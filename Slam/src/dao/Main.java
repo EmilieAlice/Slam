@@ -1,4 +1,4 @@
-package test;
+package dao;
 
 public class Main {
 
