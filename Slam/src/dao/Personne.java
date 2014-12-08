@@ -22,15 +22,14 @@ private int id;
 		setDate_inscription(Date_inscription);
 	}
 	public Personne(int id){
-		getId(id);
+		getId();
 	}
 	
-		private int getId(int id) {
-			return id;			
+	public int getId() {
+		return id;
 	}
 
-		public Personne(Personne a) {
-		// TODO Auto-generated constructor stub
+	public Personne(Personne a) {
 	}
 
 }
