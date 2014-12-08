@@ -1,5 +1,7 @@
 package mail;
 
+
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
@@ -7,12 +9,18 @@ import javax.mail.internet.AddressException;
 
 public class test {
 	
-	public static void main(String[] args) throws AddressException, MessagingException {
-	String texte ="TEST MAIL BTS SIO....";
-	String adresse="acerdove@hotmail.fr";
+	public static  void main(String[] args) throws AddressException, MessagingException{
+	String texte ="contenu mail";
+	String objet ="objet du mail";
+	String adresse="adresse to";
+	String gmail="adresse expediteur";
+	String mdp="MDP";
 
+	EnvoiMail message = new EnvoiMail();
+	message.initialisation(gmail, mdp);
+	message.preparation(adresse, objet, texte);
+	message.envoiMail();
 	
-	EnvoiMail.envoiMail(adresse, texte); 
 	
 	
 	
