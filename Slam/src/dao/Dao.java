@@ -1,8 +1,9 @@
 package dao;
 
-import dao.Personne;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import modele.Personne;
 
 public interface Dao<T>{ // interface générique
 	
