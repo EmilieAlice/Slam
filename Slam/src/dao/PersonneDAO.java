@@ -15,17 +15,16 @@ public class PersonneDAO extends Personne implements Dao<Personne> {
 	@Override
 	public boolean update(Personne a) throws SQLException {
 		Statement str = DataBase.getConnection().createStatement();
-		String req = "insert into personne(id_personne, civilite, prenom, nom, adresse, code_postale, ville, telephone, telephone2, email, mot_passse) values (0,'"+a.getCivilite() +"','"+ a.getPrenom()+"','"+ a.getNom()+"','"+ a.getAdresse()+"','"+ a.getCode_postale()+"','"+ a.getVille()+"','"+ a.getTelephone()+"','"+ a.getTelephone2()+"','"+ a.getEmail()+"','"+ a.getMot_passe()+"')";
+		String req = "insert into personne(est_inscrite) values ("+a.getEstInscrite()+"')";
 		str.execute(req);
 		return true;
 	}
 
-
-
 	@Override
-	public boolean valide(int i) throws SQLException {
+	public boolean valider(Personne a) throws SQLException {
 		Statement str = DataBase.getConnection().createStatement();
-		String req = "select date_inscription, id_personne from personne where personne.date_inscription"
+		String req = "update "+ a +"set est_inscrit ='true' where id = '"+ a.getIdPersonne() +"' and date_add(date_inscription, interval 5 minutes > now()";
+		str.execute(req);
 		return false;
 	}
 	

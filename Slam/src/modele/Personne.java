@@ -3,39 +3,38 @@ package modele;
 import java.sql.Date;
 
 public class Personne {
+	private int idPersonne;
 	private Date dateInscription;
-	private int id;
-
-	public Date getDate_inscription() {
+	private Boolean estInscrite;
+	
+	public Date getDateInscription() {
 		return dateInscription;
 	}
-
-	public void setDate_inscription(Date dateInsc) {
-		this.dateInscription = dateInsc;
+	public void setDateInscription(Date dateInscription) {
+		this.dateInscription = dateInscription;
 	}
-
-	public Personne(int id_personne, String civilite, String prenom, String nom, String adresse, String code_Postal, String ville, String telephone, String telephone2, String email, String mot_passe, Date date_inscription, boolean est_insrite){
-
+	public Boolean getEstInscrite() {
+		return estInscrite;
 	}
-
-	public Personne(Date Date_inscription){
-		setDate_inscription(Date_inscription);
+	public void setEstInscrite(Boolean estInscrite) {
+		this.estInscrite = estInscrite;
 	}
-	public Personne(int id_personne){
-		getId();
+	public int getIdPersonne() {
+		return idPersonne;
 	}
-
-
-	private int getId(int id_personne) {
-		return id_personne;			
-=======
-	
-	public int getId() {
-		return id_personne;
-
+	public void setIdPersonne(int idPersonne) {
+		this.idPersonne = idPersonne;
 	}
-
+	public Personne( int idPersonne, Date dateInscription, Boolean estInscrite) {
+		super();
+		this.idPersonne = idPersonne;
+		this.dateInscription = dateInscription;
+		this.estInscrite = estInscrite;
+	}
 	public Personne(Personne a) {
+		
 	}
+	
 
+	
 }
