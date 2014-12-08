@@ -1,6 +1,6 @@
 package dao;
 
-import java.Personne;
+import dao.Personne;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
