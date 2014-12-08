@@ -59,7 +59,7 @@ public class EnvoiMail {
 	
 	
 	
-	// initialisation des donné de connection pour les expeditions de mail adresse mail avec mot de passe du compte gmail 
+	// initialisation des donne de connection pour les expeditions de mail adresse mail avec mot de passe du compte gmail 
 
 	public void initialisation(String adresse_gmail, String mdp) {
 		
@@ -84,12 +84,12 @@ public class EnvoiMail {
 	public void envoiMail() throws AddressException, MessagingException {
 
 //1		
-		System.out.println("\n 1st ===> Mise en place des propriï¿½tï¿½s du serveur");
+		System.out.println("\n 1st ===> Mise en place des proprietes du serveur");
 		mailServerProperties = System.getProperties();
 		mailServerProperties.put("mail.smtp.port", "587");
 		mailServerProperties.put("mail.smtp.auth", "true");
 		mailServerProperties.put("mail.smtp.starttls.enable", "true");
-		System.out.println("Les propriï¿½tï¿½s du serveur de messagerie ont ï¿½tï¿½ mis en place avec succï¿½s ..");
+		System.out.println("Les proprietes du serveur de messagerie ont ete mis en place avec succee ..");
 		
 		
  
@@ -108,7 +108,7 @@ public class EnvoiMail {
 		
 		generateMailMessage.setContent(messageText, "text/html");
 		generateMailMessage.setSubject(objet);
-		System.out.println("session a ï¿½tï¿½ crï¿½ï¿½ avec succï¿½s ..");
+		System.out.println("session a ete cree avec succee ..");
 		
 	
 		Transport transport = getMailSession.getTransport("smtp");
