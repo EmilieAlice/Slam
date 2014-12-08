@@ -25,7 +25,8 @@ public class PersonneDAO extends Personne implements Dao<Personne> {
 
 	@Override
 	public boolean valide(int i) throws SQLException {
-		
+		Statement str = DataBase.getConnection().createStatement();
+		String req = "select "
 		return false;
 	}
 	
