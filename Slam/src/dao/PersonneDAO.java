@@ -2,30 +2,39 @@ package dao;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
 import modele.Personne;
 
-public class PersonneDAO extends Personne implements Dao<Personne> {
+public class PersonneDAO implements Dao<Personne>  {
 
 	public PersonneDAO(Personne a){
-		super(a);
+		super();
 	}
-		
-	@Override
-	public boolean update(Personne a) throws SQLException {
+
+	public boolean valider(Personne a) throws SQLException {
 		Statement str = DataBase.getConnection().createStatement();
-		String req = "insert into personne(est_inscrite) values ("+a.getEstInscrite()+"')";
+		String req = "update personne set est_inscrite =true where id_personne = '"+ a.getIdPersonne() +"' and date_add(date_inscription, interval 1 HOUR > now())";
 		str.execute(req);
-		return true;
+		return false;
 	}
 
 	@Override
-	public boolean valider(Personne a) throws SQLException {
-		Statement str = DataBase.getConnection().createStatement();
-		String req = "update "+ a +"set est_inscrit ='true' where id = '"+ a.getIdPersonne() +"' and date_add(date_inscription, interval 5 minutes > now()";
-		str.execute(req);
-		return false;
+	public int insert(Personne a) throws SQLException {
+		throw new UnsupportedOperationException("pas implemente");
+	}
+
+	@Override
+	public boolean update(Personne a) throws SQLException {
+		throw new UnsupportedOperationException("pas implemente");
+	}
+
+	@Override
+	public boolean delete(int id) throws SQLException {
+		throw new UnsupportedOperationException("pas implemente");
+	}
+
+	@Override
+	public Personne findById(int id) throws SQLException {
+		throw new UnsupportedOperationException("pas implemente");
 	}
 	
 }

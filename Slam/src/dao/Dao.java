@@ -1,18 +1,13 @@
 package dao;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import modele.Personne;
-
-public interface Dao<T>{ // interface générique
+public interface Dao<T>{
 	
-	//public int insert(T a) throws SQLException;
-	public boolean valide(int i) throws SQLException;
+	public int insert(T a) throws SQLException;
 	public boolean update(T a) throws SQLException;
-	//public boolean update(int id) throws SQLException;
-	//public T findById(int id) throws SQLException;
-	//public ArrayList<T> findAll() throws SQLException;
+	public boolean delete(int id) throws SQLException;
+	public T findById(int id) throws SQLException;
 
 	
 }
