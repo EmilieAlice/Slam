@@ -59,7 +59,8 @@ public class EnvoiMail {
 	
 	
 	
-	
+	// initialisation des donné de connection pour les expeditions de mail adresse mail avec mot de passe du compte gmail 
+
 	public void initialisation(String adresse_gmail, String mdp) {
 		
 		setAdresse_gmail(adresse_gmail);
@@ -70,7 +71,7 @@ public class EnvoiMail {
 		
 	
 	
-	
+	// preparation du mail adresse destinataire :: objet du mail :: contenu du mail
 	public void preparation(String adresseTo,String objet , String messageText) {
 		setObjet(objet);
 		setMessageText(messageText);
@@ -79,7 +80,7 @@ public class EnvoiMail {
 	
 	
 	
-	
+	// envoi le mail preparer 
 	public void envoiMail() throws AddressException, MessagingException {
 
 //1		
