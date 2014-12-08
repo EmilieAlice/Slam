@@ -21,12 +21,18 @@ public class Personne {
 	public Personne(Date Date_inscription){
 		setDate_inscription(Date_inscription);
 	}
-	public Personne(int id){
-		getId(id);
+	public Personne(int id_personne){
+		getId();
 	}
 
-	private int getId(int id) {
-		return id;			
+
+	private int getId(int id_personne) {
+		return id_personne;			
+=======
+	
+	public int getId() {
+		return id_personne;
+
 	}
 
 	public Personne(Personne a) {
