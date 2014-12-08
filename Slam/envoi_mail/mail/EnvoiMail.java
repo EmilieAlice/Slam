@@ -53,7 +53,7 @@ public class EnvoiMail {
 		Transport transport = getMailSession.getTransport("smtp");
 		
 		// Entrer UserID and Password (XXXxxxxxxxx@gmail.com)
-		transport.connect("smtp.gmail.com", "hssainisaad@gmail.com", "lenovo10");
+		transport.connect("smtp.gmail.com", "adresse mail", "mdp");
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		
 
