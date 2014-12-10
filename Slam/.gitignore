@@ -1,2 +1,5 @@
 /build/
 /bin/
+
+#Pour éviter les soucis de buildpath et librairies
+.classpath
