@@ -7,6 +7,7 @@ public class Main {
 		System.out.println("Un petit commit de Jérome");
 		System.out.println("Test du git ignore");
 		System.out.println("Seconde test du ignore");
+		System.out.println("test gitignor depuis Emilie");
 
 	}
 
