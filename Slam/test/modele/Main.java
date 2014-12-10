@@ -12,6 +12,7 @@ public class Main {
 		System.out.println("Et la drenière pour la route");
 		System.out.println("ça marche !");
 		System.out.println("coucou");
+		System.out.println("test");
 	}
 
 }
