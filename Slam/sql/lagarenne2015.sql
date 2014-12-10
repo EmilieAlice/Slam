@@ -389,9 +389,9 @@ BEGIN
 
   INSERT INTO etat_candidature
   (id_etat_candidature, libelle) VALUES
-  (1, 'A'),
-  (2, 'V'),
-  (3, 'R');
+  ('A', 'Admis'),
+  ('V', 'Validée'),
+  ('R', 'Refusée');
 
   INSERT INTO candidature
   (id_session, id_personne, id_etat_candidature, date_effet, motivation) VALUES
