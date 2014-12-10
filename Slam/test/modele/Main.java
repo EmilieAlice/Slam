@@ -8,7 +8,7 @@ public class Main {
 		System.out.println("Test du git ignore");
 		System.out.println("Seconde test du ignore");
 		System.out.println("test gitignor depuis Emilie");
-
+		System.out.println("Cette fois ci c'est la bonne !");
 	}
 
 }
