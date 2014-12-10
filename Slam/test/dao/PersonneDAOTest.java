@@ -16,10 +16,10 @@ public class PersonneDAOTest {
 	
 	@Test
 	public void testFindById() throws SQLException {
-		Timestamp time = Timestamp.valueOf("2014-12-10 09:13:28");
+		Timestamp time = Timestamp.valueOf("2014-12-10 10:46:24");
 
 		Personne expected = new Personne(2, "Mle", "Emilie", "WAILLE", "25 Avenue de la gare", "92000", "NANTERRE",
-				"0956789101", "0321033738", "waille@hotmail.fr", "walle", time, false);
+				"0956789101", null, "waille@hotmail.fr", "walle", time, false);
 		PersonneDAO dao = new PersonneDAO();
 		Personne result = dao.findById(2);
 		assertEquals(expected, result);
