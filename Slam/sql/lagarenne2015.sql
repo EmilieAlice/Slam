@@ -395,9 +395,9 @@ BEGIN
 
   INSERT INTO candidature
   (id_session, id_personne, id_etat_candidature, date_effet, motivation) VALUES
-  (3, 2, 2, '2015-03-15 10:00:00', 'Je suis extrement motivé pour accéder à cette formation d''informatique, un domaine qui me passionne.'),
-  (1, 3, 1, '2015-08-10 14:00:00', 'Je suis extrement motivé pour accéder à cette formation.'),
-  (2, 1, 3, '2015-08-10 14:00:00', 'Je suis très motivé et passioné et souhaite donc accéder à cette formation.');
+  (3, 2, 'V', '2015-03-15 10:00:00', 'Je suis extrement motivé pour accéder à cette formation d''informatique, un domaine qui me passionne.'),
+  (1, 3, 'A', '2015-08-10 14:00:00', 'Je suis extrement motivé pour accéder à cette formation.'),
+  (2, 1, 'R', '2015-08-10 14:00:00', 'Je suis très motivé et passioné et souhaite donc accéder à cette formation.');
 
   INSERT INTO evaluation
   (id_evaluation, id_module, id_session, id_formateur) VALUES
@@ -420,7 +420,6 @@ BEGIN
   COMMIT;
 
   ALTER TABLE evaluation AUTO_INCREMENT=1;
-  ALTER TABLE etat_candidature AUTO_INCREMENT=1;
   ALTER TABLE salle AUTO_INCREMENT=1;
   ALTER TABLE session AUTO_INCREMENT=1;
   ALTER TABLE formation AUTO_INCREMENT=1;
