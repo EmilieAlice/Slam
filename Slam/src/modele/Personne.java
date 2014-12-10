@@ -5,6 +5,10 @@ import java.sql.Timestamp;
 
 public class Personne {
 
+	public Personne() {
+		super();
+	}
+
 	private int idPersonne;
 	private String civilite;
 	private String prenom;
@@ -99,16 +103,15 @@ public class Personne {
 	}
 
 
-
-	public Personne(int idPersonne, String civilite, String nom, String prenom,
+	public Personne(int idPersonne, String civilite, String prenom, String nom, 
 			String adresse, String codePostal, String ville, String telephone,
 			String telephone2, String email, String motPasse,
 			Timestamp time, boolean estInscrite) {
 		super();
 		this.idPersonne = idPersonne;
 		this.civilite = civilite;
-		this.nom = nom;
 		this.prenom = prenom;
+		this.nom = nom;
 		this.adresse = adresse;
 		this.codePostal = codePostal;
 		this.ville = ville;
@@ -216,6 +219,17 @@ public class Personne {
 		} else if (!ville.equals(other.ville))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Personne [idPersonne=" + idPersonne + ", civilite=" + civilite
+				+ ", prenom=" + prenom + ", nom=" + nom + ", adresse="
+				+ adresse + ", codePostal=" + codePostal + ", ville=" + ville
+				+ ", telephone=" + telephone + ", telephone2=" + telephone2
+				+ ", email=" + email + ", motPasse=" + motPasse
+				+ ", dateInscription=" + dateInscription + ", estInscrite="
+				+ estInscrite + "]";
 	}
 
 }
