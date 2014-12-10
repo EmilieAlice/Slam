@@ -16,7 +16,7 @@ public class PersonneDAOTest {
 	
 	@Test
 	public void testFindById() throws SQLException {
-		Timestamp time = Timestamp.valueOf("2014-12-10 10:46:24");
+		Timestamp time = Timestamp.valueOf("2014-12-10 10:47:12");
 
 		Personne expected = new Personne(2, "Mle", "Emilie", "WAILLE", "25 Avenue de la gare", "92000", "NANTERRE",
 				"0956789101", null, "waille@hotmail.fr", "walle", time, false);
@@ -28,7 +28,7 @@ public class PersonneDAOTest {
 
 	@Test
 	public void testEquals() {
-		Timestamp time = Timestamp.valueOf("2014-12-08 13:06:37");
+		Timestamp time = Timestamp.valueOf("2014-12-10 10:47:12");
 		Personne expected = new Personne(2, "Mle", "Emilie", "WAILLE", "25 Avenue de la gare", "92000", "NANTERRE",
 				"0956789101", "0321033738", "waille@hotmail.fr", "walle", time, false);
 		Personne result = new Personne(2, "Mle", "Emilie", "WAILLE", "25 Avenue de la gare", "92000", "NANTERRE",
