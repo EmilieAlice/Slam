@@ -2,9 +2,50 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Inscription au site</title>
 </head>
 <body>
+	<h2 id="titre"> Merci de remplir ce formulaire pour vous inscrire sur notre site</h2>
+	<fieldset>
+		<form method="POST" action="">
+			<table>
+				<tr>
+					<td>Nom :</td>
+					<td><input type="text" name="nom"></td>
+				</tr>
+				<tr>
+					<td>Prénom :</td>
+					<td><input type="text" name="prenom"></td>
+				</tr>
+				<tr>
+					<td>Email :</td>
+					<td><input type="text" name="email"></td>
+				</tr>
+				<tr>
+					<td>Mot de passe :</td>
+					<td><input type="password" name="motDePasse"></td>
+				</tr>
+				<tr>
+					<td>Confirmation de mot de passe :</td>
+					<td><input type="password" name="motDePasse"></td>
+				</tr>
+				<tr>
+					<td>Adresse :</td>
+					<td><input type="text" name="adresse"></td>
+				</tr>
+				<tr>
+					<td>Situation :</td>
+					<td><input type="textarea" name="situation"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" name="validationFormulaire"
+						value="Validez votre inscription"></td>
+				</tr>
+			</table>
+		</form>
+
+	</fieldset>
 
 </body>
 </html>

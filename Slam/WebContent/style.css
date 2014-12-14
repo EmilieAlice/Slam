@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: auto;
+	width: 1024px;
+	background-color: #b1e3ff;
+}
+
+#titre{
+	text-align: center;
+}
