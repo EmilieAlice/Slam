@@ -2,8 +2,8 @@ package dao;
 
 import java.sql.SQLException;
 import java.sql.ResultSet;
-
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 
 import modele.Personne;
 
@@ -12,7 +12,7 @@ public class PersonneDAO implements Dao<Personne>  {
 	private static PreparedStatement pValider = null;
 	static{
 		try{
-			pValider = DataBase.getConnection().prepareStatement("update personne set est_inscrite = true where id_personne = ?"
+			pValider = DataBase.getConnection().prepareStatement("update personne set est_inscrite = true where email = ? date_inscription = ?"
 				+ " and date_add(date_inscription, interval 1 minute) > now()");
 		}
 		catch(SQLException e){
@@ -61,8 +61,9 @@ public class PersonneDAO implements Dao<Personne>  {
 	 * @return true or false
 	 * @throws SQLException
 	 */
-	public boolean valider(int id) throws SQLException {
-		pValider.setInt(1, id);
+	public boolean valider(String email, Timestamp date) throws SQLException {
+		pValider.setString(1, email);
+		pValider.setTimestamp(2, date);
 		int nbAffectes = pValider.executeUpdate();
 		return nbAffectes == 1;
 	}
