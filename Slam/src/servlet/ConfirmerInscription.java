@@ -50,7 +50,8 @@ public class ConfirmerInscription extends HttpServlet {
           + " réessayer plus tard."
           + exc.getMessage();
     }
-    request.getRequestDispatcher("WEB_INF/message.jsp").forward(request, response);
+    request.setAttribute("msg", msg);
+    request.getRequestDispatcher("WEB-INF/message.jsp").forward(request, response);
   }
 
   protected void doPost(HttpServletRequest request,
