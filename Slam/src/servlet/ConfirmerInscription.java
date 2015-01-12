@@ -32,7 +32,7 @@ public class ConfirmerInscription extends HttpServlet {
       long ms = Long.parseLong(cle);
       Timestamp time = new Timestamp(ms);
       PersonneDAO dao = new PersonneDAO();
-      boolean ok = dao.valider(email, time);
+      boolean ok = dao.isValider(email, time);
       if (ok) {
         msg = "Votre inscription est validée. Vous pouvez accéder à votre "
             + "<a href='EspacePersonnel?email="

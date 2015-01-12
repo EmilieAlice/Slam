@@ -61,7 +61,7 @@ public class PersonneDAO implements Dao<Personne>  {
 	 * @return true or false
 	 * @throws SQLException
 	 */
-	public boolean valider(String email, Timestamp date) throws SQLException {
+	public boolean isValider(String email, Timestamp date) throws SQLException {
 		pValider.setString(1, email);
 		pValider.setTimestamp(2, date);
 		int nbAffectes = pValider.executeUpdate();
@@ -117,7 +117,7 @@ public class PersonneDAO implements Dao<Personne>  {
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean update(Personne personne) throws SQLException {
+	public boolean isUpdate(Personne personne) throws SQLException{
 		pUpdate.setInt(1, personne.getIdPersonne());
 		pUpdate.setString(2, personne.getCivilite());
 		pUpdate.setString(3, personne.getPrenom());
@@ -142,7 +142,7 @@ public class PersonneDAO implements Dao<Personne>  {
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean delete(int id) throws SQLException {
+	public boolean isDelete(int id) throws SQLException {
 		throw new UnsupportedOperationException("pas implemente");
 	}
 
