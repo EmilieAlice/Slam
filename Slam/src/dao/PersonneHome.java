@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 import modele.Personne;
 
-public class PersonneDAO implements Dao<Personne>  {
+public class PersonneHome implements Dao<Personne>  {
 	
 	private static PreparedStatement pValider = null;
 	static{

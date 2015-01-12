@@ -1,6 +1,6 @@
 package servlet;
 
-import dao.PersonneDAO;
+import dao.PersonneHome;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -31,7 +31,7 @@ public class ConfirmerInscription extends HttpServlet {
     try {
       long ms = Long.parseLong(cle);
       Timestamp time = new Timestamp(ms);
-      PersonneDAO dao = new PersonneDAO();
+      PersonneHome dao = new PersonneHome();
       boolean ok = dao.isValider(email, time);
       if (ok) {
         msg = "Votre inscription est validée. Vous pouvez accéder à votre "
