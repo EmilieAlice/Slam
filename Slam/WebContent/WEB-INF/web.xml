@@ -11,13 +11,13 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>serv</display-name>
-    <servlet-name>serv</servlet-name>
-    <servlet-class>servlet.serv</servlet-class>
+    <display-name>ConfirmerInscription</display-name>
+    <servlet-name>ConfirmerInscription</servlet-name>
+    <servlet-class>servlet.ConfirmerInscription</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>serv</servlet-name>
-    <url-pattern>/serv</url-pattern>
+    <servlet-name>ConfirmerInscription</servlet-name>
+    <url-pattern>/ConfirmerInscription</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
