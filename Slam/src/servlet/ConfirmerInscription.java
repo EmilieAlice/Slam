@@ -15,47 +15,47 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ConfirmerInscription extends HttpServlet {
 
-  /** Confirmer l'inscription du candidat. Avertit l'utilisateur dans
-   * l'attribut msg (ok ou erreur).
-   *
-   * @param request
-   * @param response
-   * @throws ServletException
-   * @throws IOException
-   */
-  protected void doGet(HttpServletRequest request,
-      HttpServletResponse response) throws ServletException, IOException {
-    String cle = request.getParameter("cle");
-    String email = request.getParameter("email");
-    String msg = null;
-    try {
-      long ms = Long.parseLong(cle);
-      Timestamp time = new Timestamp(ms);
-      PersonneHome dao = new PersonneHome();
-      boolean ok = dao.isValider(email, time);
-      if (ok) {
-        msg = "Votre inscription est validée. Vous pouvez accéder à votre "
-            + "<a href='EspacePersonnel?email="
-            + email + "'>espace personnel</a>";
-      }
-      else {
-        msg = "La clé indiquée est invalide. Veuillez vous réinscrire";
-      }
-    }
-    catch (NumberFormatException exc) {
-      msg = "La clé indiquée est invalide. Veuillez vous réinscrire";
-    }
-    catch (SQLException exc) {
-      msg = "Problème de connexion à la base de données. Veuillez"
-          + " réessayer plus tard."
-          + exc.getMessage();
-    }
-    request.getRequestDispatcher("WEB_INF/message.jsp").forward(request, response);
-  }
+	/** Confirmer l'inscription du candidat. Avertit l'utilisateur dans
+	 * l'attribut msg (ok ou erreur).
+	 *
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String cle = request.getParameter("cle");
+		String email = request.getParameter("email");
+		String msg = null;
+		try {
+			long ms = Long.parseLong(cle);
+			Timestamp time = new Timestamp(ms);
+			PersonneHome dao = new PersonneHome();
+			boolean ok = dao.valider(email, time);
+			if (ok) {
+				msg = "Votre inscription est validée. Vous pouvez accéder à votre "
+						+ "<a href='EspacePersonnel?email="
+						+ email + "'>espace personnel</a>";
+			}
+			else {
+				msg = "La clé indiquée est invalide. Veuillez vous réinscrire";
+			}
+		}
+		catch (NumberFormatException exc) {
+			msg = "La clé indiquée est invalide. Veuillez vous réinscrire";
+		}
+		catch (SQLException exc) {
+			msg = "Problème de connexion à la base de données. Veuillez"
+					+ " réessayer plus tard."
+					+ exc.getMessage();
+		}
+		request.getRequestDispatcher("WEB_INF/message.jsp").forward(request, response);
+	}
 
-  protected void doPost(HttpServletRequest request,
-      HttpServletResponse response) throws ServletException, IOException {
-    throw new UnsupportedOperationException();
-  }
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		throw new UnsupportedOperationException();
+	}
 
 }

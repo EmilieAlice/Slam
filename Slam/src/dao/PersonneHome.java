@@ -19,6 +19,19 @@ public class PersonneHome implements Dao<Personne>  {
 		}
 	}
 	
+	/** Valider l'inscription. Renvoie true si c'est ok, false sinon (délai expiré
+	 * ou personne pas trouvée)
+	 * @param id de l'utilisateur dont on souhaite valider l'inscription
+	 * @return true or false
+	 * @throws SQLException
+	 */
+	public boolean valider(String email, Timestamp date) throws SQLException {
+		pValider.setString(1, email);
+		pValider.setTimestamp(2, date);
+		int nbAffectes = pValider.executeUpdate();
+		return nbAffectes == 1;
+	}
+	
 	private static PreparedStatement pFindById = null;
 	static{
 		try{
@@ -27,47 +40,6 @@ public class PersonneHome implements Dao<Personne>  {
 		catch(SQLException e){
 		}
 	}
-
-	private static PreparedStatement pInsert = null;
-	static{
-		try{
-			pInsert = DataBase.getConnection().prepareStatement("INSERT INTO personne (id_personne, civilite, prenom, nom,"
-					+ "adresse, code_postal, ville, telephone, telephone2,"
-					+ "email, mot_passe, date_inscription, est_inscrite) VALUES"
-					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-		}
-		catch(SQLException e){
-		}
-	}
-	
-	private static PreparedStatement pUpdate = null;
-	static{
-		try{
-			pUpdate = DataBase.getConnection().prepareStatement("UPDATE personne SET `id_personne` = ?, "
-					+ "`civilite` = ?, `prenom` = ?, `nom` = ?, "
-					+ "`adresse` = ?, `code_postal` = ?, `ville` = ?, "
-					+ "`telephone` = ?, `telephone2` = ?, `email` = ?, "
-					+ "`mot_passe` = ?, `date_inscription` = ?, `est_inscrite` = ? "
-					+ "WHERE `id_personne` = ? ");
-		}
-		catch(SQLException e){
-		}
-	}
-	
-
-	/** Valider l'inscription. Renvoie true si c'est ok, false sinon (délai expiré
-	 * ou personne pas trouvée)
-	 * @param id de l'utilisateur dont on souhaite valider l'inscription
-	 * @return true or false
-	 * @throws SQLException
-	 */
-	public boolean isValider(String email, Timestamp date) throws SQLException {
-		pValider.setString(1, email);
-		pValider.setTimestamp(2, date);
-		int nbAffectes = pValider.executeUpdate();
-		return nbAffectes == 1;
-	}
-
 	
 	/** Renvoie la personne de l'id donnée, ou rien si elle n'existe pas 
 	 * @param id de la personne que l'on souhaite trouver
@@ -89,6 +61,19 @@ public class PersonneHome implements Dao<Personne>  {
 		}
 		return result;
 	}
+
+	private static PreparedStatement pInsert = null;
+	static{
+		try{
+			pInsert = DataBase.getConnection().prepareStatement("INSERT INTO personne (id_personne, civilite, prenom, nom,"
+					+ "adresse, code_postal, ville, telephone, telephone2,"
+					+ "email, mot_passe, date_inscription, est_inscrite) VALUES"
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		}
+		catch(SQLException e){
+		}
+	}
+	
 	/** Creation d'une nouvelle personne dans la table personne de la base de donnée.
 	 * @param la nouvelle personne à creer
 	 * @throws SQLException
@@ -111,13 +96,27 @@ public class PersonneHome implements Dao<Personne>  {
 		pInsert.executeUpdate();
 	}
 	
+	private static PreparedStatement pUpdate = null;
+	static{
+		try{
+			pUpdate = DataBase.getConnection().prepareStatement("UPDATE personne SET `id_personne` = ?, "
+					+ "`civilite` = ?, `prenom` = ?, `nom` = ?, "
+					+ "`adresse` = ?, `code_postal` = ?, `ville` = ?, "
+					+ "`telephone` = ?, `telephone2` = ?, `email` = ?, "
+					+ "`mot_passe` = ?, `date_inscription` = ?, `est_inscrite` = ? "
+					+ "WHERE `id_personne` = ? ");
+		}
+		catch(SQLException e){
+		}
+	}
+
 	/** Met à jour les données d'une personne dans la table personne de la base de donnée.
 	 * @param la personne que l'on souhaite mettre à jour
 	 * @return true or false
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean isUpdate(Personne personne) throws SQLException{
+	public boolean update(Personne personne) throws SQLException{
 		pUpdate.setInt(1, personne.getIdPersonne());
 		pUpdate.setString(2, personne.getCivilite());
 		pUpdate.setString(3, personne.getPrenom());
@@ -142,7 +141,7 @@ public class PersonneHome implements Dao<Personne>  {
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean isDelete(int id) throws SQLException {
+	public boolean delete(int id) throws SQLException {
 		throw new UnsupportedOperationException("pas implemente");
 	}
 

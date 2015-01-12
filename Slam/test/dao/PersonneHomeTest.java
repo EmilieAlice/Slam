@@ -24,7 +24,7 @@ public class PersonneHomeTest {
 		Personne expected = new Personne(7, "Mr", "Pascal", "Waille", "12 rue d'en haut", "62270",
 				"Rebreuviette", "03210337338", "0646808184", "pascal@hot.fr", "papi", time, true);
 		PersonneHome dao = new PersonneHome();
-		boolean result = dao.isValider("pascal@hot.fr", time);
+		boolean result = dao.valider("pascal@hot.fr", time);
 		assertEquals(expected, result);
 	}
 	
@@ -64,7 +64,7 @@ public class PersonneHomeTest {
 		Personne expected = new Personne(2, "Mle", "Emilie", "Waille", "25 avenue Gabriel", "92000", "Nanterre",
 				"0170163146", "0646808184", "ewaille@hotmail.fr", "walle", time, false);
 		PersonneHome dao = new PersonneHome();
-		boolean result = dao.isUpdate(expected);
+		boolean result = dao.update(expected);
 		assertEquals(expected, result);	
 	}
 	
