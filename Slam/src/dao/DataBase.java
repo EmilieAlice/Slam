@@ -6,9 +6,10 @@ public class DataBase {
 
 
 	protected static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-	protected static final String URL = "jdbc:mysql://192.168.92.10/lagarenne2015";
+	protected static final String URL = "jdbc:mysql://localhost/lagarenne2015";
+	//protected static final String URL = "jdbc:mysql://192.168.92.10/lagarenne2015";
 	protected static final String USER = "root";
-	protected static final String PASSWORD = "greta";
+	protected static final String PASSWORD = "1234";
 
 	public enum SortOrder {
 		ASC, DESC;
@@ -36,7 +37,7 @@ public class DataBase {
 	}
 
 	/** Fournit une connexion à la base de données.
-	 * Ne fait pas appel à un pool de connexion, mâme si cela est envisageable plus tard
+	 * Ne fait pas appel à un pool de connexion, même si cela est envisageable plus tard
 	 * (ne changerait rien à l'appel de la méthode)
 	 * @throws java.sql.SQLException
 	 */

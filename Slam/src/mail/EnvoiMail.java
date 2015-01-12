@@ -52,34 +52,44 @@ public class EnvoiMail {
 		return adresse_gmail;
 	}
 
-	// initialisation des donnÈ de connection pour les expeditions de mail adresse mail avec mot de passe du compte gmail 
+	/** Initialisation des donn√©es de connection pour les expeditions de mail,
+	 * adresse mail avec mot de passe du compte gmail 
+	 * @param adresse gmail de l'administrateur
+	 * @param mot de passe de la boite mail
+	 */
 	public void initialisation(String adresse_gmail, String mdp) {
-		
 		setAdresse_gmail(adresse_gmail);
 		setMdp(mdp);
 		setAdresseTo(adresse_gmail);
 		}
 		
-	// preparation du mail adresse destinataire :: objet du mail :: contenu du mail
+	/** Preparation du mail grace √† l'adresse du destinataire, objet du mail et son contenu du mail
+	 * @param adresse mail du candidat
+	 * @param objet du mail
+	 * @param le message √† envoyer au candidate
+	 */
 	public void preparation(String adresseTo,String objet , String messageText) {
 		setObjet(objet);
 		setMessageText(messageText);
 		
 	}
 	
-	// envoi le mail preparer  
+	/** Envoi du mail definitif
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
 	public void envoiMail() throws AddressException, MessagingException {
 
 //1		
-		System.out.println("\n 1st ===> Mise en place des propriÈtÈs du serveur");
+		System.out.println("\n 1st ===> Mise en place des propri√©t√©s du serveur");
 		mailServerProperties = System.getProperties();
 		mailServerProperties.put("mail.smtp.port", "587");
 		mailServerProperties.put("mail.smtp.auth", "true");
 		mailServerProperties.put("mail.smtp.starttls.enable", "true");
-		System.out.println("Les propriÈtÈs du serveur de messagerie ont ÈtÈ mis en place avec succËs ..");
+		System.out.println("Les propri√©t√©s du serveur de messagerie ont √©t√© mis en place avec succ√®s ..");
 
 //2		
-		System.out.println("\n\n 2nd ===> ouverture de la session mail et envoi");
+		System.out.println("\n\n 2nd ===> Ouverture de la session mail et envoi");
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		generateMailMessage = new MimeMessage(getMailSession);
 		
@@ -88,7 +98,7 @@ public class EnvoiMail {
 //Mail
 		generateMailMessage.setContent(messageText, "text/html");
 		generateMailMessage.setSubject(objet);
-		System.out.println("session a ÈtÈ crÈÈ avec succËs ..");
+		System.out.println("La session a √©t√© cr√©√©e avec succ√®s ..");
 		
 		Transport transport = getMailSession.getTransport("smtp");
 		
@@ -98,6 +108,6 @@ public class EnvoiMail {
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		
 		transport.close();
-		System.out.println("\n\n ===> mail evoyer");
+		System.out.println("\n\n ===> Mail envoy√©");
 	}
 }

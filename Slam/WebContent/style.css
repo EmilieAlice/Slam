@@ -3,9 +3,16 @@
 body {
 	margin: auto;
 	width: 1024px;
-	background-color: #b1e3ff;
+	background-color: #ccffbc;
+	font-family: Garamond;
 }
 
 #titre{
 	text-align: center;
+}
+
+table{
+	font-family: Verdana;
+	font-size: 15px;
+	margin: auto;
 }

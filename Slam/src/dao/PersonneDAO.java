@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
@@ -9,37 +8,76 @@ import java.sql.PreparedStatement;
 import modele.Personne;
 
 public class PersonneDAO implements Dao<Personne>  {
+	
+	private static PreparedStatement pValider = null;
+	static{
+		try{
+			pValider = DataBase.getConnection().prepareStatement("update personne set est_inscrite = true where id_personne = ?"
+				+ " and date_add(date_inscription, interval 1 minute) > now()");
+		}
+		catch(SQLException e){
+		}
+	}
+	
+	private static PreparedStatement pFindById = null;
+	static{
+		try{
+			pFindById = DataBase.getConnection().prepareStatement("select * from personne where id_personne = ? ;");
+		}
+		catch(SQLException e){
+		}
+	}
+
+	private static PreparedStatement pInsert = null;
+	static{
+		try{
+			pInsert = DataBase.getConnection().prepareStatement("INSERT INTO personne (id_personne, civilite, prenom, nom,"
+					+ "adresse, code_postal, ville, telephone, telephone2,"
+					+ "email, mot_passe, date_inscription, est_inscrite) VALUES"
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		}
+		catch(SQLException e){
+		}
+	}
+	
+	private static PreparedStatement pUpdate = null;
+	static{
+		try{
+			pUpdate = DataBase.getConnection().prepareStatement("UPDATE personne SET `id_personne` = ?, "
+					+ "`civilite` = ?, `prenom` = ?, `nom` = ?, "
+					+ "`adresse` = ?, `code_postal` = ?, `ville` = ?, "
+					+ "`telephone` = ?, `telephone2` = ?, `email` = ?, "
+					+ "`mot_passe` = ?, `date_inscription` = ?, `est_inscrite` = ? "
+					+ "WHERE `id_personne` = ? ");
+		}
+		catch(SQLException e){
+		}
+	}
+	
 
 	/** Valider l'inscription. Renvoie true si c'est ok, false sinon (délai expiré
 	 * ou personne pas trouvée)
-	 * @param int id
-	 * @return nbAffectes
+	 * @param id de l'utilisateur dont on souhaite valider l'inscription
+	 * @return true or false
 	 * @throws SQLException
 	 */
 	public boolean valider(int id) throws SQLException {
-		String req = "update personne set est_inscrite = true where id_personne = ?"
-				+ " and date_add(date_inscription, interval 1 minute) > now()";
-		Connection db = DataBase.getConnection();
-		PreparedStatement psValider = db.prepareStatement(req);
-		psValider.setInt(1, id);
-		int nbAffectes = psValider.executeUpdate();
+		pValider.setInt(1, id);
+		int nbAffectes = pValider.executeUpdate();
 		return nbAffectes == 1;
 	}
 
 	
-	/** Renvoie la personne de id donné, ou null si pas trouvé 
-	 * @param int id
-	 * @return resultat
+	/** Renvoie la personne de l'id donnée, ou rien si elle n'existe pas 
+	 * @param id de la personne que l'on souhaite trouver
+	 * @return la personne correspondante
 	 * @throws SQLException
 	 */
 	@Override
 	public Personne findById(int id) throws SQLException {
 		Personne result = null;
-		String req = "select * from personne where id_personne = ? ;";
-		Connection db = DataBase.getConnection();
-		PreparedStatement psFindById = db.prepareStatement(req);
-		psFindById.setInt(1, id);
-		ResultSet res = psFindById.executeQuery();
+		pFindById.setInt(1, id);
+		ResultSet res = pFindById.executeQuery();
 		if (res.next()){
 			result = new Personne(res.getInt("id_personne"), res.getString("civilite"), res.getString("prenom"),
 					res.getString("nom"), res.getString("adresse"), res.getString("code_postal"),
@@ -51,69 +89,55 @@ public class PersonneDAO implements Dao<Personne>  {
 		return result;
 	}
 	/** Creation d'une nouvelle personne dans la table personne de la base de donnée.
-	 * @param Personne personne
-	 * @return
+	 * @param la nouvelle personne à creer
 	 * @throws SQLException
 	 */
 	@Override
 	public void insert(Personne personne) throws SQLException {
-		String req = "INSERT INTO personne (id_personne, civilite, prenom, nom,"
-				+ "adresse, code_postal, ville, telephone, telephone2,"
-				+ "email, mot_passe, date_inscription, est_inscrite) VALUES"
-				+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-		Connection db = DataBase.getConnection();
-		PreparedStatement psInsert = db.prepareStatement(req);
-		psInsert.setInt(1, personne.getIdPersonne());
-		psInsert.setString(2, personne.getCivilite());
-		psInsert.setString(3, personne.getPrenom());
-		psInsert.setString(4, personne.getNom());
-		psInsert.setString(5, personne.getAdresse());
-		psInsert.setString(6, personne.getCodePostal());
-		psInsert.setString(7, personne.getVille());
-		psInsert.setString(8, personne.getTelephone());
-		psInsert.setString(9,personne.getTelephone2());
-		psInsert.setString(10, personne.getEmail());
-		psInsert.setString(11, personne.getMotPasse());
-		psInsert.setTimestamp(12, personne.getDateInscription());
-		psInsert.setBoolean(13, personne.isEstInscrite());
-		psInsert.executeUpdate();
+		pInsert.setInt(1, personne.getIdPersonne());
+		pInsert.setString(2, personne.getCivilite());
+		pInsert.setString(3, personne.getPrenom());
+		pInsert.setString(4, personne.getNom());
+		pInsert.setString(5, personne.getAdresse());
+		pInsert.setString(6, personne.getCodePostal());
+		pInsert.setString(7, personne.getVille());
+		pInsert.setString(8, personne.getTelephone());
+		pInsert.setString(9,personne.getTelephone2());
+		pInsert.setString(10, personne.getEmail());
+		pInsert.setString(11, personne.getMotPasse());
+		pInsert.setTimestamp(12, personne.getDateInscription());
+		pInsert.setBoolean(13, personne.isEstInscrite());
+		pInsert.executeUpdate();
 	}
+	
 	/** Met à jour les données d'une personne dans la table personne de la base de donnée.
-	 * @param int id
-	 * @return true
+	 * @param la personne que l'on souhaite mettre à jour
+	 * @return true or false
 	 * @throws SQLException
 	 */
 	@Override
 	public boolean update(Personne personne) throws SQLException {
-		String req = "UPDATE personne SET `id_personne` = ?, "
-				+ "`civilite` = ?, `prenom` = ?, `nom` = ?, "
-				+ "`adresse` = ?, `code_postal` = ?, `ville` = ?, "
-				+ "`telephone` = ?, `telephone2` = ?, `email` = ?, "
-				+ "`mot_passe` = ?, `date_inscription` = ?, `est_inscrite` = ? "
-				+ "WHERE `id_personne` = ? ";
-		Connection db = DataBase.getConnection();
-		PreparedStatement psUpdate = db.prepareStatement(req);
-		psUpdate.setInt(1, personne.getIdPersonne());
-		psUpdate.setString(2, personne.getCivilite());
-		psUpdate.setString(3, personne.getPrenom());
-		psUpdate.setString(4, personne.getNom());
-		psUpdate.setString(5, personne.getAdresse());
-		psUpdate.setString(6, personne.getCodePostal());
-		psUpdate.setString(7, personne.getVille());
-		psUpdate.setString(8, personne.getTelephone());
-		psUpdate.setString(9, personne.getTelephone2());
-		psUpdate.setString(10, personne.getEmail());
-		psUpdate.setString(11, personne.getMotPasse());
-		psUpdate.setTimestamp(12, personne.getDateInscription());
-		psUpdate.setBoolean(13, personne.isEstInscrite());
-		psUpdate.setInt(14, personne.getIdPersonne());
-		psUpdate.execute();
+		pUpdate.setInt(1, personne.getIdPersonne());
+		pUpdate.setString(2, personne.getCivilite());
+		pUpdate.setString(3, personne.getPrenom());
+		pUpdate.setString(4, personne.getNom());
+		pUpdate.setString(5, personne.getAdresse());
+		pUpdate.setString(6, personne.getCodePostal());
+		pUpdate.setString(7, personne.getVille());
+		pUpdate.setString(8, personne.getTelephone());
+		pUpdate.setString(9, personne.getTelephone2());
+		pUpdate.setString(10, personne.getEmail());
+		pUpdate.setString(11, personne.getMotPasse());
+		pUpdate.setTimestamp(12, personne.getDateInscription());
+		pUpdate.setBoolean(13, personne.isEstInscrite());
+		pUpdate.setInt(14, personne.getIdPersonne());
+		pUpdate.execute();
 		return true;
 	}
 
 	/** Supprime une personne de la table personne dans la base de donnée, en donnant son id.
-	 * @param int id
-	 * @return 
+	 * @param id de la personne que l'on souhaite supprimer
+	 * @return true or false
 	 * @throws SQLException
 	 */
 	@Override

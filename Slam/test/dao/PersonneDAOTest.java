@@ -15,6 +15,9 @@ import dao.PersonneDAO;
 
 public class PersonneDAOTest {
 	
+	/** Test de la methode valider() : On ecrit la personne attendu,
+	 *  et on compare avec la personne que l'on va trouver grace à la methode
+	 */	
 	@Test
 	public void testValider() throws SQLException {
 		Timestamp time = Timestamp.valueOf("2014-12-20 16:36:31");
@@ -25,6 +28,9 @@ public class PersonneDAOTest {
 		assertEquals(expected, result);
 	}
 	
+	/** Test de la methode findById() : On ecrit la personne attendu,
+	 *  et on compare avec la personne que l'on va trouver grace à la methode
+	 */
 	@Test
 	public void testFindById() throws SQLException {
 		Timestamp time = Timestamp.valueOf("2014-12-20 16:36:31");
@@ -36,6 +42,9 @@ public class PersonneDAOTest {
 		
 	}
 	
+	/** Test de la methode insert() : On ecrit la nouvelle personne,
+	 * et on l'insert dans la base de donnée grace à la methode
+	 */
 	@Test
 	public void testInsert() throws SQLException {
 		Date date= new Date();
@@ -46,6 +55,9 @@ public class PersonneDAOTest {
 		dao.insert(expected);
 	}
 	
+	/** Test de la methode update() : On ecrit la personne attendu, 
+	 * et on la met a jour grace à la methode
+	 */
 	@Test
 	public void testUpdate() throws SQLException {
 		Timestamp time = Timestamp.valueOf("2014-12-17 11:29:18");

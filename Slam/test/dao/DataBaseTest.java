@@ -11,6 +11,7 @@ import dao.DataBase;
 
 public class DataBaseTest {
 	
+	// Permet de tester la connection à la base de donner
 	@Test
 	public void testGetConnection() throws SQLException {
 		Connection instance = DataBase.getConnection();

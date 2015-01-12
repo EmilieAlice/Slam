@@ -220,7 +220,10 @@ public class Personne {
 			return false;
 		return true;
 	}
-	
+	/** Permet, lorsque l'on fait le test JUnit,
+	 * de voir les differences entre ce qui est attendu et le resultat(non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Personne [idPersonne=" + idPersonne + ", civilite=" + civilite
