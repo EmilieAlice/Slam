@@ -8,17 +8,16 @@ import java.sql.Timestamp;
 import modele.Personne;
 
 public class PersonneHome implements Dao<Personne>  {
-	
+
 	private static PreparedStatement pValider = null;
 	static{
 		try{
 			pValider = DataBase.getConnection().prepareStatement("update personne set est_inscrite = true where email = ? date_inscription = ?"
-				+ " and date_add(date_inscription, interval 1 minute) > now()");
+					+ " and date_add(date_inscription, interval 1 minute) > now()");
 		}
 		catch(SQLException e){
 		}
 	}
-	
 
 	/** Valider l'inscription. Renvoie true si c'est ok, false sinon (délai expiré
 	 * ou personne pas trouvée)
@@ -32,7 +31,7 @@ public class PersonneHome implements Dao<Personne>  {
 		int nbAffectes = pValider.executeUpdate();
 		return nbAffectes == 1;
 	}
-	
+
 	private static PreparedStatement pFindById = null;
 	static{
 		try{
@@ -41,7 +40,7 @@ public class PersonneHome implements Dao<Personne>  {
 		catch(SQLException e){
 		}
 	}
-	
+
 	/** Renvoie la personne de l'id donnée, ou rien si elle n'existe pas 
 	 * @param id de la personne que l'on souhaite trouver
 	 * @return la personne correspondante
@@ -62,7 +61,7 @@ public class PersonneHome implements Dao<Personne>  {
 		}
 		return result;
 	}
-	
+
 	private static PreparedStatement pInsert = null;
 	static{
 		try{
@@ -74,7 +73,7 @@ public class PersonneHome implements Dao<Personne>  {
 		catch(SQLException e){
 		}
 	}
-	
+
 	/** Creation d'une nouvelle personne dans la table personne de la base de donnée.
 	 * @param la nouvelle personne à creer
 	 * @throws SQLException
@@ -95,16 +94,14 @@ public class PersonneHome implements Dao<Personne>  {
 		pInsert.setBoolean(12, personne.isEstInscrite());
 		pInsert.executeUpdate();
 	}
-	
+
 	private static PreparedStatement pUpdate = null;
 	static{
 		try{
-			pUpdate = DataBase.getConnection().prepareStatement("UPDATE personne SET `id_personne` = ?, "
-					+ "`civilite` = ?, `prenom` = ?, `nom` = ?, "
-					+ "`adresse` = ?, `code_postal` = ?, `ville` = ?, "
-					+ "`telephone` = ?, `telephone2` = ?, `email` = ?, "
-					+ "`mot_passe` = ?, `date_inscription` = ?, `est_inscrite` = ? "
-					+ "WHERE `id_personne` = ? ");
+			pUpdate = DataBase.getConnection().prepareStatement("UPDATE personne SET `civilite` = ?,"
+					+ " `prenom` = ?, `nom` = ?, `adresse` = ?, `code_postal` = ?, `ville` = ?, "
+					+ "`telephone` = ?, `telephone2` = ?, `email` = ?, `mot_passe` = ?,"
+					+ " `date_inscription` = ?, `est_inscrite` = ? WHERE `id_personne` = ? ");
 		}
 		catch(SQLException e){
 		}
@@ -117,22 +114,30 @@ public class PersonneHome implements Dao<Personne>  {
 	 */
 	@Override
 	public boolean update(Personne personne) throws SQLException{
-		pUpdate.setInt(1, personne.getIdPersonne());
-		pUpdate.setString(2, personne.getCivilite());
-		pUpdate.setString(3, personne.getPrenom());
-		pUpdate.setString(4, personne.getNom());
-		pUpdate.setString(5, personne.getAdresse());
-		pUpdate.setString(6, personne.getCodePostal());
-		pUpdate.setString(7, personne.getVille());
-		pUpdate.setString(8, personne.getTelephone());
-		pUpdate.setString(9, personne.getTelephone2());
-		pUpdate.setString(10, personne.getEmail());
-		pUpdate.setString(11, personne.getMotPasse());
-		pUpdate.setTimestamp(12, personne.getDateInscription());
-		pUpdate.setBoolean(13, personne.isEstInscrite());
-		pUpdate.setInt(14, personne.getIdPersonne());
+		pUpdate.setString(1, personne.getCivilite());
+		pUpdate.setString(2, personne.getPrenom());
+		pUpdate.setString(3, personne.getNom());
+		pUpdate.setString(4, personne.getAdresse());
+		pUpdate.setString(5, personne.getCodePostal());
+		pUpdate.setString(6, personne.getVille());
+		pUpdate.setString(7, personne.getTelephone());
+		pUpdate.setString(8, personne.getTelephone2());
+		pUpdate.setString(9, personne.getEmail());
+		pUpdate.setString(10, personne.getMotPasse());
+		pUpdate.setTimestamp(11, personne.getDateInscription());
+		pUpdate.setBoolean(12, personne.isEstInscrite());
+		pUpdate.setInt(13, personne.getIdPersonne());
 		pUpdate.execute();
 		return true;
+	}
+
+	private static PreparedStatement pDelete = null;
+	static{
+		try{
+			pDelete = DataBase.getConnection().prepareStatement("DELETE FROM personne WHERE id_personne = ?");
+		}
+		catch(SQLException e){
+		}
 	}
 
 	/** Supprime une personne de la table personne dans la base de donnée, en donnant son id.
@@ -142,7 +147,9 @@ public class PersonneHome implements Dao<Personne>  {
 	 */
 	@Override
 	public boolean delete(int id) throws SQLException {
-		throw new UnsupportedOperationException("pas implemente");
+		pDelete.setInt(1, id);
+		pDelete.executeQuery();
+		return true;
 	}
 
 
