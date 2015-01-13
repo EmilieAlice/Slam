@@ -41,9 +41,11 @@ public class Formulaire extends HttpServlet {
 		String tel2 = request.getParameter("tel2");
 		String mail = request.getParameter("mail");
 		String mdp = request.getParameter("motDePasse");
-		Boolean inscrit = true;
+		Boolean inscrit = false;
 		
-		Personne p = new Personne();
+		System.out.println(civilite+nom+prenom+adresse+codePostale+ville+tel1+tel2+mail+mdp+inscrit);
+		
+		/*Personne p = new Personne();
 		Timestamp d = new Timestamp(2015, 0, 12, 16, 57, 00, 0);
 		p.setCivilite(civilite);
 		p.setNom(nom);
@@ -64,7 +66,7 @@ public class Formulaire extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**
