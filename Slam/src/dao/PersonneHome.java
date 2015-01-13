@@ -19,6 +19,7 @@ public class PersonneHome implements Dao<Personne>  {
 		}
 	}
 	
+
 	/** Valider l'inscription. Renvoie true si c'est ok, false sinon (délai expiré
 	 * ou personne pas trouvée)
 	 * @param id de l'utilisateur dont on souhaite valider l'inscription
@@ -61,14 +62,14 @@ public class PersonneHome implements Dao<Personne>  {
 		}
 		return result;
 	}
-
+	
 	private static PreparedStatement pInsert = null;
 	static{
 		try{
-			pInsert = DataBase.getConnection().prepareStatement("INSERT INTO personne (id_personne, civilite, prenom, nom,"
+			pInsert = DataBase.getConnection().prepareStatement("INSERT INTO personne (civilite, prenom, nom,"
 					+ "adresse, code_postal, ville, telephone, telephone2,"
 					+ "email, mot_passe, date_inscription, est_inscrite) VALUES"
-					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		}
 		catch(SQLException e){
 		}
@@ -80,19 +81,18 @@ public class PersonneHome implements Dao<Personne>  {
 	 */
 	@Override
 	public void insert(Personne personne) throws SQLException {
-		pInsert.setInt(1, personne.getIdPersonne());
-		pInsert.setString(2, personne.getCivilite());
-		pInsert.setString(3, personne.getPrenom());
-		pInsert.setString(4, personne.getNom());
-		pInsert.setString(5, personne.getAdresse());
-		pInsert.setString(6, personne.getCodePostal());
-		pInsert.setString(7, personne.getVille());
-		pInsert.setString(8, personne.getTelephone());
-		pInsert.setString(9,personne.getTelephone2());
-		pInsert.setString(10, personne.getEmail());
-		pInsert.setString(11, personne.getMotPasse());
-		pInsert.setTimestamp(12, personne.getDateInscription());
-		pInsert.setBoolean(13, personne.isEstInscrite());
+		pInsert.setString(1, personne.getCivilite());
+		pInsert.setString(2, personne.getPrenom());
+		pInsert.setString(3, personne.getNom());
+		pInsert.setString(4, personne.getAdresse());
+		pInsert.setString(5, personne.getCodePostal());
+		pInsert.setString(6, personne.getVille());
+		pInsert.setString(7, personne.getTelephone());
+		pInsert.setString(8,personne.getTelephone2());
+		pInsert.setString(9, personne.getEmail());
+		pInsert.setString(10, personne.getMotPasse());
+		pInsert.setTimestamp(11, personne.getDateInscription());
+		pInsert.setBoolean(12, personne.isEstInscrite());
 		pInsert.executeUpdate();
 	}
 	

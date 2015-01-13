@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +31,7 @@ public class Formulaire extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String civilite = request.getParameter("civilite");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prénom");
 		String adresse = request.getParameter("adresse");
@@ -36,8 +39,13 @@ public class Formulaire extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String tel1 = request.getParameter("tel1");
 		String tel2 = request.getParameter("tel2");
+		String mail = request.getParameter("mail");
+		String mdp = request.getParameter("motDePasse");
+		Boolean inscrit = true;
 		
 		Personne p = new Personne();
+		Timestamp d = new Timestamp(2015, 0, 12, 16, 57, 00, 0);
+		p.setCivilite(civilite);
 		p.setNom(nom);
 		p.setPrenom(prenom);
 		p.setAdresse(adresse);
@@ -45,6 +53,10 @@ public class Formulaire extends HttpServlet {
 		p.setVille(ville);
 		p.setTelephone(tel1);
 		p.setTelephone2(tel2);
+		p.setDateInscription(d);
+		p.setEstInscrite(inscrit);
+		p.setEmail(mail);
+		p.setMotPasse(mdp);
 		
 		PersonneHome pDAO = new PersonneHome();
 		try {
