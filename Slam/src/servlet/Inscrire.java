@@ -40,7 +40,7 @@ public class Inscrire extends HttpServlet {
 	 * @see Méthode doPost qui récupère les champs du formulaire et qui insère la personne dans la base de données.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("coucou");
+		System.out.println("coucou null");
 		/*String civilite = request.getParameter("civilite");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
