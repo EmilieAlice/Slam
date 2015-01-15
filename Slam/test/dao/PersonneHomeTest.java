@@ -49,10 +49,12 @@ public class PersonneHomeTest {
 	public void testInsert() throws SQLException {
 		Date date= new Date();
 		Timestamp time = new Timestamp(date.getTime());
-		Personne expected = new Personne(7, "Mr", "Pascal", "Waille", "12 rue d'en haut", "62270",
+		Personne expected = new Personne(0, "Mr", "Pascal", "Waille", "12 rue d'en haut", "62270",
 				"Rebreuviette", "03210337338", "0646808184", "pascal@hot.fr", "papi", time, false);
 		PersonneHome dao = new PersonneHome();
 		dao.insert(expected);
+		expected.setIdPersonne(7);
+		assertEquals(expected, dao.findById(7));
 	}
 	
 	/** Test de la methode update() : On ecrit la personne attendu, 

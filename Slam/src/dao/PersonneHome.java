@@ -67,8 +67,8 @@ public class PersonneHome implements Dao<Personne>  {
 		try{
 			pInsert = DataBase.getConnection().prepareStatement("INSERT INTO personne (civilite, prenom, nom,"
 					+ "adresse, code_postal, ville, telephone, telephone2,"
-					+ "email, mot_passe, date_inscription, est_inscrite) VALUES"
-					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+					+ "email, mot_passe, est_inscrite) VALUES"
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		}
 		catch(SQLException e){
 		}
@@ -90,8 +90,7 @@ public class PersonneHome implements Dao<Personne>  {
 		pInsert.setString(8,personne.getTelephone2());
 		pInsert.setString(9, personne.getEmail());
 		pInsert.setString(10, personne.getMotPasse());
-		pInsert.setTimestamp(11, personne.getDateInscription());
-		pInsert.setBoolean(12, personne.isEstInscrite());
+		pInsert.setBoolean(11, personne.isEstInscrite());
 		pInsert.executeUpdate();
 	}
 
