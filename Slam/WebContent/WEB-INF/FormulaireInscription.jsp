@@ -1,3 +1,6 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,7 +15,7 @@
         <table>
           <tr>
             <td>*</td>
-            <td>Civilité  :</td>
+            <td>Civilité :</td>
             <td>
               <select name="civilite">
                 <option>M.</option>
@@ -23,13 +26,16 @@
           </tr>
           <tr>
             <td>*</td>
-            <td>Pr�nom :</td>
+            <td>Prénom :</td>
             <td><input type="text" name="prenom"></td>
           </tr>
           <tr>
             <td>*</td>
             <td>Nom :</td>
             <td><input type="text" name="nom"></td>
+            <c:if test="${msgNom != null}">
+            <td class="erreur">${msgNom}</td>
+            </c:if>
           </tr>
           <tr>
             <td></td>
@@ -48,12 +54,12 @@
           </tr>
           <tr>
             <td></td>
-            <td>Telephone 1 :</td>
+            <td>Téléphone 1 :</td>
             <td><input type="text" name="telephone"></td>
           </tr>
           <tr>
             <td></td>
-            <td>Telephone 2 :</td>
+            <td>Téléphone 2 :</td>
             <td><input type="text" name="telephone2"></td>
           </tr>
           <tr>
@@ -68,7 +74,7 @@
           </tr>
           <tr>
             <td>*</td>
-            <td>Confirmation de mot de passe :</td>
+            <td>Confirmation<br/>de mot de passe :</td>
             <td><input type="password" name="motDePasse"></td>
           </tr>
         </table>
