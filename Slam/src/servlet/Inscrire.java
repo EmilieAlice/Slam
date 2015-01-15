@@ -40,7 +40,6 @@ public class Inscrire extends HttpServlet {
 	 * @see Méthode doPost qui récupère les champs du formulaire et qui insère la personne dans la base de données.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 		String civilite = request.getParameter("civilite");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -55,11 +54,13 @@ public class Inscrire extends HttpServlet {
 
 		String msg = null;
 
-		Personne nouvellePersonne = new Personne(0, civilite, prenom, nom, adresse, codePostal, ville, telephone, telephone2, email, motPasse, null, estInscrite);
+		Personne personne = new Personne(0, civilite, prenom, nom, adresse, codePostal, ville, telephone, telephone2, email, motPasse, null, estInscrite);
+    System.out.println(personne);
 
 		PersonneHome pDAO = new PersonneHome();
 		try {
-			pDAO.insert(nouvellePersonne);
+      assert personne.getCivilite() != null;
+			pDAO.insert(personne);
 			EnvoiMail.envoyer(email, "Votre inscription sur Agriotes", "Veuillez cliquer sur le lien ci-joint pour confirmer votre inscription");
 			msg = "Un mail vous a été envoyé. Vous pouvez confirmer votre inscription.";
 		} catch (SQLException e) {
