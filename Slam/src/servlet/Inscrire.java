@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -15,7 +17,7 @@ import mail.EnvoiMail;
 import modele.Personne;
 
 /**
- * Servlet implementation class Inscrire
+ * Servlet implementation class Formulaire
  */
 public class Inscrire extends HttpServlet {
 	private static final long serialVersionUID = 1L;
