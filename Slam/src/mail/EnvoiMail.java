@@ -54,7 +54,7 @@ public class EnvoiMail {
 	 */
 
 
-	public void envoyer(String adresseTo,String objet , String messageText) throws AddressException, MessagingException {
+	public static void envoyer(String adresseTo,String objet , String messageText) throws AddressException, MessagingException {
 
 //1
 		System.out.println("\n 1st ===> Mise en place des propriétés du serveur");

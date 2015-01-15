@@ -102,7 +102,6 @@ public class Personne {
 		this.estInscrite = estInscrite;
 	}
 
-
 	public Personne(int idPersonne, String civilite, String prenom, String nom, 
 			String adresse, String codePostal, String ville, String telephone,
 			String telephone2, String email, String motPasse,
