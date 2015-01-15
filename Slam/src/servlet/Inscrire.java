@@ -40,7 +40,8 @@ public class Inscrire extends HttpServlet {
 	 * @see Méthode doPost qui récupère les champs du formulaire et qui insère la personne dans la base de données.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String civilite = request.getParameter("civilite");
+		System.out.println("coucou");
+		/*String civilite = request.getParameter("civilite");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
 		String adresse = request.getParameter("adresse");
@@ -74,7 +75,7 @@ public class Inscrire extends HttpServlet {
 			msg = e.getMessage();
 		}
 		request.setAttribute("msg", msg);
-		request.getRequestDispatcher("/WEB-INF/message.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/message.jsp").forward(request, response);*/
 	}
 
 }
