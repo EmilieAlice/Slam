@@ -313,27 +313,37 @@ DROP PROCEDURE IF EXISTS refresh_base$
 
 CREATE DEFINER=root@localhost PROCEDURE refresh_base()
 BEGIN
+  -- Lever temporairement les contraintes d'intégrité
+  SET FOREIGN_KEY_CHECKS=0;
+  TRUNCATE seance;
+  TRUNCATE note;
+  TRUNCATE evaluation;
+  TRUNCATE candidature;
+  TRUNCATE etat_candidature;
+  TRUNCATE salle;
+  TRUNCATE session;
+  TRUNCATE module_formation;
+  TRUNCATE formation;
+  TRUNCATE module_theme;
+  TRUNCATE theme;
+  TRUNCATE module;
+  TRUNCATE formateur;
+  TRUNCATE personne;
+  SET FOREIGN_KEY_CHECKS=1;
+
+  ALTER TABLE evaluation AUTO_INCREMENT=1;
+  ALTER TABLE salle AUTO_INCREMENT=1;
+  ALTER TABLE session AUTO_INCREMENT=1;
+  ALTER TABLE formation AUTO_INCREMENT=1;
+  ALTER TABLE theme AUTO_INCREMENT=1;
+  ALTER TABLE module AUTO_INCREMENT=1;
+  ALTER TABLE personne AUTO_INCREMENT=1;
+
   START TRANSACTION;
-  
-  DELETE FROM seance;
-  DELETE FROM note;
-  DELETE FROM evaluation;
-  DELETE FROM candidature;
-  DELETE FROM etat_candidature;
-  DELETE FROM salle;
-  DELETE FROM session;
-  DELETE FROM module_formation;
-  DELETE FROM formation;
-  DELETE FROM module_theme;
-  DELETE FROM theme;
-  DELETE FROM module;
-  DELETE FROM formateur;
-  DELETE FROM personne;
-      
   INSERT INTO personne
   (id_personne,civilite,prenom, nom,adresse,code_postal,ville,telephone,telephone2,email,mot_passe,date_inscription,est_inscrite) VALUES
   (1, 'M.', 'Jérome', 'LE BARON', '33 Chemin du fossé de laumone', '92600', 'Asnières', '0951466417', null, 'lebaronjerome@free.fr', 'dopler', current_timestamp(), 0),
-  (2, 'Mle', 'Emilie', 'WAILLE', '25 Avenue de la gare', '92000', 'NANTERRE', '0956789101', null, 'waille@hotmail.fr', 'walle', current_timestamp(), 0),
+  (2, 'Mle', 'Emilie', 'WAILLE', '25 Avenue de la gare', '92000', 'NANTERRE', '0956789101', null, 'waille@hotmail.fr', 'walle', '2014-12-17 11:29:18', 0),
   (3, 'M.', 'Saad', 'Hassaini', '123 Rue de la mairie', '95230', 'POISSY', '0532198734', null, 'saadh@gmail.com', 'loljeu', current_timestamp(), 0),
   (4, 'Mme', 'Brigitte', 'GROLEAS', '12 Rue du temple', '95000', 'ARGENTEUIL', '0125897456', null, 'brigitte@groleas.fr', 'java8', current_timestamp(), 0),
   (5, 'M.', 'Michel', 'PLASSE', '5 Rue des martyrs', '78560', 'MELUN', '0244896531', null, 'm.plasse@voila.fr', 'tintin', current_timestamp(), 0),
@@ -418,14 +428,5 @@ BEGIN
   (3, 3, 6, '2015-09-12 13:00:00', '2015-09-12 17:00:00', 1, 'Révision des propositions relatives');
 
   COMMIT;
-
-  ALTER TABLE evaluation AUTO_INCREMENT=1;
-  ALTER TABLE salle AUTO_INCREMENT=1;
-  ALTER TABLE session AUTO_INCREMENT=1;
-  ALTER TABLE formation AUTO_INCREMENT=1;
-  ALTER TABLE theme AUTO_INCREMENT=1;
-  ALTER TABLE module AUTO_INCREMENT=1;
-  ALTER TABLE personne AUTO_INCREMENT=1;
-
 END$
 CALL refresh_base()$
