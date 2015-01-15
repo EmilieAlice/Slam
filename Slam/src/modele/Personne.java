@@ -2,6 +2,7 @@ package modele;
 
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Personne {
 
@@ -102,7 +103,7 @@ public class Personne {
 		this.estInscrite = estInscrite;
 	}
 
-	public Personne(int idPersonne, String civilite, String prenom, String nom, 
+	public Personne(int idPersonne, String civilite, String prenom, String nom,
 			String adresse, String codePostal, String ville, String telephone,
 			String telephone2, String email, String motPasse,
 			Timestamp time, boolean estInscrite) {
@@ -149,76 +150,57 @@ public class Personne {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Personne other = (Personne) obj;
-		if (adresse == null) {
-			if (other.adresse != null)
-				return false;
-		} else if (!adresse.equals(other.adresse))
-			return false;
-		if (civilite == null) {
-			if (other.civilite != null)
-				return false;
-		} else if (!civilite.equals(other.civilite))
-			return false;
-		if (codePostal == null) {
-			if (other.codePostal != null)
-				return false;
-		} else if (!codePostal.equals(other.codePostal))
-			return false;
-		if (dateInscription == null) {
-			if (other.dateInscription != null)
-				return false;
-		} else if (!dateInscription.equals(other.dateInscription))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (estInscrite != other.estInscrite)
-			return false;
-		if (idPersonne != other.idPersonne)
-			return false;
-		if (motPasse == null) {
-			if (other.motPasse != null)
-				return false;
-		} else if (!motPasse.equals(other.motPasse))
-			return false;
-		if (nom == null) {
-			if (other.nom != null)
-				return false;
-		} else if (!nom.equals(other.nom))
-			return false;
-		if (prenom == null) {
-			if (other.prenom != null)
-				return false;
-		} else if (!prenom.equals(other.prenom))
-			return false;
-		if (telephone == null) {
-			if (other.telephone != null)
-				return false;
-		} else if (!telephone.equals(other.telephone))
-			return false;
-		if (telephone2 == null) {
-			if (other.telephone2 != null)
-				return false;
-		} else if (!telephone2.equals(other.telephone2))
-			return false;
-		if (ville == null) {
-			if (other.ville != null)
-				return false;
-		} else if (!ville.equals(other.ville))
-			return false;
-		return true;
-	}
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Personne other = (Personne) obj;
+    if (this.idPersonne != other.idPersonne) {
+      return false;
+    }
+    if (!Objects.equals(this.civilite, other.civilite)) {
+      return false;
+    }
+    if (!Objects.equals(this.prenom, other.prenom)) {
+      return false;
+    }
+    if (!Objects.equals(this.nom, other.nom)) {
+      return false;
+    }
+    if (!Objects.equals(this.adresse, other.adresse)) {
+      return false;
+    }
+    if (!Objects.equals(this.codePostal, other.codePostal)) {
+      return false;
+    }
+    if (!Objects.equals(this.ville, other.ville)) {
+      return false;
+    }
+    if (!Objects.equals(this.telephone, other.telephone)) {
+      return false;
+    }
+    if (!Objects.equals(this.telephone2, other.telephone2)) {
+      return false;
+    }
+    if (!Objects.equals(this.email, other.email)) {
+      return false;
+    }
+    if (!Objects.equals(this.motPasse, other.motPasse)) {
+      return false;
+    }
+    if (!Objects.equals(this.dateInscription, other.dateInscription)) {
+      return false;
+    }
+    if (this.estInscrite != other.estInscrite) {
+      return false;
+    }
+    return true;
+  }
+
 	/** Permet, lorsque l'on fait le test JUnit,
 	 * de voir les differences entre ce qui est attendu et le resultat(non-Javadoc)
 	 * @see java.lang.Object#toString()
