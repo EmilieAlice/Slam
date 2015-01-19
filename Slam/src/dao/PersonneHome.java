@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 import modele.Personne;
@@ -84,7 +85,8 @@ public class PersonneHome implements Dao<Personne> {
   public void insert(Personne personne) throws SQLException {
     if (pInsert == null) {
       Connection connection = DataBase.getConnection();
-      pInsert = connection.prepareStatement(sqlInsert);
+      pInsert = connection.prepareStatement(sqlInsert,
+          Statement.RETURN_GENERATED_KEYS);
     }
     pInsert.setString(1, personne.getCivilite());
     pInsert.setString(2, personne.getPrenom());
@@ -99,6 +101,14 @@ public class PersonneHome implements Dao<Personne> {
     pInsert.setTimestamp(11, personne.getDateInscription());
     pInsert.setBoolean(12, personne.isEstInscrite());
     pInsert.executeUpdate();
+    // Recuperer le id, mis a jour par la BD
+    ResultSet rs = pInsert.getGeneratedKeys();
+    if (rs.next()) {
+      personne.setIdPersonne(rs.getInt(1));
+      System.out.println("id : " + personne.getIdPersonne());
+    }
+    // Recuperer la date d'inscription, mise a jour par la BD
+    // PAS FAIT ENCORE !
   }
 
   private static String sqlUpdate = "UPDATE personne SET civilite = ?,"

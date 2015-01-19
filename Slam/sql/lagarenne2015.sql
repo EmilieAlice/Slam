@@ -438,4 +438,9 @@ CREATE TRIGGER personne_before_insert BEFORE UPDATE ON personne
 $
 
 /** Supprime l'utilisateur avant de le créer */
-GRANT ALL ON lagarenne2015.* TO lagarenne2015@localhost IDENTIFIED BY 'lagarenne2015'$
+GRANT USAGE ON lagarenne2015.* TO 'lagarenne2015'@'localhost' IDENTIFIED BY 'lagarenne2015'$
+DROP USER 'lagarenne2015'@'localhost'$
+/** Creer l'utilisateur et lui donner tous les droits */
+CREATE USER 'lagarenne2015'@'localhost' IDENTIFIED BY 'lagarenne2015'$
+GRANT ALL ON lagarenne2015.* TO 'lagarenne2015'@'localhost'$
+GRANT SELECT ON mysql.proc TO 'lagarenne2015'@'localhost';
