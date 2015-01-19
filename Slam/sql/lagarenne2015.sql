@@ -438,8 +438,4 @@ CREATE TRIGGER personne_before_insert BEFORE UPDATE ON personne
 $
 
 /** Supprime l'utilisateur avant de le créer */
-GRANT USAGE ON *.* TO 'lagarenne2015'@'localhost' IDENTIFIED BY 'lagarenne2015'$
-DROP USER 'lagarenne2015'@'localhost'$
-/** Cree l'utilisateur et lui donne les droits sur la base */
-CREATE USER 'lagarenne2015'@'localhost' identified BY 'lagarenne2015'$
-GRANT ALL ON lagarenne2015.* TO lagarenne2015@localhost$
+GRANT ALL ON lagarenne2015.* TO lagarenne2015@localhost IDENTIFIED BY 'lagarenne2015'$
