@@ -10,8 +10,8 @@ import org.junit.Test;
 import dao.DataBase;
 
 public class DataBaseTest {
-	
-	// Permet de tester la connection à la base de donner
+
+	// Permet de tester la connection à la base de donneée
 	@Test
 	public void testGetConnection() throws SQLException {
 		Connection instance = DataBase.getConnection();
