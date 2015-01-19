@@ -37,7 +37,7 @@ public class EnvoiMail {
 	}
 
 	/**
-	 * initialisation des donné de connection pour les expeditions de mail adresse mail avec mot de passe du compte gmail
+	 * Initialisation des données de connection pour les expeditions de mail : adresse mail avec mot de passe du compte gmail
 	 * @param adresse_gmail
 	 * @param mdp
 	 */
@@ -45,46 +45,45 @@ public class EnvoiMail {
 
 		setAdresse_gmail(adresse_gmail);
 		setMdp(mdp);
-
-		}
+	}
 
 
 	/*
-	 *  envoi le mail preparer
+	 *  Envoi le mail préparé
 	 */
 
 
-	public static void envoyer(String adresseTo,String objet , String messageText) throws AddressException, MessagingException {
+	public static void envoyer(String adresseTo, String objet, String messageText) throws AddressException, MessagingException {
 
-//1
+		//1
 		System.out.println("\n 1st ===> Mise en place des propriétés du serveur");
 		mailServerProperties = System.getProperties();
 		mailServerProperties.put("mail.smtp.port", "587");
 		mailServerProperties.put("mail.smtp.auth", "true");
 		mailServerProperties.put("mail.smtp.starttls.enable", "true");
-		System.out.println("Les propriétés du serveur de messagerie ont été mis en place avec succès ..");
+		System.out.println("Les propriétés du serveur de messagerie ont été mis en place avec succès ...");
 
-//2
+		//2
 		System.out.println("\n\n 2nd ===> ouverture de la session mail et envoi");
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		generateMailMessage = new MimeMessage(getMailSession);
 
 		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(adresseTo));
 
-//Mail
+		//Mail
 		generateMailMessage.setContent(messageText, "text/html");
 		generateMailMessage.setSubject(objet);
-		System.out.println("session a été créé avec succès ..");
+		System.out.println("La session a été créée avec succès ..");
 
 		Transport transport = getMailSession.getTransport("smtp");
 
-// Entrer UserID and Password (XXXxxxxxxxx@gmail.com)
+		// Entrer UserID and Password (XXXxxxxxxxx@gmail.com)
 		transport.connect("smtp.gmail.com", adresse_gmail, mdp);
 
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 
 		transport.close();
-		System.out.println("\n\n ===> mail evoyer");
+		System.out.println("\n\n ===> mail envoyé");
 	}
 
 
