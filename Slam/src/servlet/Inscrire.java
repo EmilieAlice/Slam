@@ -47,8 +47,7 @@ public class Inscrire extends HttpServlet {
       HttpServletResponse response) throws ServletException, IOException {
     // La JSP a afficher
     String vue = null;
-    System.out.println("coucou null");
-
+    
     // Verifier que les champs obligatoires sont là
     formIsValid = true; // optimisme
     verifierFormulaire(request);
