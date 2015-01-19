@@ -437,6 +437,9 @@ CREATE TRIGGER personne_before_insert BEFORE UPDATE ON personne
   END
 $
 
-
+/** Supprime l'utilisateur avant de le créer */
+GRANT USAGE ON *.* TO 'lagarenne2015'@'localhost'$
+DROP USER 'lagarenne2015'@'localhost'$
+/** Cree l'utilisateur et lui donne les droits sur la base */
 CREATE USER 'lagarenne2015'@'localhost' identified BY 'lagarenne2015'$
 GRANT ALL ON lagarenne2015.* TO lagarenne2015@localhost$
