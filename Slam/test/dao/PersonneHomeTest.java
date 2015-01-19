@@ -17,6 +17,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
    */
   @Test
   public void testValider() throws SQLException {
+    System.out.println("\nvalider");
     Date now = new Date();
     Timestamp time = new Timestamp(now.getTime());
     Personne personne = new Personne(7, "Mr", "Pascal", "Waille",
@@ -38,6 +39,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
    */
   @Test
   public void testFindById() throws SQLException {
+    System.out.println("\nfindById");
     Timestamp time = Timestamp.valueOf("2014-12-17 11:29:18");
     Personne expected = new Personne(2, "Mle", "Emilie", "WAILLE",
         "25 Avenue de la gare", "92000", "NANTERRE", "0956789101",
@@ -56,7 +58,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
    */
   @Test
   public void testInsert() throws SQLException {
-    System.out.println("insert");
+    System.out.println("\ninsert");
     Date date = new Date();
     Timestamp time = new Timestamp(date.getTime());
 		// Suprimer la precision en-dessous des secondes,
@@ -67,6 +69,26 @@ public class PersonneHomeTest extends AgriotesTestCase {
         "0646808184", "pascal@hot.fr", "papi", time, false);
     PersonneHome dao = new PersonneHome();
     dao.insert(personne);
+    assertEquals(7, personne.getIdPersonne());
+    Personne result = dao.findById(7);
+    System.out.println("e: " + personne);
+    System.out.println("r: " + result);
+    assertEquals(personne, result);
+  }
+
+  @Test
+  public void testInsertViaProcedureMySQL() throws SQLException {
+    System.out.println("\ninsertViaProcedureMySQL");
+    Date date = new Date();
+    Timestamp time = new Timestamp(date.getTime());
+		// Suprimer la precision en-dessous des secondes,
+    // pas prises en compte dans le Timestamp de MySQL
+    time.setNanos(0);
+    Personne personne = new Personne(0, "Mr", "Pascal", "Waille",
+        "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
+        "0646808184", "pascal@hot.fr", "papi", time, false);
+    PersonneHome dao = new PersonneHome();
+    dao.insertViaProcedureMySQL(personne);
     assertEquals(7, personne.getIdPersonne());
     Personne result = dao.findById(7);
     System.out.println("e: " + personne);
