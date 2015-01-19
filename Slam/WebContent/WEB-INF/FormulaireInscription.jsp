@@ -23,6 +23,9 @@
 					<td>*</td>
 					<td>Prénom :</td>
 					<td><input type="text" name="prenom"></td>
+					<c:if test="${msgPrenom != null}">
+						<td class="erreur">${msgPrenom}</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td>*</td>
@@ -61,11 +64,17 @@
 					<td>*</td>
 					<td>Email :</td>
 					<td><input type="text" name="email"></td>
+					<c:if test="${msgEmail != null}">
+						<td class="erreur">${msgEmail}</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td>*</td>
 					<td>Mot de passe :</td>
 					<td><input type="password" name="motDePasse"></td>
+					<c:if test="${msgMotDePasse != null}">
+						<td class="erreur">${msgMotDePasse}</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td>*</td>
