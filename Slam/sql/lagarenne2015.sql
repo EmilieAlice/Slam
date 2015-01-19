@@ -430,3 +430,13 @@ BEGIN
   COMMIT;
 END$
 CALL refresh_base()$
+
+CREATE TRIGGER personne_before_insert BEFORE UPDATE ON personne
+  FOR EACH ROW BEGIN
+      SET NEW.date_inscription = NOW();
+  END
+$
+
+
+CREATE USER 'lagarenne2015'@'localhost' identified BY 'lagarenne2015'$
+GRANT ALL ON lagarenne2015.* TO lagarenne2015@localhost$

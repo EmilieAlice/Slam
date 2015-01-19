@@ -8,8 +8,8 @@ public class DataBase {
 	protected static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 	protected static final String URL = "jdbc:mysql://localhost/lagarenne2015";
 	//protected static final String URL = "jdbc:mysql://192.168.92.10/lagarenne2015";
-	protected static final String USER = "root";
-	protected static final String PASSWORD = "1234";
+	protected static final String USER = "lagarenne2015";
+	protected static final String PASSWORD = "lagarenne2015";
 
 	public enum SortOrder {
 		ASC, DESC;
