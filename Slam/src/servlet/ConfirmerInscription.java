@@ -18,7 +18,7 @@ public class ConfirmerInscription extends HttpServlet {
 	/** Confirmer l'inscription du candidat. Avertit l'utilisateur dans
 	 * l'attribut msg (ok ou erreur).
 	 *
-	 * @param request
+	 * @param requestw
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
