@@ -462,6 +462,7 @@ CREATE PROCEDURE inserer_personne(
 	IN  p_mot_passe varchar(45),
 	OUT p_date_inscription TIMESTAMP)
 BEGIN
+END 
 	START TRANSACTION;
 	SELECT NOW() INTO p_date_inscription;
 	INSERT INTO personne (civilite, prenom, nom, adresse, code_postal, ville,
