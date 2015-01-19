@@ -108,12 +108,24 @@ public class Inscrire extends HttpServlet {
 		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.0");
 		boolean estInscrite = false;
 
-		// Les tests
+		// Les tests pour vérifier si les champs sont vides
 		if (nom.matches("^ *")) {
 			formIsValid = false;
 			request.setAttribute("msgNom", "Le nom est obligatoire");
 		}
-		// Faire de même avec les autres champs
+		if (prenom.matches("^ *")) {
+			formIsValid = false;
+			request.setAttribute("msgPrenom", "Le prénom est obligatoire");
+		}
+		if (email.matches("^ *")) {
+			formIsValid = false;
+			request.setAttribute("msgEmail", "L'email est obligatoire");
+		}
+		if (motPasse.matches("^ *")) {
+			formIsValid = false;
+			request.setAttribute("msgMotDePasse", "Le mot de passe est obligatoire");
+		}
+
 
 		if (formIsValid) {
 			personne = new Personne(0, civilite, prenom, nom, adresse,
