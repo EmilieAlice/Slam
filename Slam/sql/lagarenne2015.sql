@@ -443,11 +443,11 @@ DROP USER 'lagarenne2015'@'localhost'$
 /** Creer l'utilisateur et lui donner tous les droits */
 CREATE USER 'lagarenne2015'@'localhost' IDENTIFIED BY 'lagarenne2015'$
 GRANT ALL ON lagarenne2015.* TO 'lagarenne2015'@'localhost'$
-GRANT SELECT ON mysql.proc TO 'lagarenne2015'@'localhost';
+GRANT SELECT ON mysql.proc TO 'lagarenne2015'@'localhost'$
 
 
 /* Insertion d'une personne, en recuperant le id et la date d'inscription */
-DROP PROCEDURE IF EXISTS inserer_personne§
+DROP PROCEDURE IF EXISTS inserer_personne$
 CREATE PROCEDURE inserer_personne(
 	OUT p_id INT,
 	IN  p_civilite VARCHAR(3),
@@ -462,7 +462,6 @@ CREATE PROCEDURE inserer_personne(
 	IN  p_mot_passe varchar(45),
 	OUT p_date_inscription TIMESTAMP)
 BEGIN
-END 
 	START TRANSACTION;
 	SELECT NOW() INTO p_date_inscription;
 	INSERT INTO personne (civilite, prenom, nom, adresse, code_postal, ville,
@@ -471,7 +470,7 @@ END
 		p_telephone, p_telephone2, p_email, p_mot_passe, p_date_inscription);
 	SELECT MAX(id_personne) FROM personne INTO p_id;
 	COMMIT;
-END§
+END
 
 /* Exemple d'utilisation :
 call refresh_base()§
