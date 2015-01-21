@@ -62,10 +62,12 @@ public class Inscrire extends HttpServlet {
 			try {
 				assert personne.getCivilite() != null;
 				pDAO.insert(personne);
+				long cle = personne.getDateInscription().getTime();
 				EnvoiMail.envoyer(personne.getEmail(),
 						"Votre inscription sur Agriotes",
 						"Veuillez cliquer sur le lien ci-joint pour "
-								+ "confirmer votre inscription");
+								+ "confirmer votre inscription : "
+								+ "<a href='http://localhost:8080/Slam/ConfirmerInscription?cle="+cle+"&email="+personne.getEmail() + "'>Confirmation de l'inscription</a>");
 				msg = "Un mail vous a été envoyé. Vous pouvez "
 						+ "confirmer votre inscription.";
 			} catch (SQLException e) {
@@ -105,7 +107,7 @@ public class Inscrire extends HttpServlet {
 		String email = request.getParameter("email");
 		String motPasse = request.getParameter("motDePasse");
 		// Date sans importance, elle est fixée par la BD
-		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.0");
+		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.000");
 		boolean estInscrite = false;
 
 		// Les tests pour vérifier si les champs sont vides

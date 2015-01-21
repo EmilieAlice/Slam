@@ -28,11 +28,13 @@ public class ConfirmerInscription extends HttpServlet {
 		String cle = request.getParameter("cle");
 		String email = request.getParameter("email");
 		String msg = null;
-		try {
+		
 			long ms = Long.parseLong(cle);
 			Timestamp time = new Timestamp(ms);
-			PersonneHome dao = new PersonneHome();
+			try {
+				PersonneHome dao = new PersonneHome();
 			boolean ok = dao.valider(email, time);
+			
 			if (ok) {
 				msg = "Votre inscription est validée. Vous pouvez accéder à votre "
 						+ "<a href='EspacePersonnel?email="
@@ -50,12 +52,17 @@ public class ConfirmerInscription extends HttpServlet {
 					+ " réessayer plus tard."
 					+ exc.getMessage();
 		}
-		request.getRequestDispatcher("WEB_INF/message.jsp").forward(request, response);
+			String king;
+	request.setAttribute("msg", msg);
+	String vue = "/WEB-INF/message.jsp";
+		
+	request.getRequestDispatcher(vue).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		throw new UnsupportedOperationException();
+		
 		
 	}
 

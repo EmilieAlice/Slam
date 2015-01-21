@@ -12,7 +12,7 @@ import modele.Personne;
 
 public class PersonneHome implements Dao<Personne> {
   /** Temps maximum de validité du lien pour confirmer son inscription */
-  public static String DELAI_VALIDATION = "1 minute";
+  public static String DELAI_VALIDATION = "1 hour";
 
   private static String sqlValider
       = "UPDATE personne SET est_inscrite = true"

@@ -431,11 +431,10 @@ BEGIN
 END$
 CALL refresh_base()$
 
-CREATE TRIGGER personne_before_insert BEFORE UPDATE ON personne
+CREATE TRIGGER personne_before_insert BEFORE INSERT ON personne
   FOR EACH ROW BEGIN
       SET NEW.date_inscription = NOW();
-  END
-$
+  END$
 
 /** Supprime l'utilisateur avant de le créer */
 GRANT USAGE ON lagarenne2015.* TO 'lagarenne2015'@'localhost' IDENTIFIED BY 'lagarenne2015'$
