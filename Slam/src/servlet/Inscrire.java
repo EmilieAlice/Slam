@@ -107,7 +107,7 @@ public class Inscrire extends HttpServlet {
 		String email = request.getParameter("email");
 		String motPasse = request.getParameter("motDePasse");
 		// Date sans importance, elle est fixée par la BD
-		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.000");
+		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.0");
 		boolean estInscrite = false;
 
 		// Les tests pour vérifier si les champs sont vides

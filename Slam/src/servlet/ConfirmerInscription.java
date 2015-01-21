@@ -52,10 +52,9 @@ public class ConfirmerInscription extends HttpServlet {
 					+ " réessayer plus tard."
 					+ exc.getMessage();
 		}
-			String king;
+			
 	request.setAttribute("msg", msg);
 	String vue = "/WEB-INF/message.jsp";
-		
 	request.getRequestDispatcher(vue).forward(request, response);
 	}
 
