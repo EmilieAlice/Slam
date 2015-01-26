@@ -37,7 +37,7 @@ public class Inscrire extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/FormulaireInscription.jsp")
-		.forward(request, response);
+				.forward(request, response);
 	}
 
 	/**
@@ -68,11 +68,15 @@ public class Inscrire extends HttpServlet {
 				assert personne.getCivilite() != null;
 				pDAO.insert(personne);
 				long cle = personne.getDateInscription().getTime();
-				EnvoiMail.envoyer(personne.getEmail(),
-						"Votre inscription sur Agriotes",
-						"Veuillez cliquer sur le lien ci-joint pour "
-								+ "confirmer votre inscription : "
-								+ "<a href='http://localhost:8080/Slam/ConfirmerInscription?cle="+cle+"&email="+personne.getEmail() + "'>Confirmation de l'inscription</a>");
+				EnvoiMail
+						.envoyer(
+								personne.getEmail(),
+								"Votre inscription sur Agriotes",
+								"Veuillez cliquer sur le lien ci-joint pour "
+										+ "confirmer votre inscription : "
+										+ "<a href='http://sio92250.no-ip.org:18080/Slam/ConfirmerInscription?cle="
+										+ cle + "&email=" + personne.getEmail()
+										+ "'>Confirmation de l'inscription</a>");
 				msg = "Un mail vous a été envoyé. Vous pouvez "
 						+ "confirmer votre inscription.";
 			} catch (SQLException e) {
@@ -135,9 +139,9 @@ public class Inscrire extends HttpServlet {
 		}
 		if (motPasse.matches("^ *")) {
 			formIsValid = false;
-			request.setAttribute("msgMotDePasse", "Le mot de passe est obligatoire");
+			request.setAttribute("msgMotDePasse",
+					"Le mot de passe est obligatoire");
 		}
-
 
 		if (formIsValid) {
 			personne = new Personne(0, civilite, prenom, nom, adresse,
