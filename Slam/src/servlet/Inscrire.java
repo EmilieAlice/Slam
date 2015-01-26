@@ -121,7 +121,7 @@ public class Inscrire extends HttpServlet {
 		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.0");
 		boolean estInscrite = false;
 		PersonneHome database = new PersonneHome();
-		if (database.checkEmail(email)) {
+		if (!database.checkEmail(email)) {
 			formIsValid = false;
 			request.setAttribute("msgEmail", "L'email " + email
 					+ " existe déjà");
