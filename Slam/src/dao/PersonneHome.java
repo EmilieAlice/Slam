@@ -230,11 +230,15 @@ public class PersonneHome implements Dao<Personne> {
 	private static String sqlCheckMail = "SELECT email FROM personne WHERE email = ?";
 
 	public boolean checkEmail(String email) throws SQLException {
+		boolean verif = false;
 		Connection connection = DataBase.getConnection();
 		PreparedStatement pCheckMail = connection
 				.prepareStatement(sqlCheckMail);
 		pCheckMail.setString(1, email);
-		boolean verif = pCheckMail.execute();
+		ResultSet result = pCheckMail.executeQuery();
+		if (result.next()) {
+			verif = true;
+		}
 		pCheckMail.close();
 		connection.close();
 		return verif;
