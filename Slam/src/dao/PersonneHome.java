@@ -223,5 +223,17 @@ public class PersonneHome implements Dao<Personne> {
     connection.close();
     return true;
   }
+  private static String sqlCheckMail
+  	= "SELECT email FROM personne WHERE email = 1";
+  
+public boolean checkEmail(String email) throws SQLException {
+	Connection connection = DataBase.getConnection();
+	PreparedStatement pCheckMail = connection.prepareStatement(sqlCheckMail);
+	pCheckMail.setString(1, email);
+	boolean verif = pCheckMail.execute();
+	pCheckMail.close();
+	connection.close();
+	return verif;
+}
 
 }

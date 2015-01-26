@@ -51,7 +51,12 @@ public class Inscrire extends HttpServlet {
 
 		// Verifier que les champs obligatoires sont là
 		formIsValid = true; // optimisme
-		verifierFormulaire(request);
+		try {
+			verifierFormulaire(request);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if (!formIsValid) {
 			// Les messages ont ete positionnes,
 			// renvoyons vers le formulaire
@@ -93,8 +98,9 @@ public class Inscrire extends HttpServlet {
 	 * la forme msgNomDuChamp (ex : msgEmail)
 	 *
 	 * @param request
+	 * @throws SQLException 
 	 */
-	private void verifierFormulaire(HttpServletRequest request) {
+	private void verifierFormulaire(HttpServletRequest request) throws SQLException {
 		// Recuperer les parametres
 		String civilite = request.getParameter("civilite");
 		String nom = request.getParameter("nom");
@@ -109,7 +115,11 @@ public class Inscrire extends HttpServlet {
 		// Date sans importance, elle est fixée par la BD
 		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.0");
 		boolean estInscrite = false;
-
+		PersonneHome database = new PersonneHome();
+		if (!database.checkEmail(email))
+		{
+			request.setAttribute("msgEmail", "L'email "+email +" existe déjà");
+		}
 		// Les tests pour vérifier si les champs sont vides
 		if (nom.matches("^ *")) {
 			formIsValid = false;
