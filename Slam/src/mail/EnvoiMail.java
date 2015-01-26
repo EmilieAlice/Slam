@@ -68,6 +68,7 @@ public class EnvoiMail {
 				.println("\n\n 2nd ===> ouverture de la session mail et envoi");
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		generateMailMessage = new MimeMessage(getMailSession);
+                generateMailMessage.setHeader("Content-Type", "text/html; charset=utf-8");
 
 		generateMailMessage.addRecipient(Message.RecipientType.TO,
 				new InternetAddress(adresseTo));
