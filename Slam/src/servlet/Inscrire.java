@@ -122,6 +122,7 @@ public class Inscrire extends HttpServlet {
 		boolean estInscrite = false;
 		PersonneHome database = new PersonneHome();
 		if (database.checkEmail(email)) {
+			formIsValid = false;
 			request.setAttribute("msgEmail", "L'email " + email
 					+ " existe déjà");
 		}
