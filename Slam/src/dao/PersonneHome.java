@@ -24,8 +24,7 @@ public class PersonneHome implements Dao<Personne> {
 	 * Valider l'inscription. Renvoie true si c'est ok, false sinon (délai
 	 * expiré ou personne pas trouvée)
 	 *
-	 * @param id
-	 *            de l'utilisateur dont on souhaite valider l'inscription
+	 * @param id de l'utilisateur dont on souhaite valider l'inscription
 	 * @return true or false
 	 * @throws SQLException
 	 */
@@ -43,8 +42,7 @@ public class PersonneHome implements Dao<Personne> {
 	/**
 	 * Renvoie la personne de l'id donnée, ou rien si elle n'existe pas
 	 *
-	 * @param id
-	 *            de la personne que l'on souhaite trouver
+	 * @param id de la personne que l'on souhaite trouver
 	 * @return la personne correspondante
 	 * @throws SQLException
 	 */
@@ -83,8 +81,7 @@ public class PersonneHome implements Dao<Personne> {
 	 * Requiert personne != null. <br/>
 	 * Utilise une transaction pour insérer et lire la date générée.
 	 *
-	 * @param la
-	 *            nouvelle personne à creer
+	 * @param la nouvelle personne à creer
 	 * @throws SQLException
 	 */
 	@Override
