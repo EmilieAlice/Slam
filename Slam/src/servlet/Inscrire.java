@@ -74,7 +74,8 @@ public class Inscrire extends HttpServlet {
 								"Votre inscription sur Agriotes",
 								"Veuillez cliquer sur le lien ci-joint pour "
 										+ "confirmer votre inscription : "
-										+ "<a href='http://sio92250.no-ip.org:18080/Slam/ConfirmerInscription?cle="
+										//+ "<a href='http://sio92250.no-ip.org:18080/Slam/ConfirmerInscription?cle="
+										+ "<a href='http://localhost:8080/Slam/ConfirmerInscription?cle="
 										+ cle + "&email=" + personne.getEmail()
 										+ "'>Confirmation de l'inscription</a>");
 				msg = "Un mail vous a été envoyé. Vous pouvez "
