@@ -431,10 +431,47 @@ BEGIN
 END$
 CALL refresh_base()$
 
-CREATE TRIGGER personne_before_insert BEFORE INSERT ON personne
-  FOR EACH ROW BEGIN
-      SET NEW.date_inscription = NOW();
-  END$
+DROP FUNCTION IF EXISTS initcap$
+CREATE FUNCTION initcap(chaine text) RETURNS text CHARSET utf8 deterministic
+BEGIN
+    DECLARE gauche, droite text; 
+    SET gauche='';
+    SET droite ='';
+        WHILE chaine REGEXP ' ' DO
+            SELECT SUBSTRING_INDEX(chaine, ' ', 1) INTO gauche;
+            SELECT SUBSTRING(chaine, LOCATE(' ', chaine) + 1) INTO chaine; 
+            SELECT CONCAT(droite, ' ', CONCAT(UPPER(SUBSTRING(gauche, 1, 1)), LOWER(SUBSTRING(gauche, 2)))) INTO droite; 
+        END WHILE;
+    RETURN LTRIM(CONCAT(droite, ' ', CONCAT(UPPER(SUBSTRING(chaine,1,1)), LOWER(SUBSTRING(chaine, 2))))); 
+END$
+
+CREATE TRIGGER personne_before_insert_trigger BEFORE INSERT ON personne
+FOR EACH ROW
+BEGIN
+    SET NEW.date_inscription = NOW();
+    SET NEW.prenom = trim(initcap(NEW.prenom));
+    SET NEW.nom = trim(UPPER(NEW.nom));
+    SET NEW.adresse = trim(NEW.adresse);
+    SET NEW.ville = trim(initcap(NEW.ville));
+    SET NEW.telephone = trim(NEW.telephone);
+    SET NEW.telephone2 = trim(NEW.telephone2);
+    If NEW.prenom REGEXP '^ *$' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT='Prenom vide', MYSQL_ERRNO=3000;
+    END If;
+    If NEW.nom REGEXP '^ *$' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT='Nom vide', MYSQL_ERRNO=3001;
+    END If;
+    If NEW.email REGEXP '^ *$' THEN
+        SIGNAL SQLSTATE '45002'
+        SET MESSAGE_TEXT='Email vide', MYSQL_ERRNO=3002;
+    END If;
+    If NEW.mot_passe REGEXP '^ *$' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT='Mot de passe vide', MYSQL_ERRNO=3003;
+    END If;
+END$
 
 /** Supprime l'utilisateur avant de le créer */
 GRANT USAGE ON lagarenne2015.* TO 'lagarenne2015'@'localhost' IDENTIFIED BY 'lagarenne2015'$
@@ -448,32 +485,32 @@ GRANT SELECT ON mysql.proc TO 'lagarenne2015'@'localhost'$
 /* Insertion d'une personne, en recuperant le id et la date d'inscription */
 DROP PROCEDURE IF EXISTS inserer_personne$
 CREATE PROCEDURE inserer_personne(
-	OUT p_id INT,
-	IN  p_civilite VARCHAR(3),
-	IN  p_prenom varchar(20),
-	IN  p_nom varchar(30),
-	IN  p_adresse varchar(45),
-	IN  p_code_postal varchar(5),
-	IN  p_ville varchar(30),
-	IN  p_telephone varchar(15),
-	IN  p_telephone2 varchar(15),
-	IN  p_email varchar(30),
-	IN  p_mot_passe varchar(45),
-	OUT p_date_inscription TIMESTAMP)
+    OUT p_id INT,
+    IN  p_civilite VARCHAR(3),
+    IN  p_prenom varchar(20),
+    IN  p_nom varchar(30),
+    IN  p_adresse varchar(45),
+    IN  p_code_postal varchar(5),
+    IN  p_ville varchar(30),
+    IN  p_telephone varchar(15),
+    IN  p_telephone2 varchar(15),
+    IN  p_email varchar(30),
+    IN  p_mot_passe varchar(45),
+    OUT p_date_inscription TIMESTAMP)
 BEGIN
-	START TRANSACTION;
-	SELECT NOW() INTO p_date_inscription;
-	INSERT INTO personne (civilite, prenom, nom, adresse, code_postal, ville,
-		telephone, telephone2, email, mot_passe, date_inscription)
-	VALUES(p_civilite, p_prenom, p_nom, p_adresse, p_code_postal, p_ville,
-		p_telephone, p_telephone2, p_email, p_mot_passe, p_date_inscription);
-	SELECT MAX(id_personne) FROM personne INTO p_id;
-	COMMIT;
-END
+    START TRANSACTION;
+    SELECT NOW() INTO p_date_inscription;
+    INSERT INTO personne (civilite, prenom, nom, adresse, code_postal, ville,
+        telephone, telephone2, email, mot_passe, date_inscription)
+    VALUES(p_civilite, p_prenom, p_nom, p_adresse, p_code_postal, p_ville,
+        p_telephone, p_telephone2, p_email, p_mot_passe, p_date_inscription);
+    SELECT MAX(id_personne) FROM personne INTO p_id;
+    COMMIT;
+END$
 
 /* Exemple d'utilisation :
 call refresh_base()§
 CALL inserer_personne(@id, 'M', 'Archi', 'Haddock', 'Chateau', '12345', 'Moulinsart',
-	'0123456789', null, 'haddock@moulinsart.be', 'mille sabords', @date)§
+    '0123456789', null, 'haddock@moulinsart.be', 'mille sabords', @date)§
 SELECT @id, @date§
 */
