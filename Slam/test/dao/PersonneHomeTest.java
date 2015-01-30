@@ -88,7 +88,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
     PersonneHome dao = new PersonneHome();
-    dao.insertViaProcedureMySQL(personne);
+    PersonneHome.insertViaProcedureMySQL(personne);
     assertEquals(7, personne.getIdPersonne());
     Personne result = dao.findById(7);
     System.out.println("e: " + personne);

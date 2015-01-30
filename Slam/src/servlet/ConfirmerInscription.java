@@ -19,7 +19,11 @@ import modele.Personne;
  */
 public class ConfirmerInscription extends HttpServlet {
 
-  private Personne personne;
+  /**
+	 * Pour utiliser le projet avec des versions anterieurs
+	 */
+	private static final long serialVersionUID = 1L;
+private Personne personne;
 
   /**
    * Confirmer l'inscription du candidat. Avertit l'utilisateur dans
@@ -71,6 +75,7 @@ public class ConfirmerInscription extends HttpServlet {
         }
         request.setAttribute("msg", msg);
         vue = "/WEB-INF/message.jsp";
+        request.getRequestDispatcher(vue).forward(request, response);
       }
       else {
         msg = "Le lien d'inscription a expiré. Veuillez vous réinscrire";
