@@ -22,7 +22,8 @@
 				<tr>
 					<td>*</td>
 					<td>Prénom :</td>
-					<td><input type="text" name="prenom" value=${ param["prenom"] }></td>
+					<td><input type="text" name="prenom"
+						value=${ param["prenom"] }></td>
 					<c:if test="${msgPrenom != null}">
 						<td class="erreur">${msgPrenom}</td>
 					</c:if>
