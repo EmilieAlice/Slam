@@ -94,11 +94,11 @@ ENGINE = InnoDB$
 -- Table formateur
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS formateur (
-  id_personne INT NOT NULL,
+  id_formateur INT NOT NULL,
   date_entree DATE NULL,
-  PRIMARY KEY (id_personne),
+  PRIMARY KEY (id_formateur),
   CONSTRAINT fk_formateur_personne1
-    FOREIGN KEY (id_personne)
+    FOREIGN KEY (id_formateur)
     REFERENCES personne (id_personne)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -223,6 +223,8 @@ CREATE TABLE IF NOT EXISTS seance (
   INDEX fk_seance_session1_idx (id_session ASC),
   INDEX fk_seance_formateur1_idx (id_personne ASC),
   INDEX fk_seance_salle1_idx (id_salle ASC),
+  ADD UNIQUE INDEX `debut_UNIQUE` (`debut` ASC),
+  ADD UNIQUE INDEX `fin_UNIQUE` (`fin` ASC),
   CONSTRAINT fk_seance_module1
     FOREIGN KEY (id_module)
     REFERENCES module (id_module)
