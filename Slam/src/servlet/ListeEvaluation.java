@@ -8,32 +8,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import contexte.SessionAgriotes;
 import modele.Evaluation;
+import modele.Personne;
 import dao.EvaluationHome;
+import dao.PersonneHome;
 
 /**
  * Servlet implementation class ListeEvaluation
  */
 public class ListeEvaluation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ListeEvaluation() {
-        super();
-    }
 
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ListeEvaluation() {
+		super();
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// Recupere la session dans la variable session
+		SessionAgriotes maSession = SessionAgriotes.get(request);
+		// Simuler que le candidat 2 est connecte
+		PersonneHome dao = new PersonneHome();
+		Personne user;
+
 		String idSession = request.getParameter("idSession");
-		String idFormateur = request.getParameter("idFormateur");
+		// le idFormateur est àA récupérer de l'objet user de la session
+		String idFormateur = request.getParameter("idFormateur"); 
 		int intIdSession = Integer.parseInt(idSession);
 		int intIdFormateur = Integer.parseInt(idFormateur);
-
+		
+		// if (user != null) {
 		ArrayList<Evaluation> liste = new ArrayList<Evaluation>();
-		EvaluationHome dao = new EvaluationHome();
-		liste = dao.findSession(intIdSession, intIdFormateur);
+		EvaluationHome evaluationDao = new EvaluationHome();
+		liste = evaluationDao.findSession(intIdSession, intIdFormateur);
 
 		request.setAttribute("idSession", idSession);
 		request.setAttribute("idFormateur", idFormateur);
@@ -41,10 +52,15 @@ public class ListeEvaluation extends HttpServlet {
 
 		request.getRequestDispatcher("/WEB-INF/evaluation.jsp").forward(
 				request, response);
+		/*
+		  } else { request.getRequestDispatcher("index.html").forward(request,
+		  response); }
+		 */
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 	}
 
 }
