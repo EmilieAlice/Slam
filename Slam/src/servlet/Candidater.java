@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -24,7 +25,11 @@ import mail.EnvoiMail;
 import modele.Personne;
 
 /**
- * Servlet implementation class Candidater
+ * cette servlet permet aux utilisateurs ayant un compte de déposer leurs
+ * candidature pour intégrer une session
+ * 
+ * @author jamal
+ *
  */
 public class Candidater extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,67 +46,76 @@ public class Candidater extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 *      response) la méthode doGet permet de vérifier que le candidat est
+	 *      connecté et de le rediriger vers une page après cette vérification
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// Recupere la session dans la variable session
-		SessionAgriotes maSession;
-		HttpSession session = request.getSession(true);
-		if (session.getAttribute("session") != null) {
-			maSession = (SessionAgriotes) session.getAttribute("session");
-		} else {
-			maSession = new SessionAgriotes();
-		}
-		// Remet maSession en session
-		session.setAttribute("session", maSession);
+		SessionAgriotes session = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
 		PersonneHome dao = new PersonneHome();
-		Personne user;
+		Personne user = session.getUser();
+		// User 9 en dur
 		try {
-			user = dao.findById(3);
-			maSession.setUser(user);
-			request.setAttribute("civiliteUser", user.getCivilite());
-			request.setAttribute("nomUser", user.getNom());
-			request.setAttribute("prenomUser", user.getPrenom());
-
+			user = dao.findById(9);
+			session.setUser(user);
 			System.out.println("email : " + user.getEmail());
-			System.out.println("getUser : " + maSession.getUser().getEmail());
-			if (maSession.getUser() != null) {
-				try {
-					System.out.println("candidater");
-					Map<String, String> sessions = MapDao.getSessions();
-					request.setAttribute("sessions", sessions);
-					System.out.println(sessions.size() + " sessions");
-					request.getRequestDispatcher("candidater.jsp").forward(
-							request, response);
-				} catch (SQLException exc) {
-					// renvoyer vers erreur.jsp
-				}
-			} else {
-
-				request.getRequestDispatcher("index.html").forward(request,
-						response);
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("getUser : " + session.getUser().getEmail());
+		} catch (SQLException exc) {
+			exc.printStackTrace();
 		}
+		// Si l'utilisateur est connecte
+		if (user != null) {
+			try {
+				System.out.println("candidater");
+				Map<String, String> sessions = MapDao.getSessions();
+				request.setAttribute("sessions", sessions);
+				request.setAttribute("user", user);
+				System.out.println(sessions.size() + " sessions");
+				request.getRequestDispatcher("WEB-INF/candidater.jsp").forward(
+						request, response);
+			} catch (SQLException exc) {
+				// renvoyer vers erreur.jsp
+			}
+		} else {
+			request.getRequestDispatcher("index.html").forward(request,
+					response);
+		}
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 *      response) la méthode doPost permet de vérifier le formulaire de
+	 *      candidature, envoyer un mail de confirmation si OK et par la suite
+	 *      stocker les données dans la base
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//
+		// Recupere la session dans la variable session
+		SessionAgriotes maSession = SessionAgriotes.get(request);
+		// Simuler que le candidat 2 est connecte
+		PersonneHome dao = new PersonneHome();
+		Personne user;
+		try {
+			user = dao.findById(9);
+			maSession.setUser(user);
+			request.setAttribute("user", user);
+			System.out.println("email : " + user.getEmail());
+			System.out.println("getUser : " + maSession.getUser().getEmail());
+		} catch (SQLException exc) {
+			// renvoyer vers erreur.jsp
+		}
+
 		String renvoiForm = null;
 		formOk = true; // Ã  vÃ©rifier
-		personne = new Personne();
+		// personne = new Personne();
+
 		try {
+			user = dao.findById(9);
 			verifierFormCandidature(request);
-			System.out.println(personne.getIdPersonne());
+			System.out.println(user.getIdPersonne());
 
 			System.out.println("candidater");
 			Map<String, String> sessions = MapDao.getSessions();
@@ -113,43 +127,60 @@ public class Candidater extends HttpServlet {
 		if (!formOk) {
 			// Les messages ont ete positionnes,
 			// renvoyons vers le formulaire
-			renvoiForm = "candidater.jsp";
+			renvoiForm = "WEB-INF/candidater.jsp";
 		} else {
 			String validerCandidature = null;
-			PersonneHome personneHome = new PersonneHome();
+			// PersonneHome personneHome = new PersonneHome();
+
 			try {
 				// personneHome.insererCandidature();
-				String insererCandidature = "INSERT INTO candidature(id_session, id_personne, id_etat_candidature,"
-						+ " date_effet, motivation) VALUES(?, ?, ?, ? , ?)";
+				user = dao.findById(9);
 				Connection connexion = DataBase.getConnection();
-				PreparedStatement StmtInsererCandidature = connexion
-						.prepareStatement(insererCandidature);
+				PreparedStatement insererCandidature = connexion
+						.prepareStatement("INSERT INTO candidature(id_session, id_personne, id_etat_candidature,"
+								+ " date_effet, motivation) VALUES(?, ?, 'V', now() , ?)");
+				System.out.println(insererCandidature);
+				// PreparedStatement StmtInsererCandidature =
+				// connexion.prepareStatement(insererCandidature);
 				int sessionId = Integer.parseInt(request
 						.getParameter("session"));
-				StmtInsererCandidature.setInt(1, sessionId);
-
+				insererCandidature.setInt(1, sessionId);
+				insererCandidature.setInt(2, user.getIdPersonne());
+				// insererCandidature.setString(3, "V");
+				insererCandidature.setString(3, request.getParameter("msg"));
+				insererCandidature.executeUpdate();
+				System.out.println(insererCandidature);
 				// ===============
 				EnvoiMail
 						.envoyer(
-								request.getParameter("mail"),
+								user.getEmail(),
 								"Votre candidature",
-								"M(Mme)"
+								user.getCivilite()
 										+ ". "
-										+ request.getParameter("prenom")
+										+ user.getPrenom()
 										+ " "
-										+ request.getParameter("nom")
+										+ user.getNom()
 										+ ", "
-										+ "nous avons bien reÃ§u votre candidature, elle sera traitÃ©e dans les plus brefs delais.");
-				validerCandidature = "La candidature a Ã©tÃ© pris en compte, un mail de confirmation a Ã©tÃ© envoyÃ©.";
+										+ "nous avons bien reçu votre candidature, elle sera traitée dans les plus brefs delais.");
+				validerCandidature = "La candidature a été pris en compte, un mail de confirmation a été envoyé.";
 			} catch (AddressException e) {
 				e.printStackTrace();
 				validerCandidature = e.getMessage();
+				System.out.println("erreur adresse");
 			} catch (MessagingException e) {
 				e.printStackTrace();
 				validerCandidature = e.getMessage();
-			} catch (SQLException e) {
+				System.out.println("erreur message");
+			} catch (SQLException exc) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if (exc.getErrorCode() == DataBase.DOUBLON) {
+					exc.printStackTrace();
+					validerCandidature = "Vous avez déjà postulé à cette session.";
+				}
+				else {
+					exc.printStackTrace();
+					// Renvoyer vers erreur.msg
+				}
 			}
 			request.setAttribute("validerCandidature", validerCandidature);
 			renvoiForm = "/WEB-INF/confirmation_candidature.jsp";

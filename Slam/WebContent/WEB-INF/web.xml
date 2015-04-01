@@ -48,4 +48,14 @@
 		<servlet-name>Inscrire</servlet-name>
 		<url-pattern>/Inscrire</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description />
+		<display-name>Candidater</display-name>
+		<servlet-name>Candidater</servlet-name>
+		<servlet-class>servlet.Candidater</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Candidater</servlet-name>
+		<url-pattern>/Candidater</url-pattern>
+	</servlet-mapping>
 </web-app>

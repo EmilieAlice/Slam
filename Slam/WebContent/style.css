@@ -1,10 +1,9 @@
 @CHARSET "UTF-8";
 
 body {
-	margin: auto;
-	width: 1024px;
-	background-color: #ccffbc;
+	background-color: #dedede;
 	font-family: Garamond;
+	margin: 15px 0 0 0;
 }
 
 #titre{
@@ -18,4 +17,122 @@ table{
 }
 .erreur {
   color: red;
+}
+
+#formulaire{
+	border: 1px groove;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 3% 3% 3% 10%;
+    position: relative;
+    width: 60%;
+    z-index: 9999;
+}
+#formulaire p{
+	margin: 0 0 35px 0;
+}
+#formulaire span{
+	margin: 0 0 0 100px;
+	display: block;
+}
+
+#formulaire form label{
+	width: 150px;
+	float: left;
+	font-family:"shrimp", "Trebuchet MS", Arial, Helvetica, sans-serif;;
+	font-size: 1.1em;
+	font-weight:bold;
+}
+
+#formulaire .nom{
+	width: 160px;
+}
+#formulaire .mail{
+	width: 160px;
+}
+#formulaire .cv{
+	width: 60%;
+}
+#formulaire .lm{
+	width: 60%;
+}
+
+#formulaire .button1{
+	background-color: #39342D;
+	position: relative;
+	left: 300px;
+	color: white;
+	cursor:pointer;
+	margin: 0 20px 0 0;
+	font-family:"shrimp", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size: 1em;
+	border: 2px white solid;
+	border-radius: 3px;
+}
+#formulaire .button2{
+	background: #39342D;
+	position: relative;
+	left: 288px;
+	color: white;
+	cursor:pointer;
+	font-family:"shrimp", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size: 1em;
+	border: 2px white solid;
+	border-radius: 3px;
+}
+
+
+/*==============================================jamal modifs==================*/
+#contenu{
+	width: 65%;
+	background: rgba(255, 255, 255, 0.9);
+	overflow: hidden;
+    margin: 20px auto;
+    padding: 30px;
+    -moz-box-shadow: 10px 10px 12px -5px #656565;
+	-webkit-box-shadow: 10px 10px 12px -5px #656565;
+	-o-box-shadow: 10px 10px 12px -5px #656565;
+	box-shadow: 10px 10px 12px -5px #656565;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=12);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+header{
+	margin: 0 auto 30px auto;
+	padding: 0 30px;
+	overflow: hidden;
+}
+header .logo{
+	float: left;
+	margin: 0 15% 0 0;
+}
+header .slogan{
+	float: left;
+	overflow: hidden;
+    width: 50%;
+}
+
+header h3{
+	float: right;
+	text-transform: lowercase;
+	color:rgba(190, 190, 190, 0.8);
+}
+p.phrase{
+	font-family: arial;
+    font-size: 17px;
+    margin: 20px auto;
+    width: 85%;
+    text-align: center;
+}
+footer{
+	margin: 0 auto;
+	text-align: center;
+	padding: 10px 0;
+	background-color: rgba(255, 255, 255, 0.9);
+	font-family: arial;
+	font-size:12px;
+	color:rgba(137, 137, 137, 0.8);
 }
