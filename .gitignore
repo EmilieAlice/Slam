@@ -3,3 +3,4 @@
 
 #Pour éviter les soucis de buildpath et librairies
 /Slam/.classpath
+/.DS_Store
