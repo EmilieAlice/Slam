@@ -65,4 +65,14 @@
     <servlet-name>ListeEvaluation</servlet-name>
     <url-pattern>/ListeEvaluation</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EnregistrerNotes</display-name>
+    <servlet-name>EnregistrerNotes</servlet-name>
+    <servlet-class>servlet.EnregistrerNotes</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EnregistrerNotes</servlet-name>
+    <url-pattern>/EnregistrerNotes</url-pattern>
+  </servlet-mapping>
 </web-app>

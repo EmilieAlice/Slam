@@ -9,7 +9,7 @@
 		varStatus="status">
 		<p>
 			Remplir les notes pour <a
-				href="Stagiaire?evaluation=${ listeEvaluation.idEvaluation }&idSession=${ idSession }">l'évaluation
+				href="EnregistrerNotes?evaluation=${ listeEvaluation.idEvaluation }&idSession=${ idSession }">l'évaluation
 				${ status.count }</a>
 		</p>
 	</c:forEach>
