@@ -75,4 +75,14 @@
     <servlet-name>EnregistrerNotes</servlet-name>
     <url-pattern>/EnregistrerNotes</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListeNotes</display-name>
+    <servlet-name>ListeNotes</servlet-name>
+    <servlet-class>servlet.ListeNotes</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListeNotes</servlet-name>
+    <url-pattern>/ListeNotes</url-pattern>
+  </servlet-mapping>
 </web-app>
