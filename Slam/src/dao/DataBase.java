@@ -8,7 +8,16 @@ import java.sql.SQLException;
 
 public class DataBase {
 
+	/** Code erreur MySQL pour serveur pas dispo */
+	public static final int SERVER_OFF = 0;
+	/** Code erreur MySQL pour doublon (duplicate entry for key ...) */
+	public static final int DOUBLON = 1062;
+	/** Code erreur MySQL quand on essaie de supprimer une ligne referencee par une autre */
+	public static final int ROW_IS_REFERENCED = 1451;
+	/** Code erreur MySQL pour parent row not found */
+	public static final int FOREIGN_KEY_NOT_FOUND = 1452;
 
+	
 	protected static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 	protected static final String URL = "jdbc:mysql://localhost:3306/lagarenne2015";
 	//protected static final String sURL = "jdbc:mysql://192.168.92.10/lagarenne2015";
