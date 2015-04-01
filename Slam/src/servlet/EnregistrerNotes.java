@@ -35,21 +35,35 @@ public class EnregistrerNotes extends HttpServlet {
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
 		PersonneHome dao = new PersonneHome();
-		Personne user;
+		Personne user = null;
 
-		String session = request.getParameter("idSession");
-		int idSession = Integer.parseInt(session);
+		try {
+			user = dao.findById(4);
+			maSession.setUser(user);
+			request.setAttribute("user", user);
+		} catch (SQLException exc) {
+			// renvoyer vers erreur.jsp
+		}
+		if (user != null) {
 
-		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
-		StagiaireHome stagiaireDao = new StagiaireHome();
-		listeStagiaires = stagiaireDao.findStagiaire(idSession);
+			String session = request.getParameter("idSession");
+			int idSession = Integer.parseInt(session);
 
-		request.setAttribute("listeStagiaires", listeStagiaires);
-		request.setAttribute("idEvaluation", request.getParameter("evaluation"));
-		request.setAttribute("idSession", request.getParameter("idSession"));
+			ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
+			StagiaireHome stagiaireDao = new StagiaireHome();
+			listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
-		request.getRequestDispatcher("/WEB-INF/enregistrementNotes.jsp")
-				.forward(request, response);
+			request.setAttribute("listeStagiaires", listeStagiaires);
+			request.setAttribute("idEvaluation",
+					request.getParameter("evaluation"));
+			request.setAttribute("idSession", request.getParameter("idSession"));
+
+			request.getRequestDispatcher("/WEB-INF/enregistrementNotes.jsp")
+					.forward(request, response);
+		} else {
+			request.getRequestDispatcher("index.html").forward(request,
+					response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

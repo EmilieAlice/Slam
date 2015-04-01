@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -33,29 +34,40 @@ public class ListeEvaluation extends HttpServlet {
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
 		PersonneHome dao = new PersonneHome();
-		Personne user;
+		Personne user = null;
 
-		String idSession = request.getParameter("idSession");
-		// le idFormateur est àA récupérer de l'objet user de la session
-		String idFormateur = request.getParameter("idFormateur"); 
-		int intIdSession = Integer.parseInt(idSession);
-		int intIdFormateur = Integer.parseInt(idFormateur);
-		
-		// if (user != null) {
-		ArrayList<Evaluation> liste = new ArrayList<Evaluation>();
-		EvaluationHome evaluationDao = new EvaluationHome();
-		liste = evaluationDao.findSession(intIdSession, intIdFormateur);
+		try {
+			user = dao.findById(4);
+			maSession.setUser(user);
+			request.setAttribute("user", user);
+		} catch (SQLException exc) {
+			// renvoyer vers erreur.jsp
+		}
+		if (user != null) {
+			String idSession = request.getParameter("idSession");
+			// le idFormateur est àA récupérer de l'objet user de la session
+			// String idFormateur = request.getParameter("idFormateur");
+			int intIdSession = Integer.parseInt(idSession);
+			// int intIdFormateur = Integer.parseInt(idFormateur);
+			int idFormateur = user.getIdPersonne();
 
-		request.setAttribute("idSession", idSession);
-		request.setAttribute("idFormateur", idFormateur);
-		request.setAttribute("listeEvaluation", liste);
+			// if (user != null) {
+			ArrayList<Evaluation> liste = new ArrayList<Evaluation>();
+			EvaluationHome evaluationDao = new EvaluationHome();
+			liste = evaluationDao.findSession(intIdSession, idFormateur);
 
-		request.getRequestDispatcher("/WEB-INF/evaluation.jsp").forward(
-				request, response);
-		/*
-		  } else { request.getRequestDispatcher("index.html").forward(request,
-		  response); }
-		 */
+			request.setAttribute("idSession", idSession);
+			request.setAttribute("idFormateur", idFormateur);
+			request.setAttribute("listeEvaluation", liste);
+
+			request.getRequestDispatcher("/WEB-INF/evaluation.jsp").forward(
+					request, response);
+
+		} else {
+			request.getRequestDispatcher("index.html").forward(request,
+					response);
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request,
