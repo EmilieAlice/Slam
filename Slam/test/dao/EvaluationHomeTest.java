@@ -15,7 +15,7 @@ public class EvaluationHomeTest {
 	public void testFindMaxEvaluation() {
 		EvaluationHome evaluationDao = new EvaluationHome();
 		int nbreMaxEvaluation = evaluationDao.findMaxEvaluation(1);
-		
+
 		assertEquals(4, nbreMaxEvaluation);
 	}
 

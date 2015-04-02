@@ -59,10 +59,9 @@ public class StagiaireHome {
 	 */
 	static {
 		try {
-			pVerificationStagiaire = DataBase.getConnection()
-					.prepareStatement(
-							"SELECT * FROM lagarenne2015.stagiaire "
-									+ "WHERE id_personne=?;");
+			pVerificationStagiaire = DataBase.getConnection().prepareStatement(
+					"SELECT * FROM lagarenne2015.stagiaire "
+							+ "WHERE id_personne=?;");
 		} catch (Exception e) {
 			e.getMessage();
 			System.out.println("Requete findStagiaires échouée.");
@@ -98,10 +97,11 @@ public class StagiaireHome {
 	 */
 	static {
 		try {
-			pFindSessionPersonne = DataBase.getConnection()
+			pFindSessionPersonne = DataBase
+					.getConnection()
 					.prepareStatement(
 							"SELECT id_session FROM lagarenne2015.candidature "
-							+ "WHERE id_personne = ? AND id_etat_candidature = 'A';");
+									+ "WHERE id_personne = ? AND id_etat_candidature = 'A';");
 		} catch (Exception e) {
 			e.getMessage();
 			System.out.println("Requete findSessionStagiaire échouée.");
