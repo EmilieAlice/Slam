@@ -5,7 +5,7 @@
 <title>Stagiaire</title>
 </head>
 <body>
-<h1>Formulaire pour rentrer les notes de la session ???</h1>
+	<h1>Formulaire pour rentrer les notes de la session ???</h1>
 	<form action="EnregistrerNotes" method="POST">
 		<table>
 			<thead>
@@ -20,7 +20,11 @@
 					<tr>
 						<td>${ stagiaire.nom }</td>
 						<td>${ stagiaire.prenom }</td>
-						<td><input type="text" name="${ stagiaire.nom }" maxlength="4" size="6"></td>
+						<td><input type="text" name="${ stagiaire.nom }"
+							maxlength="4" size="6"></td>
+						<c:if test="${msgNote != null}">
+							<td> ${msgNote}</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</tbody>

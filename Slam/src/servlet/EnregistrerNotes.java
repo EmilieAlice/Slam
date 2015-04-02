@@ -73,7 +73,9 @@ public class EnregistrerNotes extends HttpServlet {
 		// Simuler que le candidat 2 est connecte
 		PersonneHome dao = new PersonneHome();
 		Personne user;
-
+		
+		String renvoiFormulaire = null;
+		
 		String idSession = request.getParameter("idSession");
 		int intIdSession = Integer.parseInt(idSession);
 		String evaluation = request.getParameter("idEvaluation");
@@ -85,34 +87,28 @@ public class EnregistrerNotes extends HttpServlet {
 
 		for (Stagiaire stagiaire : listeStagiaires) {
 			String valeur = request.getParameter(stagiaire.getNom());
-			if (valeur.isEmpty()) {
-				System.out.println("Valeur vide");
+			// vérifier si les champs sont valides
+			if (valeur.matches("^ *")) {
+				formOk = false;
+				request.setAttribute("msgNote", "Vous devez rentrer un note");
+				renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
+			} else if (valeur.matches("^ *")) {
+				formOk = false;
+				request.setAttribute("msgNote",
+						"Vous devez rentrer une note comprise en 0 et 20");
+				renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
+			} else {
+				Double note = Double.parseDouble(valeur);
+				NoteHome noteDao = new NoteHome();
+				noteDao.insertNote(intIdEvaluation, stagiaire.getIdStagiaire(),
+						note);
+				renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";
 			}
-			Double note = Double.parseDouble(valeur);
-			NoteHome noteDao = new NoteHome();
-			noteDao.insertNote(intIdEvaluation, stagiaire.getIdStagiaire(),
-					note);
 		}
 
-		request.getRequestDispatcher("/WEB-INF/enregistrementNotesOk.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher(renvoiFormulaire)
+		.forward(request, response);
+		
 	}
 
-	private void verifierFormNotes(HttpServletRequest request)
-			throws SQLException {
-		// Recuperation des parametres
-		String session = request.getParameter("session");
-		String valeur = request.getParameter(stagiaire.getNom());
-
-		// vérifier si les champs sont valides
-		if (valeur.matches("^ *")) {
-			formOk = false;
-			request.setAttribute("msgValeur", "Vous devez rentrer un note");
-		} else if (valeur.matches("^ *")) {
-			formOk = false;
-			request.setAttribute("msgValeur",
-					"Vous devez rentrer une note comprise en 0 et 20");
-		}
-
-	}
 }
