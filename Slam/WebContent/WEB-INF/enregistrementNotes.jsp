@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Formulaire pour rentrer les notes de la session ???</h1>
-	<form action="Stagiaire" method="POST">
+	<form action="EnregistrerNotes" method="POST">
 		<table>
 			<thead>
 				<tr>

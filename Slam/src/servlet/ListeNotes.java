@@ -39,7 +39,7 @@ public class ListeNotes extends HttpServlet {
 		Personne user = null;
 		// On simule en dur la personne connectée 1
 		try {
-			user = dao.findById(8);
+			user = dao.findById(1);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
