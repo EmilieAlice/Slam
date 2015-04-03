@@ -2,10 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="bootstrap.css">
 <title>Stagiaire</title>
 </head>
 <body>
 	<h1>Formulaire pour rentrer les notes de la session ???</h1>
+
 	<form action="EnregistrerNotes" method="POST">
 		<table>
 			<thead>

@@ -48,15 +48,16 @@ public class EnregistrerNotes extends HttpServlet {
 
 			String session = request.getParameter("idSession");
 			int idSession = Integer.parseInt(session);
+			String evaluation = request.getParameter("evaluation");
+			int idEvaluation = Integer.parseInt(evaluation);
 
 			ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 			StagiaireHome stagiaireDao = new StagiaireHome();
 			listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
 			request.setAttribute("listeStagiaires", listeStagiaires);
-			request.setAttribute("idEvaluation",
-					request.getParameter("evaluation"));
-			request.setAttribute("idSession", request.getParameter("idSession"));
+			request.setAttribute("idEvaluation", idEvaluation);
+			request.setAttribute("idSession", idSession);
 
 			request.getRequestDispatcher("/WEB-INF/enregistrementNotes.jsp")
 					.forward(request, response);
@@ -76,36 +77,37 @@ public class EnregistrerNotes extends HttpServlet {
 		
 		String renvoiFormulaire = null;
 		
-		String idSession = request.getParameter("idSession");
-		int intIdSession = Integer.parseInt(idSession);
+		String session = request.getParameter("idSession");
+		int idSession = Integer.parseInt(session);
 		String evaluation = request.getParameter("idEvaluation");
-		int intIdEvaluation = Integer.parseInt(evaluation);
+		int idEvaluation = Integer.parseInt(evaluation);
 
 		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 		StagiaireHome stagiaireDao = new StagiaireHome();
-		listeStagiaires = stagiaireDao.findStagiaire(intIdSession);
+		listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
 		for (Stagiaire stagiaire : listeStagiaires) {
 			String valeur = request.getParameter(stagiaire.getNom());
 			// vérifier si les champs sont valides
 			if (valeur.matches("^ *")) {
-				formOk = false;
-				request.setAttribute("msgNote", "Vous devez rentrer un note");
+				request.setAttribute("msgNote", "Vous devez rentrer une note");
 				renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
 			} else if (valeur.matches("^ *")) {
-				formOk = false;
 				request.setAttribute("msgNote",
 						"Vous devez rentrer une note comprise en 0 et 20");
 				renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
 			} else {
 				Double note = Double.parseDouble(valeur);
 				NoteHome noteDao = new NoteHome();
-				noteDao.insertNote(intIdEvaluation, stagiaire.getIdStagiaire(),
+				noteDao.insertNote(idEvaluation, stagiaire.getIdStagiaire(),
 						note);
 				renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";
 			}
 		}
-
+		
+		request.setAttribute("listeStagiaires", listeStagiaires);
+		request.setAttribute("idEvaluation", idEvaluation);
+		request.setAttribute("idSession", session);
 		request.getRequestDispatcher(renvoiFormulaire)
 		.forward(request, response);
 		
