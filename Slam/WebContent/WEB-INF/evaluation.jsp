@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="bootstrap.css">
-<link rel="stylesheet" href="style.css">
 <title>Liste d'évaluation</title>
 </head>
 <body>
@@ -18,6 +17,9 @@
 							${ status.count }</a>
 					</p>
 				</c:forEach>
+				<form action="ListeEvaluation" method="POST">
+				<input type="submit" value="Ajouter une évaluation">
+				</form>
 			</div>
 		</div>
 	</div>

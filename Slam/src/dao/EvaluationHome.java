@@ -27,8 +27,10 @@ public class EvaluationHome {
 	 * Méthode qui récupère dans la base données une liste d'évaluation pour une
 	 * session et un formateur
 	 * 
-	 * @param idSession un entier
-	 * @param idFormateur un entier
+	 * @param idSession
+	 *            un entier
+	 * @param idFormateur
+	 *            un entier
 	 * @return un ArrayList d'Evaluation
 	 */
 	public ArrayList<Evaluation> findSession(int idSession, int idFormateur) {
@@ -58,14 +60,12 @@ public class EvaluationHome {
 	 */
 	static {
 		try {
-			pFindMaxEvaluation = DataBase
-					.getConnection()
-					.prepareStatement(
-							"SELECT MAX(nbre) AS nbre_max FROM"
-									+ "(SELECT COUNT(id_evaluation) AS nbre "
-									+ "FROM lagarenne2015.evaluation "
-									+ "WHERE id_session = ? "
-									+ "GROUP BY id_module) AS nbre_eval_module;");
+			pFindMaxEvaluation = DataBase.getConnection().prepareStatement(
+					"SELECT MAX(nbre) AS nbre_max FROM"
+							+ "(SELECT COUNT(id_evaluation) AS nbre "
+							+ "FROM lagarenne2015.evaluation "
+							+ "WHERE id_session = ? "
+							+ "GROUP BY id_module) AS nbre_eval_module;");
 		} catch (Exception e) {
 			e.getMessage();
 			System.out.println("Requete findMaxEvaluation échouée.");
@@ -89,6 +89,39 @@ public class EvaluationHome {
 			e.printStackTrace();
 		}
 		return nbreMaxEvaluation;
+	}
+
+	private static java.sql.PreparedStatement pInsertEvaluation = null;
+	/**
+	 * Requete pour créer une évaluation
+	 */
+	static {
+		try {
+			pInsertEvaluation = DataBase.getConnection().prepareStatement(
+					"INSERT INTO lagarenne2015.evaluation (id_module,id_session,id_formateur) "
+							+ "VALUES (?,?,?);");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete insertEvaluation échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui créé une nouvelle évaluation
+	 */
+	public Boolean insertEvaluation(int idModule, int idSession, int idFormateur) {
+		Boolean etat = new Boolean(false);
+		try {
+			pInsertEvaluation.setInt(1, idModule);
+			pInsertEvaluation.setInt(2, idSession);
+			pInsertEvaluation.setInt(3, idFormateur);
+			int resultat = pInsertEvaluation.executeUpdate();
+			if (resultat != 0)
+				etat = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return etat;
 	}
 
 }

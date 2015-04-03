@@ -32,10 +32,12 @@ public class ListeEvaluation extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
-		// Simuler que le candidat 2 est connecte
+		// Personne user = maSession.getUser();
+		// Simuler que le formateir 4 est connecte
 		PersonneHome dao = new PersonneHome();
 		Personne user = null;
 
+		// int intIdSession = maSession.getIdSession();
 		try {
 			user = dao.findById(4);
 			maSession.setUser(user);
@@ -47,7 +49,8 @@ public class ListeEvaluation extends HttpServlet {
 			String idSession = request.getParameter("idSession");
 			// le idFormateur est àA récupérer de l'objet user de la session
 			// String idFormateur = request.getParameter("idFormateur");
-			int intIdSession = Integer.parseInt(idSession);
+			// int intIdSession = Integer.parseInt(idSession);
+			int intIdSession = 1;
 			// int intIdFormateur = Integer.parseInt(idFormateur);
 			int idFormateur = user.getIdPersonne();
 
@@ -56,7 +59,7 @@ public class ListeEvaluation extends HttpServlet {
 			EvaluationHome evaluationDao = new EvaluationHome();
 			liste = evaluationDao.findSession(intIdSession, idFormateur);
 
-			request.setAttribute("idSession", idSession);
+			request.setAttribute("idSession", intIdSession);
 			request.setAttribute("idFormateur", idFormateur);
 			request.setAttribute("listeEvaluation", liste);
 
@@ -72,6 +75,31 @@ public class ListeEvaluation extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// Recupere la session dans la variable session
+		SessionAgriotes maSession = SessionAgriotes.get(request);
+		// Personne user = maSession.getUser();
+		// Simuler que le formateur 4 est connecte
+		PersonneHome dao = new PersonneHome();
+		Personne user = null;
+
+		// int intIdSession = maSession.getIdSession;
+		try {
+			user = dao.findById(4);
+			maSession.setUser(user);
+			request.setAttribute("user", user);
+		} catch (SQLException exc) {
+			// renvoyer vers erreur.jsp
+		}
+
+		if (user != null) {
+
+			EvaluationHome evaluationDao = new EvaluationHome();
+			evaluationDao.insertEvaluation(1, 1, maSession.getUser()
+					.getIdPersonne());
+
+			request.setAttribute("idSession", 1);
+		}
+		response.sendRedirect("/Slam/ListeEvaluation");
 
 	}
 
