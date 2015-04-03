@@ -136,3 +136,11 @@ footer{
 	font-size:12px;
 	color:rgba(137, 137, 137, 0.8);
 }
+
+[class*="col-"], footer {
+    /*background-color: lightgreen;
+    border: 2px solid black;
+    border-radius: 6px;*/
+    line-height: 20px;
+    text-align: center;
+}
