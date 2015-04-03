@@ -7,49 +7,51 @@
 <title>Liste de vos notes</title>
 </head>
 <body>
-	<div class="row">
-		<div class="col-sm-12 col-md-12">
-			<c:choose>
-				<c:when test="${ !empty verifStagiaire }">
-					<h1>Vous n'etes pas stagiaire, vous n'avez donc pas
-						d'évaluation</h1>
-				</c:when>
+	<div class='container'>
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<c:choose>
+					<c:when test="${ !empty verifStagiaire }">
+						<h1>Vous n'etes pas stagiaire, vous n'avez donc pas
+							d'évaluation</h1>
+					</c:when>
 
-				<c:when test="${ empty verifStagiaire }">
-					<h1>Voici la liste de vos différentes notes par matières</h1>
+					<c:when test="${ empty verifStagiaire }">
+						<h1>Voici la liste de vos différentes notes par matières</h1>
 
-					<table class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>Matière</th>
-								<c:forEach var="i" begin="1" end="${nbreMaxEvaluations}"
-									step="1">
-									<th>Eval ${i}</th>
-								</c:forEach>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${listeDeModule}" var="module"
-								varStatus="status">
-								<c:forEach items="${listeDeNotesParModule}" var="hashmap"
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Matière</th>
+									<c:forEach var="i" begin="1" end="${nbreMaxEvaluations}"
+										step="1">
+										<th>Eval ${i}</th>
+									</c:forEach>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${listeDeModule}" var="module"
 									varStatus="status">
-									<c:if test="${module.nom == hashmap.key.nom }">
-										<tr>
-											<td><c:out value="${hashmap.key.nom}" /></td>
-											<c:forEach items="${hashmap.value}" var="note"
-												varStatus="status">
-												<td><c:out value="${note}"></c:out></td>
-											</c:forEach>
-										</tr>
-									</c:if>
+									<c:forEach items="${listeDeNotesParModule}" var="hashmap"
+										varStatus="status">
+										<c:if test="${module.nom == hashmap.key.nom }">
+											<tr>
+												<td><c:out value="${hashmap.key.nom}" /></td>
+												<c:forEach items="${hashmap.value}" var="note"
+													varStatus="status">
+													<td><c:out value="${note}"></c:out></td>
+												</c:forEach>
+											</tr>
+										</c:if>
+									</c:forEach>
 								</c:forEach>
-							</c:forEach>
-						</tbody>
-					</table>
+							</tbody>
+						</table>
 
-				</c:when>
+					</c:when>
 
-			</c:choose>
+				</c:choose>
+			</div>
 		</div>
 	</div>
 </body>
