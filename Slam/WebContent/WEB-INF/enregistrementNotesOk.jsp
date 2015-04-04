@@ -6,10 +6,12 @@
 <title>Enregistrement des notes réussi !</title>
 </head>
 <body>
-	<p>Les notes ont bien été enregistrées</p>
-	<p>
-		Retour à la liste des évaluations <a href="ListeEvaluation?idSession=${ idSession }">Cliquez
-			ici</a>
-	</p>
+	<div class='container'>
+		<p>Les notes ont bien été enregistrées</p>
+		<p>
+			Retour à la liste des évaluations <a
+				href="ListeEvaluation?idSession=${ idSession }">Cliquez ici</a>
+		</p>
+	</div>
 </body>
 </html>

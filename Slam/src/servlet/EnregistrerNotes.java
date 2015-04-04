@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -135,11 +137,59 @@ public class EnregistrerNotes extends HttpServlet {
 						noteStagiaire);
 			}
 			// vérifier si les champs sont valides
+			boolean testLettresVirgule = Pattern.matches("[0-9]{1,2},[0-9]",
+					valeur);
+			boolean testLettresPoint = Pattern.matches("[0-9]{1,2}.[0-9]",
+					valeur);
+			boolean testLettresSimple = Pattern.matches("[0-9]{1,2}", valeur);
+
 			if (valeur.matches("^ *")) { // On vérfie que le champs n'est pas
 											// vide
 				listeErreur.put(stagiaire.getNom(),
 						"Vous devez rentrer une note pour ce stagiaire");
-			} else if (!valeur.matches("^ *")) { // Si le champs n'est pas vide
+
+			} else if (testLettresSimple) { // Si le champs ne contient pas de
+											// lettres au format sans virgule ou
+											// point
+				Double valeurNum = Double.parseDouble(valeur);
+				if (valeurNum < 0 || valeurNum > 20) { // On vérfie que la
+														// valeur est bien
+														// comprise entre 0 et
+														// 20
+					listeErreur.put(stagiaire.getNom(),
+							"Vous devez rentrer une note comprise en 0 et 20");
+				} else { // Sinon on enregistre la note
+					Double note = Double.parseDouble(valeur);
+					listeNotes.put(stagiaire.getIdStagiaire(), note);
+				}
+			} else if (!testLettresVirgule && !testLettresPoint) { // On vérifie
+																	// qu'il n'y
+																	// a pas de
+																	// lettre
+																	// pour le
+																	// format
+																	// avec
+																	// point et
+																	// virgule
+				listeErreur
+						.put(stagiaire.getNom(),
+								"Vous devez rentrer une note pour ce stagiaire au format x.x ou x,x");
+
+			} else { // Si le champs n'est pas vide et ne contient pas de
+						// lettres
+				if (testLettresVirgule) {// Si il est avec une virgule on le
+											// change
+					Pattern pattern = Pattern
+							.compile("([0-9]{1,2})(,)([0-9]{1})");
+					Matcher matcher = pattern.matcher(valeur);
+					String partieUn = "";
+					String partieTrois = "";
+					while (matcher.find()) {
+						partieUn = matcher.group(1);
+						partieTrois = matcher.group(3);
+					}
+					valeur = partieUn + "." + partieTrois;
+				}
 				Double valeurNum = Double.parseDouble(valeur);
 				if (valeurNum < 0 || valeurNum > 20) { // On vérfie que la
 														// valeur est bien
