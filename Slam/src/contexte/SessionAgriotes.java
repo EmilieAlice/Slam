@@ -22,6 +22,8 @@ public class SessionAgriotes {
 	private HttpServletRequest request;
 	
 	private Personne user;
+	private int idSession;
+	private int idEvaluation;
 
 	/** Utilisateur connecté à l'appli Agriotes */
 	public Personne getUser() {
@@ -32,6 +34,23 @@ public class SessionAgriotes {
 	public void setUser(Personne user) {
 		this.user = user;
 	}
+	
+	public int getIdSession() {
+		return idSession;
+	}
+
+	public void setIdSession(int idSession) {
+		this.idSession = idSession;
+	}
+	
+	public int getIdEvaluation() {
+		return idEvaluation;
+	}
+
+	public void setIdEvaluation(int idEvaluation) {
+		this.idEvaluation = idEvaluation;
+	}
+
 
 	/** Instancie une session SessionAgriotes (dans une servlet).
 	 */

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import contexte.SessionAgriotes;
 import dao.NoteHome;
 import dao.PersonneHome;
+import dao.SessionHome;
 import dao.StagiaireHome;
 import modele.Personne;
 import modele.Stagiaire;
@@ -42,24 +43,34 @@ public class EnregistrerNotes extends HttpServlet {
 		try {
 			user = dao.findById(4);
 			maSession.setUser(user);
+			maSession.setIdSession(1);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
 			// renvoyer vers erreur.jsp
 		}
 		if (user != null) {
 
-			String session = request.getParameter("idSession");
-			int idSession = Integer.parseInt(session);
-			String evaluation = request.getParameter("evaluation");
-			int idEvaluation = Integer.parseInt(evaluation);
+			// String session = request.getParameter("idSession");
+			// int idSession = Integer.parseInt(session);
+			int idSession = maSession.getIdSession();
+			if (maSession.getIdEvaluation() == 0) {
+				String evaluation = request.getParameter("evaluation");
+				int idEvaluation = Integer.parseInt(evaluation);
+				maSession.setIdEvaluation(idEvaluation);
+			}
 
 			ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 			StagiaireHome stagiaireDao = new StagiaireHome();
 			listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
+			String nomSession = null;
+			SessionHome sessionDao = new SessionHome();
+			nomSession = sessionDao.recupereleNomDeLaSession(idSession);
+
 			request.setAttribute("listeStagiaires", listeStagiaires);
-			request.setAttribute("idEvaluation", idEvaluation);
+			request.setAttribute("idEvaluation", maSession.getIdEvaluation());
 			request.setAttribute("idSession", idSession);
+			request.setAttribute("nomSession", nomSession);
 
 			request.getRequestDispatcher("/WEB-INF/enregistrementNotes.jsp")
 					.forward(request, response);
@@ -84,6 +95,10 @@ public class EnregistrerNotes extends HttpServlet {
 		String evaluation = request.getParameter("idEvaluation");
 		int idEvaluation = Integer.parseInt(evaluation);
 
+		String nomSession = null;
+		SessionHome sessionDao = new SessionHome();
+		nomSession = sessionDao.recupereleNomDeLaSession(idSession);
+
 		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 		StagiaireHome stagiaireDao = new StagiaireHome();
 		listeStagiaires = stagiaireDao.findStagiaire(idSession);
@@ -93,17 +108,24 @@ public class EnregistrerNotes extends HttpServlet {
 
 		for (Stagiaire stagiaire : listeStagiaires) {
 			String valeur = request.getParameter(stagiaire.getNom());
+
 			// vérifier si les champs sont valides
-			if (valeur.matches("^ *")) {
+			if (valeur.matches("^ *")) { // On vérfie que le champs n'est pas
+											// vide
 				listeErreur.put(stagiaire.getNom(),
 						"Vous devez rentrer une note pour ce stagiaire");
-			} else if (valeur.matches("^ *")) {
-				request.setAttribute("msgNote",
-						"Vous devez rentrer une note comprise en 0 et 20");
-				renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
-			} else {
-				Double note = Double.parseDouble(valeur);
-				listeNotes.put(stagiaire.getIdStagiaire(), note);
+			} else if (!valeur.matches("^ *")) { // Si le champs n'est pas vide
+				Double valeurNum = Double.parseDouble(valeur);
+				if (valeurNum < 0 || valeurNum > 20) { // On vérfie que la
+														// valeur est bien
+														// comprise entre 0 et
+														// 20
+					listeErreur.put(stagiaire.getNom(),
+							"Vous devez rentrer une note comprise en 0 et 20");
+				} else { // Sinon on enregistre la note
+					Double note = Double.parseDouble(valeur);
+					listeNotes.put(stagiaire.getIdStagiaire(), note);
+				}
 			}
 		}
 		if (listeErreur.size() != 0) {
@@ -121,6 +143,8 @@ public class EnregistrerNotes extends HttpServlet {
 		request.setAttribute("listeStagiaires", listeStagiaires);
 		request.setAttribute("idEvaluation", idEvaluation);
 		request.setAttribute("idSession", session);
+		request.setAttribute("nomSession", nomSession);
+
 		request.getRequestDispatcher(renvoiFormulaire).forward(request,
 				response);
 

@@ -9,7 +9,7 @@
 	<div class='container'>
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
-				<h1>Formulaire pour rentrer les notes de la session ???</h1>
+				<h1>Formulaire pour rentrer les notes de la session ${ nomSession } </h1>
 
 				<form action="EnregistrerNotes" method="POST">
 					<table class="table table-bordered table-striped">

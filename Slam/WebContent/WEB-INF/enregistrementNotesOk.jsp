@@ -2,9 +2,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="bootstrap.css">
 <title>Enregistrement des notes réussi !</title>
 </head>
 <body>
-	<p>Féliciations</p>
+	<p>Les notes ont bien été enregistrées</p>
+	<p>
+		Retour à la liste des évaluations <a href="ListeEvaluation?idSession=${ idSession }">Cliquez
+			ici</a>
+	</p>
 </body>
 </html>
