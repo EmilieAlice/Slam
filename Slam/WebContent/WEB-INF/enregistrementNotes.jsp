@@ -9,8 +9,11 @@
 	<div class='container'>
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
-				<h1>Formulaire pour rentrer les notes de la session ${ nomSession } </h1>
-
+				<h1>Formulaire pour rentrer les notes de la session ${ nomSession }
+				</h1>
+				<c:if test="${ !empty noteParStagiairePourCetteEvaluation }">
+					<h3>Vous avez déjà rentré des notes pour cette évaluation, vous pouvez les modifier</h3>
+				</c:if>
 				<form action="EnregistrerNotes" method="POST">
 					<table class="table table-bordered table-striped">
 						<thead>
@@ -28,8 +31,20 @@
 								<tr>
 									<td>${ stagiaire.nom }</td>
 									<td>${ stagiaire.prenom }</td>
-									<td><input type="text" name="${ stagiaire.nom }"
-										maxlength="4" size="6"></td>
+									<td>
+									<input type="text" name="${ stagiaire.nom }"
+										maxlength="4" size="6"
+										<c:if test="${ !empty noteParStagiairePourCetteEvaluation }">
+											<c:forEach items="${noteParStagiairePourCetteEvaluation}" var="hashmapNote"
+												varStatus="status">
+												<c:if test="${stagiaire.nom == hashmapNote.key.nom }">
+													value="${hashmapNote.value }"
+												</c:if>
+											</c:forEach>
+										</c:if>
+										>
+									</td>
+
 									<c:forEach items="${ listeErreur }" var="erreur">
 										<c:if test="${ erreur.key == stagiaire.nom }">
 											<td>${erreur.value}</td>

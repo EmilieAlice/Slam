@@ -86,4 +86,85 @@ public class NoteHome {
 		return listeDeNote;
 	}
 
+	private static java.sql.PreparedStatement pRecupereNoteStagaire = null;
+	/**
+	 * Requete pour récupérer une note d'un stagaire en fonction d'un stagaire
+	 * et d'une évaluation
+	 */
+	static {
+		try {
+			pRecupereNoteStagaire = DataBase.getConnection().prepareStatement(
+					"SELECT note FROM lagarenne2015.note "
+							+ "WHERE id_personne = ? "
+							+ "AND id_evaluation = ?;");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete recupereNoteStagaire échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui récupère la note d'un stagaire en fonction d'un stagaire et
+	 * d'une évaluation
+	 *
+	 * @param idStagaire un entier
+	 * @param idEvaluation un entier
+	 * @return note un double
+	 */
+	public Double recupereNoteStagaire(int idStagiaire, int idEvaluation) {
+		Double note = new Double(0);
+		try {
+			pRecupereNoteStagaire.setInt(1, idStagiaire);
+			pRecupereNoteStagaire.setInt(2, idEvaluation);
+			ResultSet resultat = pRecupereNoteStagaire.executeQuery();
+			if (resultat.next()) {
+				note = resultat.getDouble("note");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return note;
+	}
+	
+	private static java.sql.PreparedStatement pUpdateNote = null;
+	/**
+	 * Requete pour récupérer une note d'un stagaire en fonction d'un stagaire
+	 * et d'une évaluation
+	 */
+	static {
+		try {
+			pUpdateNote = DataBase.getConnection().prepareStatement(
+					"UPDATE lagarenne2015.note "
+					+ "SET note = ? "
+					+ "WHERE id_evaluation = ? AND id_personne = ?;");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete updateNote échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui met à jour une note
+	 *
+	 * @param note un entier
+	 * @param idEvaluation un entier
+	 * @param id_personne un entier
+	 * @return un booléen
+	 */
+	public Boolean updateNote(Double note, int idEvaluation, int idPersonne ) {
+		Boolean etat = new Boolean(false);
+		try {
+			pUpdateNote.setDouble(1, note);
+			pUpdateNote.setInt(2, idEvaluation);
+			pUpdateNote.setInt(3, idPersonne);
+			int resultat = pUpdateNote.executeUpdate();
+			if (resultat != 0) {
+				etat = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return etat;
+	}
+
 }

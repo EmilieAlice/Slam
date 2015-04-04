@@ -35,5 +35,25 @@ public class NoteHomeTest {
 		}
 
 	}
+	
+	@Test
+	public void testrecupereNoteStagaire(){
+		Double note = new Double(0);
+		NoteHome noteDao = new NoteHome();
+		note = noteDao.recupereNoteStagaire(1, 1);
+		
+		Double expected = new Double(14.0);
+		
+		System.out.println(note);
+		
+		assertEquals(expected, note);
+	}
+	
+	@Test
+	public void testUpdateNote(){
+		NoteHome noteDao = new NoteHome();
+		
+		assertTrue(noteDao.updateNote(14.0, 1, 1));
+	}
 
 }

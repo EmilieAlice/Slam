@@ -63,6 +63,19 @@ public class EnregistrerNotes extends HttpServlet {
 			StagiaireHome stagiaireDao = new StagiaireHome();
 			listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
+			HashMap<Stagiaire, Double> noteParStagiairePourCetteEvaluation = new HashMap<Stagiaire, Double>();
+			for (Stagiaire stagiaire : listeStagiaires) {
+				NoteHome noteDao = new NoteHome();
+				Double noteStagiaire = new Double(
+						noteDao.recupereNoteStagaire(
+								stagiaire.getIdStagiaire(),
+								maSession.getIdEvaluation()));
+				if (noteStagiaire != 0) {
+					noteParStagiairePourCetteEvaluation.put(stagiaire,
+							noteStagiaire);
+				}
+			}
+
 			String nomSession = null;
 			SessionHome sessionDao = new SessionHome();
 			nomSession = sessionDao.recupereleNomDeLaSession(idSession);
@@ -71,6 +84,8 @@ public class EnregistrerNotes extends HttpServlet {
 			request.setAttribute("idEvaluation", maSession.getIdEvaluation());
 			request.setAttribute("idSession", idSession);
 			request.setAttribute("nomSession", nomSession);
+			request.setAttribute("noteParStagiairePourCetteEvaluation",
+					noteParStagiairePourCetteEvaluation);
 
 			request.getRequestDispatcher("/WEB-INF/enregistrementNotes.jsp")
 					.forward(request, response);
@@ -106,9 +121,19 @@ public class EnregistrerNotes extends HttpServlet {
 		HashMap<String, String> listeErreur = new HashMap<String, String>();
 		HashMap<Integer, Double> listeNotes = new HashMap<Integer, Double>();
 
+		HashMap<Stagiaire, Double> noteParStagiairePourCetteEvaluation = new HashMap<Stagiaire, Double>();
+
 		for (Stagiaire stagiaire : listeStagiaires) {
 			String valeur = request.getParameter(stagiaire.getNom());
 
+			NoteHome noteDao = new NoteHome();
+			Double noteStagiaire = new Double(noteDao.recupereNoteStagaire(
+					stagiaire.getIdStagiaire(), idEvaluation));
+
+			if (noteStagiaire != 0) {
+				noteParStagiairePourCetteEvaluation.put(stagiaire,
+						noteStagiaire);
+			}
 			// vérifier si les champs sont valides
 			if (valeur.matches("^ *")) { // On vérfie que le champs n'est pas
 											// vide
@@ -131,6 +156,14 @@ public class EnregistrerNotes extends HttpServlet {
 		if (listeErreur.size() != 0) {
 			request.setAttribute("listeErreur", listeErreur);
 			renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
+		} else if (listeErreur.size() == 0
+				&& noteParStagiairePourCetteEvaluation.size() != 0) {
+			NoteHome noteDao = new NoteHome();
+			for (Entry<Integer, Double> entree : listeNotes.entrySet()) {
+				noteDao.updateNote(entree.getValue(), idEvaluation,
+						entree.getKey());
+			}
+			renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";
 		} else {
 			for (Entry<Integer, Double> entree : listeNotes.entrySet()) {
 				NoteHome noteDao = new NoteHome();
@@ -144,6 +177,8 @@ public class EnregistrerNotes extends HttpServlet {
 		request.setAttribute("idEvaluation", idEvaluation);
 		request.setAttribute("idSession", session);
 		request.setAttribute("nomSession", nomSession);
+		request.setAttribute("noteParStagiairePourCetteEvaluation",
+				noteParStagiairePourCetteEvaluation);
 
 		request.getRequestDispatcher(renvoiFormulaire).forward(request,
 				response);
