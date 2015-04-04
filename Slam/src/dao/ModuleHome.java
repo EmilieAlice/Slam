@@ -78,6 +78,40 @@ public class ModuleHome {
 		}
 		return nbreDeModules;
 	}
+	
+	private static java.sql.PreparedStatement pFindIdModuleByIdFormateur = null;
+	/**
+	 * Requete pour récupérer l'id dun module en fonction de l'id Fomrateur
+	 */
+	static {
+		try {
+			pFindIdModuleByIdFormateur = DataBase.getConnection().prepareStatement(
+					"SELECT id_module FROM lagarenne2015.formateur "
+					+ "WHERE id_formateur=?;");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete findIdModuleByIdFormateur échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui récupère l'id dun module en fonction de l'id Fomrateur
+	 * 
+	 * @return un idModule (entier)
+	 */
+	public int recupereIdModule(int idFormateur) {
+		int idModule = 0;
+		try {
+			pFindIdModuleByIdFormateur.setInt(1, idFormateur);
+			ResultSet resultat = pFindIdModuleByIdFormateur.executeQuery();
+			if (resultat.next()) {
+				idModule = resultat.getInt("id_module");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return idModule;
+	}
 
 
 }

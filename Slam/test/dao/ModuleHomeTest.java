@@ -17,7 +17,10 @@ public class ModuleHomeTest {
 
 
 	@Test
-	public void testRecupereLesModules() {
-		fail("Not yet implemented");
+	public void testRecupereIdModule() {
+		ModuleHome moduleDao = new ModuleHome();
+		int idModule = moduleDao.recupereIdModule(4);
+		
+		assertEquals(1, idModule);
 	}
 }

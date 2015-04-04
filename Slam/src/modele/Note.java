@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.ArrayList;
+
 public class Note {
 	
 	private int idEvaluation;
@@ -35,5 +37,23 @@ public class Note {
 	public void setNote(float note) {
 		this.note = note;
 	}
+	
+	public double calculMoyenne(ArrayList<Double> listeNotes){
+		Double moyenne = new Double(0);
+		Double total = new Double(0);
+		for (Double note : listeNotes) {
+			total += note;
+		}
+		moyenne = total / listeNotes.size();
+		return moyenne;
+	}
+
+	@Override
+	public String toString() {
+		return "Note [idEvaluation=" + idEvaluation + ", idPersonne="
+				+ idPersonne + ", note=" + note + "]";
+	}
+	
+	
 
 }

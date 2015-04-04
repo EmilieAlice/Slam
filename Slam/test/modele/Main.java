@@ -1,18 +1,22 @@
 package modele;
 
+import java.util.ArrayList;
+
+import com.sun.org.apache.bcel.internal.generic.DDIV;
+
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Emilie");
-		System.out.println("Un petit commit de Jérome");
-		System.out.println("Test du git ignore");
-		System.out.println("Seconde test du ignore");
-		System.out.println("test gitignor depuis Emilie");
-		System.out.println("Cette fois ci c'est la bonne !");
-		System.out.println("Et la drenière pour la route");
-		System.out.println("ça marche !");
-		System.out.println("coucou");
-		System.out.println("test");
+		ArrayList<Double> test = new ArrayList<Double>();
+		test.add(12.0);
+		test.add(13.0);
+		test.add(14.0);
+		Note note = new Note();
+		
+		Double moyenne = new Double(0);
+		
+		moyenne = note.calculMoyenne(test);
+		System.out.println(moyenne);
 	}
 
 }

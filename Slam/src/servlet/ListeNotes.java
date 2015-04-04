@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import contexte.SessionAgriotes;
 import modele.Module;
+import modele.Note;
 import modele.Personne;
 import dao.EvaluationHome;
 import dao.ModuleHome;
@@ -73,15 +74,24 @@ public class ListeNotes extends HttpServlet {
 			// On remplit le dictionnaire de notes pour chaque matière du
 			// stagiaire
 			HashMap<Module, ArrayList<Double>> listeDeNotesParModule = new HashMap<Module, ArrayList<Double>>();
+			HashMap<Module, Double> listeDeMoyennesParModule = new HashMap<Module,Double>();
+			
+			Note note = new Note();
 			NoteHome noteDao = new NoteHome();
+			
 			for (Module unModule : listeDeModule) {
-				listeDeNotesParModule.put(unModule, noteDao.recupereNote(
-						idPersonne, unModule.getIdModule()));
+				ArrayList<Double> listeDesNotes = new ArrayList<Double>();
+				listeDesNotes = noteDao.recupereNote(idPersonne, unModule.getIdModule());
+				listeDeNotesParModule.put(unModule, listeDesNotes);
+				Double moyenne = new Double(0);
+				moyenne = note.calculMoyenne(listeDesNotes);
+				listeDeMoyennesParModule.put(unModule, moyenne);
 			}
 
 			request.setAttribute("nbreMaxEvaluations", nbreMaxEvaluations);
 			request.setAttribute("listeDeModule", listeDeModule);
 			request.setAttribute("listeDeNotesParModule", listeDeNotesParModule);
+			request.setAttribute("listeDesMoyennesParModule", listeDeMoyennesParModule);
 
 			request.getRequestDispatcher("/WEB-INF/listeNote.jsp").forward(
 					request, response);

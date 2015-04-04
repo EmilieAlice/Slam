@@ -41,7 +41,7 @@ public class EnregistrerNotes extends HttpServlet {
 		Personne user = null;
 
 		try {
-			user = dao.findById(4);
+			user = dao.findById(6);
 			maSession.setUser(user);
 			maSession.setIdSession(1);
 			request.setAttribute("user", user);

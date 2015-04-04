@@ -13,6 +13,7 @@ import contexte.SessionAgriotes;
 import modele.Evaluation;
 import modele.Personne;
 import dao.EvaluationHome;
+import dao.ModuleHome;
 import dao.PersonneHome;
 
 /**
@@ -39,7 +40,7 @@ public class ListeEvaluation extends HttpServlet {
 
 		// int intIdSession = maSession.getIdSession();
 		try {
-			user = dao.findById(4);
+			user = dao.findById(6);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
@@ -84,7 +85,7 @@ public class ListeEvaluation extends HttpServlet {
 
 		// int intIdSession = maSession.getIdSession;
 		try {
-			user = dao.findById(4);
+			user = dao.findById(6);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
@@ -92,9 +93,10 @@ public class ListeEvaluation extends HttpServlet {
 		}
 
 		if (user != null) {
-
+			ModuleHome moduleDao = new ModuleHome();
+			int idModule = moduleDao.recupereIdModule(user.getIdPersonne());
 			EvaluationHome evaluationDao = new EvaluationHome();
-			evaluationDao.insertEvaluation(1, 1, maSession.getUser()
+			evaluationDao.insertEvaluation(idModule, 1, maSession.getUser()
 					.getIdPersonne());
 
 			request.setAttribute("idSession", 1);

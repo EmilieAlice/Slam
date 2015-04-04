@@ -17,8 +17,9 @@
 					</c:when>
 
 					<c:when test="${ empty verifStagiaire }">
-						<h1>Voici la liste de vos différentes notes par matières</h1>
-
+						<h1>Voici votre bulletin de notes</h1>
+						<br>
+						<h3>Les résultats des différentes évaluations</h3>
 						<table class="table table-bordered table-striped">
 							<thead>
 								<tr>
@@ -27,23 +28,52 @@
 										step="1">
 										<th>Eval ${i}</th>
 									</c:forEach>
+
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${listeDeModule}" var="module"
 									varStatus="status">
-									<c:forEach items="${listeDeNotesParModule}" var="hashmap"
-										varStatus="status">
-										<c:if test="${module.nom == hashmap.key.nom }">
-											<tr>
-												<td><c:out value="${hashmap.key.nom}" /></td>
-												<c:forEach items="${hashmap.value}" var="note"
+									<tr>
+										<c:forEach items="${listeDeNotesParModule}" var="hashmapNote"
+											varStatus="status">
+
+											<c:if test="${module.nom == hashmapNote.key.nom }">
+
+												<td><c:out value="${hashmapNote.key.nom}" /></td>
+												<c:forEach items="${hashmapNote.value}" var="note"
 													varStatus="status">
 													<td><c:out value="${note}"></c:out></td>
 												</c:forEach>
-											</tr>
-										</c:if>
-									</c:forEach>
+											</c:if>
+										</c:forEach>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<p>
+						<h3>Les moyennes par matières</h3>
+
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Matière</th>
+									<th>Moyenne</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${listeDeModule}" var="module"
+									varStatus="status">
+									<tr>
+										<c:forEach items="${listeDesMoyennesParModule}"
+											var="hashmapMoyenne" varStatus="status">
+											<c:if test="${module.nom == hashmapMoyenne.key.nom }">
+												<td><c:out value="${hashmapMoyenne.key.nom}" /></td>
+												<td><c:out value="${hashmapMoyenne.value}" /></td>
+											</c:if>
+
+										</c:forEach>
+									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
