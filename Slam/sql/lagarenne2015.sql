@@ -48,10 +48,10 @@ ENGINE = InnoDB$
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS module (
   id_module INT NOT NULL AUTO_INCREMENT,
-  nom VARCHAR(128) NOT NULL,
+  nom_module VARCHAR(128) NOT NULL,
   objectif VARCHAR(512) NULL,
   contenu VARCHAR(45) NULL,
-  nb_heures INT NULL,
+  nb_heures_annuel INT NULL,
   prerequis VARCHAR(512) NULL,
   PRIMARY KEY (id_module))
 ENGINE = InnoDB$
@@ -62,8 +62,8 @@ ENGINE = InnoDB$
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS formation (
   id_formation INT NOT NULL AUTO_INCREMENT,
-  nom VARCHAR(45) NOT NULL,
-  description TEXT NULL,
+  nom_formation VARCHAR(45) NOT NULL,
+  description_formation TEXT NULL,
   PRIMARY KEY (id_formation))
 ENGINE = InnoDB$
 
@@ -73,10 +73,10 @@ ENGINE = InnoDB$
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS session (
   id_session INT NOT NULL AUTO_INCREMENT,
-  nom VARCHAR(45) NOT NULL,
+  nom_session VARCHAR(45) NOT NULL,
   date_debut DATE NOT NULL,
   date_fin DATE NOT NULL,
-  description TEXT NULL,
+  description_session TEXT NULL,
   id_formation INT NOT NULL,
   date_debut_inscription DATETIME NULL,
   date_fin_inscription DATETIME NULL,

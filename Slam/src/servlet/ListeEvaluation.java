@@ -35,12 +35,12 @@ public class ListeEvaluation extends HttpServlet {
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Personne user = maSession.getUser();
 		// Simuler que le formateir 4 est connecte
-		PersonneDao dao = new PersonneDao();
+		PersonneDao userDao = new PersonneDao();
 		Personne user = null;
 
 		// int intIdSession = maSession.getIdSession();
 		try {
-			user = dao.findById(6);
+			user = userDao.findById(6);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
@@ -80,12 +80,12 @@ public class ListeEvaluation extends HttpServlet {
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Personne user = maSession.getUser();
 		// Simuler que le formateur 4 est connecte
-		PersonneDao dao = new PersonneDao();
+		PersonneDao userDao = new PersonneDao();
 		Personne user = null;
 
 		// int intIdSession = maSession.getIdSession;
 		try {
-			user = dao.findById(6);
+			user = userDao.findById(6);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {

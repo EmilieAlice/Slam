@@ -36,11 +36,11 @@ public class ListeNotes extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneDao dao = new PersonneDao();
+		PersonneDao userDao = new PersonneDao();
 		Personne user = null;
 		// On simule en dur la personne connectée 1
 		try {
-			user = dao.findById(1);
+			user = userDao.findById(1);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {

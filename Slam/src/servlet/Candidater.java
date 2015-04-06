@@ -96,10 +96,10 @@ public class Candidater extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneDao dao = new PersonneDao();
+		PersonneDao userDao = new PersonneDao();
 		Personne user;
 		try {
-			user = dao.findById(9);
+			user = userDao.findById(9);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 			System.out.println("email : " + user.getEmail());
@@ -113,7 +113,7 @@ public class Candidater extends HttpServlet {
 		// personne = new Personne();
 
 		try {
-			user = dao.findById(9);
+			user = userDao.findById(9);
 			verifierFormCandidature(request);
 			System.out.println(user.getIdPersonne());
 
@@ -134,7 +134,7 @@ public class Candidater extends HttpServlet {
 
 			try {
 				// personneHome.insererCandidature();
-				user = dao.findById(9);
+				user = userDao.findById(9);
 				Connection connexion = DataBase.getConnection();
 				PreparedStatement insererCandidature = connexion
 						.prepareStatement("INSERT INTO candidature(id_session, id_personne, id_etat_candidature,"
@@ -161,7 +161,7 @@ public class Candidater extends HttpServlet {
 										+ " "
 										+ user.getNom()
 										+ ", "
-										+ "nous avons bien reçu votre candidature, elle sera traitée dans les plus brefs delais.");
+										+ "Nous avons bien reçu votre candidature, elle sera traitée dans les plus brefs delais.");
 				validerCandidature = "La candidature a été pris en compte, un mail de confirmation a été envoyé.";
 			} catch (AddressException e) {
 				e.printStackTrace();

@@ -39,11 +39,11 @@ public class EnregistrerNotes extends HttpServlet {
 		// Recuperer la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 4 est connecté
-		PersonneDao dao = new PersonneDao();
+		PersonneDao userDao = new PersonneDao();
 		Personne user = null;
 
 		try {
-			user = dao.findById(6);
+			user = userDao.findById(6);
 			maSession.setUser(user);
 			maSession.setIdSession(1);
 			request.setAttribute("user", user);
@@ -102,7 +102,7 @@ public class EnregistrerNotes extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneDao dao = new PersonneDao();
+		PersonneDao userDao = new PersonneDao();
 		Personne user;
 
 		String renvoiFormulaire = null;

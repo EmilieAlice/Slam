@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class SessionHomeTest {
+public class SessionDaoTest {
 
 	@Test
 	public void testFindNomSessionById() {

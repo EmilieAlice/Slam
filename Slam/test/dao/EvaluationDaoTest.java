@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class EvaluationHomeTest {
+public class EvaluationDaoTest {
 
 	@Test
 	public void testFindMaxEvaluation() {

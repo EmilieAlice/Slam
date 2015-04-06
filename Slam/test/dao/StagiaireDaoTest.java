@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StagiaireHomeTest {
+public class StagiaireDaoTest {
 
 	@Test
 	public void testFindSession() {

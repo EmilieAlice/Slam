@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class ModuleHomeTest {
+public class ModuleDaoTest {
 
 	@Test
 	public void testRecupereLeNombreDeModules() {

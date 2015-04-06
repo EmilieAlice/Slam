@@ -8,7 +8,7 @@ import java.util.Date;
 import modele.Personne;
 import org.junit.Test;
 
-public class PersonneHomeTest extends AgriotesTestCase {
+public class PersonneDaoTest extends AgriotesTestCase {
 
   /**
    * Test de la methode valider() : On ecrit la personne attendu, et
@@ -23,11 +23,11 @@ public class PersonneHomeTest extends AgriotesTestCase {
     Personne personne = new Personne(7, "Mr", "Pascal", "Waille",
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
-    PersonneDao dao = new PersonneDao();
-    dao.insert(personne);
-    boolean ok = dao.valider("pascal@hot.fr", time);
+    PersonneDao personneDao = new PersonneDao();
+    personneDao.insert(personne);
+    boolean ok = personneDao.valider("pascal@hot.fr", time);
     assertTrue(ok);
-    Personne result = dao.findById(7);
+    Personne result = personneDao.findById(7);
     assertTrue(result.isEstInscrite());
     assertTrue(personne.isEstInscrite());
   }
@@ -64,16 +64,16 @@ public class PersonneHomeTest extends AgriotesTestCase {
 		// Suprimer la precision en-dessous des secondes,
     // pas prises en compte dans le Timestamp de MySQL
     time.setNanos(0);
-    Personne personne = new Personne(0, "Mr", "Pascal", "Waille",
+    Personne expected = new Personne(0, "Mr", "Pascal", "Waille",
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
-    PersonneDao dao = new PersonneDao();
-    dao.insert(personne);
-    assertEquals(7, personne.getIdPersonne());
-    Personne result = dao.findById(7);
-    System.out.println("e: " + personne);
+    PersonneDao personneDao = new PersonneDao();
+    personneDao.insert(expected);
+    assertEquals(7, expected.getIdPersonne());
+    Personne result = personneDao.findById(7);
+    System.out.println("e: " + expected);
     System.out.println("r: " + result);
-    assertEquals(personne, result);
+    assertEquals(expected, result);
   }
 
   @Test
@@ -84,15 +84,15 @@ public class PersonneHomeTest extends AgriotesTestCase {
 		// Suprimer la precision en-dessous des secondes,
     // pas prises en compte dans le Timestamp de MySQL
     time.setNanos(0);
-    Personne personne = new Personne(0, "Mr", "Pascal", "Waille",
+    Personne expected = new Personne(0, "Mr", "Pascal", "Waille",
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
-    PersonneDao dao = new PersonneDao();
-    PersonneDao.insertViaProcedureMySQL(personne);
-    assertEquals(7, personne.getIdPersonne());
-    Personne result = dao.findById(7);
-    System.out.println("e: " + personne);
+    PersonneDao personneDao = new PersonneDao();
+    PersonneDao.insertViaProcedureMySQL(expected);
+    assertEquals(7, expected.getIdPersonne());
+    Personne result = personneDao.findById(7);
+    System.out.println("e: " + expected);
     System.out.println("r: " + result);
-    assertEquals(personne, result);
+    assertEquals(expected, result);
   }
 }

@@ -31,7 +31,7 @@ public class SessionDao {
 			pFindNomSessionById.setInt(1, idSession);
 			ResultSet resultat = pFindNomSessionById.executeQuery();
 			if (resultat.next()) {
-				nomSession = resultat.getString("nom");
+				nomSession = resultat.getString("nom_session");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

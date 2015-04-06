@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class NoteHomeTest {
+public class NoteDaoTest {
 
 	@Test
 	public void testInsertNote() {

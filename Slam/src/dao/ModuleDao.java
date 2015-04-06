@@ -33,7 +33,7 @@ public class ModuleDao {
 			while (resultat.next()) {
 				Module unModule = new Module();
 				unModule.setIdModule(resultat.getInt("id_module"));
-				unModule.setNom(resultat.getString("nom"));
+				unModule.setNomModule(resultat.getString("nom_module"));
 				unModule.setObjectif(resultat.getString("objectif"));
 				unModule.setContenu(resultat.getString("contenu"));
 				unModule.setNbHeuresAnnuelles(resultat.getInt("nb_heures_annuel"));

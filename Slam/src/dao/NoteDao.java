@@ -49,7 +49,7 @@ public class NoteDao {
 			pRecupereNoteParMatiere = DataBase
 					.getConnection()
 					.prepareStatement(
-							"SELECT module.nom, note, personne.nom FROM lagarenne2015.note "
+							"SELECT module.nom_module, note, personne.nom FROM lagarenne2015.note "
 									+ "INNER JOIN evaluation on note.id_evaluation = evaluation.id_evaluation "
 									+ "INNER JOIN module on module.id_module = evaluation.id_module "
 									+ "INNER JOIN personne on note.id_personne = personne.id_personne "
