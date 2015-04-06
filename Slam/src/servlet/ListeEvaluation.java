@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import contexte.SessionAgriotes;
 import modele.Evaluation;
 import modele.Personne;
-import dao.EvaluationHome;
-import dao.ModuleHome;
-import dao.PersonneHome;
+import dao.EvaluationDao;
+import dao.ModuleDao;
+import dao.PersonneDao;
 
 /**
  * Servlet implementation class ListeEvaluation
@@ -35,7 +35,7 @@ public class ListeEvaluation extends HttpServlet {
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Personne user = maSession.getUser();
 		// Simuler que le formateir 4 est connecte
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user = null;
 
 		// int intIdSession = maSession.getIdSession();
@@ -57,7 +57,7 @@ public class ListeEvaluation extends HttpServlet {
 
 			// if (user != null) {
 			ArrayList<Evaluation> liste = new ArrayList<Evaluation>();
-			EvaluationHome evaluationDao = new EvaluationHome();
+			EvaluationDao evaluationDao = new EvaluationDao();
 			liste = evaluationDao.findSession(intIdSession, idFormateur);
 
 			request.setAttribute("idSession", intIdSession);
@@ -80,7 +80,7 @@ public class ListeEvaluation extends HttpServlet {
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Personne user = maSession.getUser();
 		// Simuler que le formateur 4 est connecte
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user = null;
 
 		// int intIdSession = maSession.getIdSession;
@@ -93,9 +93,9 @@ public class ListeEvaluation extends HttpServlet {
 		}
 
 		if (user != null) {
-			ModuleHome moduleDao = new ModuleHome();
+			ModuleDao moduleDao = new ModuleDao();
 			int idModule = moduleDao.recupereIdModule(user.getIdPersonne());
-			EvaluationHome evaluationDao = new EvaluationHome();
+			EvaluationDao evaluationDao = new EvaluationDao();
 			evaluationDao.insertEvaluation(idModule, 1, maSession.getUser()
 					.getIdPersonne());
 

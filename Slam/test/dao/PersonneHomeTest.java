@@ -23,7 +23,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
     Personne personne = new Personne(7, "Mr", "Pascal", "Waille",
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
-    PersonneHome dao = new PersonneHome();
+    PersonneDao dao = new PersonneDao();
     dao.insert(personne);
     boolean ok = dao.valider("pascal@hot.fr", time);
     assertTrue(ok);
@@ -44,7 +44,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
     Personne expected = new Personne(2, "Mle", "Emilie", "WAILLE",
         "25 Avenue de la gare", "92000", "NANTERRE", "0956789101",
         null, "waille@hotmail.fr", "walle", time, false);
-    PersonneHome dao = new PersonneHome();
+    PersonneDao dao = new PersonneDao();
     Personne result = dao.findById(2);
     System.out.println("e: " + expected);
     System.out.println("r: " + result);
@@ -67,7 +67,7 @@ public class PersonneHomeTest extends AgriotesTestCase {
     Personne personne = new Personne(0, "Mr", "Pascal", "Waille",
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
-    PersonneHome dao = new PersonneHome();
+    PersonneDao dao = new PersonneDao();
     dao.insert(personne);
     assertEquals(7, personne.getIdPersonne());
     Personne result = dao.findById(7);
@@ -87,8 +87,8 @@ public class PersonneHomeTest extends AgriotesTestCase {
     Personne personne = new Personne(0, "Mr", "Pascal", "Waille",
         "12 rue d'en haut", "62270", "Rebreuviette", "03210337338",
         "0646808184", "pascal@hot.fr", "papi", time, false);
-    PersonneHome dao = new PersonneHome();
-    PersonneHome.insertViaProcedureMySQL(personne);
+    PersonneDao dao = new PersonneDao();
+    PersonneDao.insertViaProcedureMySQL(personne);
     assertEquals(7, personne.getIdPersonne());
     Personne result = dao.findById(7);
     System.out.println("e: " + personne);

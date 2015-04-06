@@ -9,7 +9,7 @@ public class EvaluationHomeTest {
 
 	@Test
 	public void testFindMaxEvaluation() {
-		EvaluationHome evaluationDao = new EvaluationHome();
+		EvaluationDao evaluationDao = new EvaluationDao();
 		int nbreMaxEvaluation = evaluationDao.findMaxEvaluation(1);
 
 		assertEquals(7, nbreMaxEvaluation);
@@ -17,7 +17,7 @@ public class EvaluationHomeTest {
 
 	@Test
 	public void testInsertEvaluation() {
-		EvaluationHome evaluationDao = new EvaluationHome();
+		EvaluationDao evaluationDao = new EvaluationDao();
 		Boolean etat = evaluationDao.insertEvaluation(1, 1, 4);
 
 		assertTrue(etat);

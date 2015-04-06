@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.ResultSet;
 
-public class SessionHome {
+public class SessionDao {
 
 	private static java.sql.PreparedStatement pFindNomSessionById = null;
 	/**

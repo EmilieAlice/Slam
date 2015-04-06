@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import modele.Stagiaire;
 
-public class StagiaireHome {
+public class StagiaireDao {
 
 	private static java.sql.PreparedStatement pFindStagiaires = null;
 	/**

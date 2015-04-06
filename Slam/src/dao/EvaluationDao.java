@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import modele.Evaluation;
 
-public class EvaluationHome {
+public class EvaluationDao {
 
 	private static java.sql.PreparedStatement pFindEvaluation = null;
 	/**

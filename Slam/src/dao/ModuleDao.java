@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import modele.Module;
 
-public class ModuleHome {
+public class ModuleDao {
 
 	private static java.sql.PreparedStatement pRecupereLesModules = null;
 	/**

@@ -10,7 +10,7 @@ public class SessionHomeTest {
 	@Test
 	public void testFindNomSessionById() {
 		String nomSession = new String();
-		SessionHome sessionDao = new SessionHome();
+		SessionDao sessionDao = new SessionDao();
 		nomSession = sessionDao.recupereleNomDeLaSession(1);
 		
 		System.out.println(nomSession);

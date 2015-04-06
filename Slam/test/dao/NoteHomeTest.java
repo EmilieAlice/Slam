@@ -11,7 +11,7 @@ public class NoteHomeTest {
 	@Test
 	public void testInsertNote() {
 		
-		NoteHome noteDao = new NoteHome();
+		NoteDao noteDao = new NoteDao();
 		Boolean test = noteDao.insertNote(1, 2, 12.0);
 		
 		assertTrue("Le test du Insert doit etre vrai si l'insert s'est bien passé", test);
@@ -24,7 +24,7 @@ public class NoteHomeTest {
 		listeDeNotesPrevue.add(10.0);
 		
 		ArrayList<Double> listeDeNotes = new ArrayList<Double>();
-		NoteHome noteDao = new NoteHome();
+		NoteDao noteDao = new NoteDao();
 		listeDeNotes = noteDao.recupereNote(3, 1);
 		
 		int i = 0;
@@ -39,7 +39,7 @@ public class NoteHomeTest {
 	@Test
 	public void testrecupereNoteStagaire(){
 		Double note = new Double(0);
-		NoteHome noteDao = new NoteHome();
+		NoteDao noteDao = new NoteDao();
 		note = noteDao.recupereNoteStagaire(1, 1);
 		
 		Double expected = new Double(14.0);
@@ -51,7 +51,7 @@ public class NoteHomeTest {
 	
 	@Test
 	public void testUpdateNote(){
-		NoteHome noteDao = new NoteHome();
+		NoteDao noteDao = new NoteDao();
 		
 		assertTrue(noteDao.updateNote(14.0, 1, 1));
 	}

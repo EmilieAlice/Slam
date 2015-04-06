@@ -3,7 +3,7 @@ package dao;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class NoteHome {
+public class NoteDao {
 
 	private static java.sql.PreparedStatement pInsertNote = null;
 	/**

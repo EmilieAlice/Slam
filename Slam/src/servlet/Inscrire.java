@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.PersonneHome;
+import dao.PersonneDao;
 import mail.EnvoiMail;
 import modele.Personne;
 
@@ -63,7 +63,7 @@ public class Inscrire extends HttpServlet {
 			vue = "/WEB-INF/FormulaireInscription.jsp";
 		} else {
 			String msg = null;
-			PersonneHome pDAO = new PersonneHome();
+			PersonneDao pDAO = new PersonneDao();
 			try {
 				assert personne.getCivilite() != null;
 				pDAO.insert(personne);
@@ -121,7 +121,7 @@ public class Inscrire extends HttpServlet {
 		// Date sans importance, elle est fixée par la BD
 		Timestamp time = Timestamp.valueOf("2000-01-01 00:00:00.0");
 		boolean estInscrite = false;
-		PersonneHome database = new PersonneHome();
+		PersonneDao database = new PersonneDao();
 		if (database.checkEmail(email)) {
 			formIsValid = false;
 			request.setAttribute("msgEmail", "L'email " + email

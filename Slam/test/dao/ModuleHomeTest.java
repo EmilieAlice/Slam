@@ -9,7 +9,7 @@ public class ModuleHomeTest {
 	@Test
 	public void testRecupereLeNombreDeModules() {
 		int nbreDeModules;
-		ModuleHome moduleDao = new ModuleHome();
+		ModuleDao moduleDao = new ModuleDao();
 		nbreDeModules = moduleDao.recupereLeNombreDeModules();
 		
 		assertEquals(3, nbreDeModules);
@@ -18,7 +18,7 @@ public class ModuleHomeTest {
 
 	@Test
 	public void testRecupereIdModule() {
-		ModuleHome moduleDao = new ModuleHome();
+		ModuleDao moduleDao = new ModuleDao();
 		int idModule = moduleDao.recupereIdModule(4);
 		
 		assertEquals(1, idModule);

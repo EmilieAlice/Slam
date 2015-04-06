@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import contexte.SessionAgriotes;
-import dao.NoteHome;
-import dao.PersonneHome;
-import dao.SessionHome;
-import dao.StagiaireHome;
+import dao.NoteDao;
+import dao.PersonneDao;
+import dao.SessionDao;
+import dao.StagiaireDao;
 import modele.Personne;
 import modele.Stagiaire;
 
@@ -39,7 +39,7 @@ public class EnregistrerNotes extends HttpServlet {
 		// Recuperer la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 4 est connecté
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user = null;
 
 		try {
@@ -62,12 +62,12 @@ public class EnregistrerNotes extends HttpServlet {
 			}
 
 			ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
-			StagiaireHome stagiaireDao = new StagiaireHome();
+			StagiaireDao stagiaireDao = new StagiaireDao();
 			listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
 			HashMap<Stagiaire, Double> noteParStagiairePourCetteEvaluation = new HashMap<Stagiaire, Double>();
 			for (Stagiaire stagiaire : listeStagiaires) {
-				NoteHome noteDao = new NoteHome();
+				NoteDao noteDao = new NoteDao();
 				Double noteStagiaire = new Double(
 						noteDao.recupereNoteStagaire(
 								stagiaire.getIdStagiaire(),
@@ -79,7 +79,7 @@ public class EnregistrerNotes extends HttpServlet {
 			}
 
 			String nomSession = null;
-			SessionHome sessionDao = new SessionHome();
+			SessionDao sessionDao = new SessionDao();
 			nomSession = sessionDao.recupereleNomDeLaSession(idSession);
 
 			request.setAttribute("listeStagiaires", listeStagiaires);
@@ -102,7 +102,7 @@ public class EnregistrerNotes extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user;
 
 		String renvoiFormulaire = null;
@@ -113,11 +113,11 @@ public class EnregistrerNotes extends HttpServlet {
 		int idEvaluation = Integer.parseInt(evaluation);
 
 		String nomSession = null;
-		SessionHome sessionDao = new SessionHome();
+		SessionDao sessionDao = new SessionDao();
 		nomSession = sessionDao.recupereleNomDeLaSession(idSession);
 
 		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
-		StagiaireHome stagiaireDao = new StagiaireHome();
+		StagiaireDao stagiaireDao = new StagiaireDao();
 		listeStagiaires = stagiaireDao.findStagiaire(idSession);
 
 		HashMap<String, String> listeErreur = new HashMap<String, String>();
@@ -128,7 +128,7 @@ public class EnregistrerNotes extends HttpServlet {
 		for (Stagiaire stagiaire : listeStagiaires) {
 			String valeur = request.getParameter(stagiaire.getNom());
 
-			NoteHome noteDao = new NoteHome();
+			NoteDao noteDao = new NoteDao();
 			Double noteStagiaire = new Double(noteDao.recupereNoteStagaire(
 					stagiaire.getIdStagiaire(), idEvaluation));
 
@@ -208,7 +208,7 @@ public class EnregistrerNotes extends HttpServlet {
 			renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
 		} else if (listeErreur.size() == 0
 				&& noteParStagiairePourCetteEvaluation.size() != 0) {
-			NoteHome noteDao = new NoteHome();
+			NoteDao noteDao = new NoteDao();
 			for (Entry<Integer, Double> entree : listeNotes.entrySet()) {
 				noteDao.updateNote(entree.getValue(), idEvaluation,
 						entree.getKey());
@@ -216,7 +216,7 @@ public class EnregistrerNotes extends HttpServlet {
 			renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";
 		} else {
 			for (Entry<Integer, Double> entree : listeNotes.entrySet()) {
-				NoteHome noteDao = new NoteHome();
+				NoteDao noteDao = new NoteDao();
 				noteDao.insertNote(idEvaluation, entree.getKey(),
 						entree.getValue());
 				renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";

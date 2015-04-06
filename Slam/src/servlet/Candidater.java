@@ -20,7 +20,7 @@ import org.apache.catalina.ant.SessionsTask;
 import contexte.SessionAgriotes;
 import dao.DataBase;
 import dao.MapDao;
-import dao.PersonneHome;
+import dao.PersonneDao;
 import mail.EnvoiMail;
 import modele.Personne;
 
@@ -54,7 +54,7 @@ public class Candidater extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes session = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user = session.getUser();
 		// User 9 en dur
 		try {
@@ -96,7 +96,7 @@ public class Candidater extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user;
 		try {
 			user = dao.findById(9);

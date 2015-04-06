@@ -14,7 +14,7 @@ public class StagiaireHomeTest {
 
 	@Test
 	public void testVerificationStagiaires() {
-		StagiaireHome stagiaireDao = new StagiaireHome();
+		StagiaireDao stagiaireDao = new StagiaireDao();
 		Boolean etatPremier = stagiaireDao.pVerificationStagiaires(1);
 		Boolean etatSecond = stagiaireDao.pVerificationStagiaires(4);
 
@@ -24,7 +24,7 @@ public class StagiaireHomeTest {
 	
 	@Test
 	public void testFindSessionPersonne() {
-		StagiaireHome stagiaireDao = new StagiaireHome();
+		StagiaireDao stagiaireDao = new StagiaireDao();
 		int idSession = stagiaireDao.findSessionPersonne(1);
 
 		assertEquals(1, idSession);		

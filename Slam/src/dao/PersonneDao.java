@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 import modele.Personne;
 
-public class PersonneHome implements Dao<Personne> {
+public class PersonneDao implements Dao<Personne> {
 	/** Temps maximum de validité du lien pour confirmer son inscription */
 	private final static String DELAI_VALIDATION = "1 hour";
 

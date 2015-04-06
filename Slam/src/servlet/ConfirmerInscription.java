@@ -1,6 +1,6 @@
 package servlet;
 
-import dao.PersonneHome;
+import dao.PersonneDao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -43,7 +43,7 @@ private Personne personne;
     long ms = Long.parseLong(cle);
     Timestamp time = new Timestamp(ms);
     try {
-      PersonneHome dao = new PersonneHome();
+      PersonneDao dao = new PersonneDao();
       boolean ok = dao.valider(email, time);
 
       if (ok) {

@@ -14,11 +14,11 @@ import contexte.SessionAgriotes;
 import modele.Module;
 import modele.Note;
 import modele.Personne;
-import dao.EvaluationHome;
-import dao.ModuleHome;
-import dao.NoteHome;
-import dao.PersonneHome;
-import dao.StagiaireHome;
+import dao.EvaluationDao;
+import dao.ModuleDao;
+import dao.NoteDao;
+import dao.PersonneDao;
+import dao.StagiaireDao;
 
 /**
  * Servlet implementation class ListeNotes
@@ -36,7 +36,7 @@ public class ListeNotes extends HttpServlet {
 		// Recupere la session dans la variable session
 		SessionAgriotes maSession = SessionAgriotes.get(request);
 		// Simuler que le candidat 2 est connecte
-		PersonneHome dao = new PersonneHome();
+		PersonneDao dao = new PersonneDao();
 		Personne user = null;
 		// On simule en dur la personne connectée 1
 		try {
@@ -52,7 +52,7 @@ public class ListeNotes extends HttpServlet {
 			int idPersonne = user.getIdPersonne();
 
 			// On vérifie que la personne est bien stagiaire
-			StagiaireHome stagiaireDao = new StagiaireHome();
+			StagiaireDao stagiaireDao = new StagiaireDao();
 			if (!stagiaireDao.pVerificationStagiaires(idPersonne)) {
 				request.setAttribute("verifStagiaire", "Mauvaise");
 			}
@@ -62,13 +62,13 @@ public class ListeNotes extends HttpServlet {
 			int idSessionStagiaire;
 			idSessionStagiaire = stagiaireDao.findSessionPersonne(idPersonne);
 			int nbreMaxEvaluations;
-			EvaluationHome evaluationDao = new EvaluationHome();
+			EvaluationDao evaluationDao = new EvaluationDao();
 			nbreMaxEvaluations = evaluationDao
 					.findMaxEvaluation(idSessionStagiaire);
 
 			// On récupère tous les modules
 			ArrayList<Module> listeDeModule = new ArrayList<Module>();
-			ModuleHome moduleDao = new ModuleHome();
+			ModuleDao moduleDao = new ModuleDao();
 			listeDeModule = moduleDao.recupereLesModules();
 
 			// On remplit le dictionnaire de notes pour chaque matière du
@@ -77,7 +77,7 @@ public class ListeNotes extends HttpServlet {
 			HashMap<Module, Double> listeDeMoyennesParModule = new HashMap<Module,Double>();
 			
 			Note note = new Note();
-			NoteHome noteDao = new NoteHome();
+			NoteDao noteDao = new NoteDao();
 			
 			for (Module unModule : listeDeModule) {
 				ArrayList<Double> listeDesNotes = new ArrayList<Double>();
