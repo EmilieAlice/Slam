@@ -65,7 +65,7 @@ public class EvaluationDao {
 							+ "(SELECT COUNT(id_evaluation) AS nbre "
 							+ "FROM lagarenne2015.evaluation "
 							+ "WHERE id_session = ? "
-							+ "GROUP BY id_module) AS nbre_eval_module;");
+							+ ") AS nbre_eval_module;");
 		} catch (Exception e) {
 			e.getMessage();
 			System.out.println("Requete findMaxEvaluation échouée.");

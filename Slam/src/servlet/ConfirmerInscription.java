@@ -44,7 +44,7 @@ private Personne personne;
     Timestamp time = new Timestamp(ms);
     try {
       PersonneDao dao = new PersonneDao();
-      boolean ok = dao.valider(email, time);
+      boolean ok = dao.validerInscription(email, time);
 
       if (ok) {
 
