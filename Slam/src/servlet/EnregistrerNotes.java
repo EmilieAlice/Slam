@@ -43,13 +43,14 @@ public class EnregistrerNotes extends HttpServlet {
 		Personne user = null;
 
 		try {
-			user = userDao.findById(6);
+			user = userDao.findById(4);
 			maSession.setUser(user);
 			maSession.setIdSession(1);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
 			// renvoyer vers erreur.jsp
 		}
+		System.out.println(user);
 		if (user != null) {
 
 			// String session = request.getParameter("idSession");

@@ -38,9 +38,9 @@
 										<c:forEach items="${listeDeNotesParModule}" var="hashmapNote"
 											varStatus="status">
 
-											<c:if test="${module.nom == hashmapNote.key.nom }">
+											<c:if test="${module.nomModule == hashmapNote.key.nomModule }">
 
-												<td><c:out value="${hashmapNote.key.nom}" /></td>
+												<td><c:out value="${hashmapNote.key.nomModule}" /></td>
 												<c:forEach items="${hashmapNote.value}" var="note"
 													varStatus="status">
 													<td><c:out value="${note}"></c:out></td>
@@ -67,8 +67,8 @@
 									<tr>
 										<c:forEach items="${listeDesMoyennesParModule}"
 											var="hashmapMoyenne" varStatus="status">
-											<c:if test="${module.nom == hashmapMoyenne.key.nom }">
-												<td><c:out value="${hashmapMoyenne.key.nom}" /></td>
+											<c:if test="${module.nomModule == hashmapMoyenne.key.nomModule }">
+												<td><c:out value="${hashmapMoyenne.key.nomModule}" /></td>
 												<td><c:out value="${hashmapMoyenne.value}" /></td>
 											</c:if>
 

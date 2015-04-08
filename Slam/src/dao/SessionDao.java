@@ -11,7 +11,7 @@ public class SessionDao {
 	static {
 		try {
 			pFindNomSessionById = DataBase.getConnection().prepareStatement(
-					"SELECT nom from lagarenne2015.session "
+					"SELECT nom_session from lagarenne2015.session "
 							+ "where id_session=?");
 		} catch (Exception e) {
 			e.getMessage();
@@ -29,6 +29,7 @@ public class SessionDao {
 		String nomSession = new String();
 		try {
 			pFindNomSessionById.setInt(1, idSession);
+			System.out.println(pFindNomSessionById);
 			ResultSet resultat = pFindNomSessionById.executeQuery();
 			if (resultat.next()) {
 				nomSession = resultat.getString("nom_session");
