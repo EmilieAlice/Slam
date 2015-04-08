@@ -50,7 +50,6 @@ public class EnregistrerNotes extends HttpServlet {
 		} catch (SQLException exc) {
 			// renvoyer vers erreur.jsp
 		}
-		System.out.println(user);
 		if (user != null) {
 
 			// String session = request.getParameter("idSession");

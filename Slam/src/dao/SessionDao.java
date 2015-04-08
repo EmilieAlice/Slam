@@ -29,7 +29,6 @@ public class SessionDao {
 		String nomSession = new String();
 		try {
 			pFindNomSessionById.setInt(1, idSession);
-			System.out.println(pFindNomSessionById);
 			ResultSet resultat = pFindNomSessionById.executeQuery();
 			if (resultat.next()) {
 				nomSession = resultat.getString("nom_session");
