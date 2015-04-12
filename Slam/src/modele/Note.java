@@ -45,6 +45,9 @@ public class Note {
 			total += note;
 		}
 		moyenne = total / listeNotes.size();
+		int moyenneArrondie = (int) (moyenne *10);
+		moyenne = (double) (moyenneArrondie);
+		moyenne /= 10;
 		return moyenne;
 	}
 
