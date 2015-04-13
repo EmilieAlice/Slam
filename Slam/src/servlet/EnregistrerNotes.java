@@ -92,7 +92,7 @@ public class EnregistrerNotes extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/enregistrementNotes.jsp")
 					.forward(request, response);
 		} else {
-			request.getRequestDispatcher("index.html").forward(request,
+			request.getRequestDispatcher("accueil.html").forward(request,
 					response);
 		}
 	}

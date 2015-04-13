@@ -7,7 +7,7 @@
 <body>
 	<div id="contenu">
 		<header>
-			<div class="logo"><a href="index.html"><img src="images/logo.png"></a></div>
+			<div class="logo"><a href="accueil.html"><img src="images/logo.png"></a></div>
 			<div class="slogan"><img src="images/slogan.png" width="90%"></div>
 			<h3>Bonjour ${user.civilite} </h3>
 		</header>

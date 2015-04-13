@@ -68,7 +68,7 @@ public class ListeEvaluation extends HttpServlet {
 					request, response);
 
 		} else {
-			request.getRequestDispatcher("index.html").forward(request,
+			request.getRequestDispatcher("accueil.html").forward(request,
 					response);
 		}
 

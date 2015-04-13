@@ -201,6 +201,50 @@ public class PersonneDao implements Dao<Personne> {
 		connection.close();
 		return true;
 	}
+	
+	private static String sqlUpdateUserInfo = "UPDATE personne SET adresse = ?, code_postal = ?,"
+			+ " ville = ?, telephone = ?, telephone2 = ?, email = ?"
+			+ " WHERE id_personne = ? ";
+	
+	private static String sqlUpdateUserInfoWithPwd = "UPDATE personne SET adresse = ?, code_postal = ?,"
+			+ " ville = ?, telephone = ?, telephone2 = ?, email = ?,"
+			+ " mot_passe = ?"
+			+ " WHERE id_personne = ? ";
+	
+	public boolean updatePersonneInfo(int id, String adresse, String cp, String ville, String tel, String tel2, String email) throws SQLException {
+		Connection connection = DataBase.getConnection();
+		PreparedStatement pUpdate = connection.prepareStatement(sqlUpdateUserInfo);
+		pUpdate.setString(1, adresse);
+		pUpdate.setString(2, cp);
+		pUpdate.setString(3, ville);
+		pUpdate.setString(4, tel);
+		pUpdate.setString(5, tel2);
+		pUpdate.setString(6, email);
+		pUpdate.setInt(7, id);
+		pUpdate.execute();
+		pUpdate.close();
+		connection.close();
+		return true;
+	}
+	
+	public boolean updatePersonneInfo(int id, String adresse, String cp, String ville, String tel, String tel2, String email, String mdp) throws SQLException {
+		Connection connection = DataBase.getConnection();
+		PreparedStatement pUpdate = connection.prepareStatement(sqlUpdateUserInfoWithPwd);
+		pUpdate.setString(1, adresse);
+		pUpdate.setString(2, cp);
+		pUpdate.setString(3, ville);
+		pUpdate.setString(4, tel);
+		pUpdate.setString(5, tel2);
+		pUpdate.setString(6, email);
+		pUpdate.setString(7, mdp);
+		pUpdate.setInt(8, id);
+		pUpdate.execute();
+		pUpdate.close();
+		connection.close();
+		return true;
+	}
+	
+	
 
 	private static String sqlDelete = "DELETE FROM personne WHERE id_personne = ?";
 
@@ -239,6 +283,39 @@ public class PersonneDao implements Dao<Personne> {
 		pCheckMail.close();
 		connection.close();
 		return verif;
+	}
+	
+	private static String sqlFindByLoginPwd = "select * from personne where email=? and mot_passe=?";
+	
+	/** Renvoie la personne du login et du pwd donnés, ou null si elle n'existe pas
+	  *
+	  * @param login et pwd de la personne que l'on souhaite trouver
+	  * @return la personne correspondante
+	  * @throws SQLException
+	  */
+	@Override
+	public Personne findByLoginPassword(String login, String pwd)
+			throws SQLException {
+		Connection connection = DataBase.getConnection();
+	    PreparedStatement pFindByLoginPwd = connection.prepareStatement(sqlFindByLoginPwd);
+	    Personne result = null;
+	    pFindByLoginPwd.setString(1, login);
+	    pFindByLoginPwd.setString(2, pwd);
+	    ResultSet res = pFindByLoginPwd.executeQuery();
+	    if (res.next()) {
+	      result = new Personne(res.getInt("id_personne"),
+	          res.getString("civilite"), res.getString("prenom"),
+	          res.getString("nom"), res.getString("adresse"),
+	          res.getString("code_postal"), res.getString("ville"),
+	          res.getString("telephone"), res.getString("telephone2"),
+	          res.getString("email"), res.getString("mot_passe"),
+	          res.getTimestamp("date_inscription"),
+	          res.getBoolean("est_inscrite")
+	      );
+	    }
+	    res.close();
+	    pFindByLoginPwd.close();
+	    return result;
 	}
 
 }

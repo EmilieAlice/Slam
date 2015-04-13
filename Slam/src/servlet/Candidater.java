@@ -79,7 +79,7 @@ public class Candidater extends HttpServlet {
 				// renvoyer vers erreur.jsp
 			}
 		} else {
-			request.getRequestDispatcher("index.html").forward(request,
+			request.getRequestDispatcher("accueil.html").forward(request,
 					response);
 		}
 
