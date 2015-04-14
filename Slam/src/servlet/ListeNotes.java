@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,7 @@ public class ListeNotes extends HttpServlet {
 		Personne user = null;
 		// On simule en dur la personne connectée 1
 		try {
-			user = userDao.findById(1);
+			user = userDao.findById(2);
 			maSession.setUser(user);
 			request.setAttribute("user", user);
 		} catch (SQLException exc) {
@@ -87,11 +88,23 @@ public class ListeNotes extends HttpServlet {
 				moyenne = note.calculMoyenne(listeDesNotes);
 				listeDeMoyennesParModule.put(unModule, moyenne);
 			}
+			
+			Double total = 0.0;
+			
+			for (Entry<Module, Double> entree : listeDeMoyennesParModule.entrySet()) {
+				total += entree.getValue();
+			}
+			
+			Double moyenneGenerale = total/listeDeMoyennesParModule.size();
+			int moyenneArrondie = (int) (moyenneGenerale * 10);
+			moyenneGenerale = (double) (moyenneArrondie);
+			moyenneGenerale /= 10;
 
 			request.setAttribute("nbreMaxEvaluations", nbreMaxEvaluations);
 			request.setAttribute("listeDeModule", listeDeModule);
 			request.setAttribute("listeDeNotesParModule", listeDeNotesParModule);
 			request.setAttribute("listeDesMoyennesParModule", listeDeMoyennesParModule);
+			request.setAttribute("moyenneGenerale", moyenneGenerale);
 
 			request.getRequestDispatcher("/WEB-INF/listeNote.jsp").forward(
 					request, response);

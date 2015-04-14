@@ -77,7 +77,7 @@
 								</c:forEach>
 							</tbody>
 						</table>
-
+						<p>Votre moyenne générale est : ${moyenneGenerale }</p>
 					</c:when>
 
 				</c:choose>
