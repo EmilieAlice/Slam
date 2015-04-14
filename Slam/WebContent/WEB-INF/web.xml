@@ -81,6 +81,7 @@
     <url-pattern>/ListeNotes</url-pattern>
   </servlet-mapping>
   <servlet>
+
     <servlet-name>Login</servlet-name>
     <servlet-class>servlet.Login</servlet-class>
   </servlet>
@@ -107,5 +108,16 @@
   <servlet-mapping>
     <servlet-name>MettreAjourInfoUtilisateur</servlet-name>
     <url-pattern>/MettreAjourInfoUtilisateur</url-pattern>
+      </servlet-mapping>
+	<servlet>
+    <description></description>
+    <display-name>StatistiquesEvaluation</display-name>
+    <servlet-name>StatistiquesEvaluation</servlet-name>
+    <servlet-class>servlet.StatistiquesEvaluation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StatistiquesEvaluation</servlet-name>
+    <url-pattern>/StatistiquesEvaluation</url-pattern>
+
   </servlet-mapping>
 </web-app>

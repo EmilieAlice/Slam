@@ -9,11 +9,13 @@
 	<div class='container'>
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
+			<h3>Vous pouvez gérer les évaluations suivantes : </h3>
 				<c:forEach items="${ listeEvaluation }" var="listeEvaluation"
 					varStatus="status">
 					<p>
 						Remplir les notes pour <a
 							href="EnregistrerNotes?evaluation=${ listeEvaluation.idEvaluation }&idSession=${ idSession }">l'évaluation
+							${ status.count }</a> / Consulter les statistiques pour <a href="StatistiquesEvaluation?evaluation=${ listeEvaluation.idEvaluation}&idSession=${ idSession }" >l'évaluation
 							${ status.count }</a>
 					</p>
 				</c:forEach>

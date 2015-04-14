@@ -124,4 +124,38 @@ public class EvaluationDao {
 		return etat;
 	}
 
+	
+	private static java.sql.PreparedStatement pListeNotes = null;
+	/**
+	 * Requete pour récupérer le nombre maximum d'évaluations
+	 */
+	static {
+		try {
+			pListeNotes = DataBase.getConnection().prepareStatement(
+					"SELECT * FROM lagarenne2015.note "
+					+ "WHERE id_evaluation=?;");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete findListeNotes échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui récupère la liste des notes pour chaque évaluation
+	 * 
+	 * @return une liste, la liste des notes pour cette évaluation
+	 */
+	public ArrayList<Double> findListeNotes(int idEvaluation) {
+		ArrayList<Double> listeDesNotes = new ArrayList<Double>();
+		try {
+			pListeNotes.setInt(1, idEvaluation);
+			ResultSet resultat = pListeNotes.executeQuery();
+			while (resultat.next()) {
+				listeDesNotes.add(resultat.getDouble("note"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listeDesNotes;
+	}
 }
