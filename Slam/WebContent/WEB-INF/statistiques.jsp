@@ -15,6 +15,8 @@
 				<p>- la note la plus haute est de ${ evaluation.noteLaPlusHaute }</p>
 
 				<p>- la note la plus basse est de ${ evaluation.noteLaPlusBasse }</p>
+				
+				<p>Voici la position de cette évaluation : ${rang }/${nbreEvaluations }</p>
 			</div>
 		</div>
 	</div>

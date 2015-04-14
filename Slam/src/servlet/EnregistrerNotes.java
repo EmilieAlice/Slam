@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import contexte.SessionAgriotes;
+import dao.EvaluationDao;
 import dao.NoteDao;
 import dao.PersonneDao;
 import dao.SessionDao;
 import dao.StagiaireDao;
+import modele.Evaluation;
 import modele.Personne;
 import modele.Stagiaire;
 
@@ -43,7 +45,7 @@ public class EnregistrerNotes extends HttpServlet {
 		Personne user = null;
 
 		try {
-			user = userDao.findById(4);
+			user = userDao.findById(5);
 			maSession.setUser(user);
 			maSession.setIdSession(1);
 			request.setAttribute("user", user);
@@ -124,7 +126,9 @@ public class EnregistrerNotes extends HttpServlet {
 		HashMap<Integer, Double> listeNotes = new HashMap<Integer, Double>();
 
 		HashMap<Stagiaire, Double> noteParStagiairePourCetteEvaluation = new HashMap<Stagiaire, Double>();
-
+		
+		ArrayList<Double> toutesLesNotes = new ArrayList<Double>();
+		
 		for (Stagiaire stagiaire : listeStagiaires) {
 			String valeur = request.getParameter(stagiaire.getNom());
 
@@ -161,6 +165,7 @@ public class EnregistrerNotes extends HttpServlet {
 				} else { // Sinon on enregistre la note
 					Double note = Double.parseDouble(valeur);
 					listeNotes.put(stagiaire.getIdStagiaire(), note);
+					toutesLesNotes.add(note);
 				}
 			} else if (!testLettresVirgule && !testLettresPoint) { // On vérifie
 																	// qu'il n'y
@@ -200,9 +205,16 @@ public class EnregistrerNotes extends HttpServlet {
 				} else { // Sinon on enregistre la note
 					Double note = Double.parseDouble(valeur);
 					listeNotes.put(stagiaire.getIdStagiaire(), note);
+					toutesLesNotes.add(note);
 				}
 			}
 		}
+		Evaluation evaluationObjet = new Evaluation();
+		EvaluationDao evaluationDao = new EvaluationDao();
+		
+		evaluationObjet.setListeDesNotes(toutesLesNotes);
+		Double moyenne = evaluationObjet.calculMoyenne();
+		
 		if (listeErreur.size() != 0) {
 			request.setAttribute("listeErreur", listeErreur);
 			renvoiFormulaire = "/WEB-INF/enregistrementNotes.jsp";
@@ -213,6 +225,7 @@ public class EnregistrerNotes extends HttpServlet {
 				noteDao.updateNote(entree.getValue(), idEvaluation,
 						entree.getKey());
 			}
+			evaluationDao.enregistreMoyenne(idEvaluation, moyenne);
 			renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";
 		} else {
 			for (Entry<Integer, Double> entree : listeNotes.entrySet()) {
@@ -221,6 +234,7 @@ public class EnregistrerNotes extends HttpServlet {
 						entree.getValue());
 				renvoiFormulaire = "/WEB-INF/enregistrementNotesOk.jsp";
 			}
+			evaluationDao.enregistreMoyenne(idEvaluation, moyenne);
 		}
 
 		request.setAttribute("listeStagiaires", listeStagiaires);

@@ -158,4 +158,77 @@ public class EvaluationDao {
 		}
 		return listeDesNotes;
 	}
+	
+	private static java.sql.PreparedStatement pEnregistreMoyenne = null;
+	/**
+	 * Requete pour récupérer le nombre maximum d'évaluations
+	 */
+	static {
+		try {
+			pEnregistreMoyenne = DataBase.getConnection().prepareStatement(
+					"UPDATE lagarenne2015.evaluation "
+					+ "SET evaluation_moyenne = ? "
+					+ "	WHERE id_evaluation = ?;");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete enregistreMoyenne échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui récupère la liste des notes pour chaque évaluation
+	 * 
+	 * @return une liste, la liste des notes pour cette évaluation
+	 */
+	public Boolean enregistreMoyenne(int idEvaluation, Double moyenne) {
+		Boolean etat = new Boolean(false);
+		try {
+			pEnregistreMoyenne.setDouble(1, moyenne);
+			pEnregistreMoyenne.setInt(2, idEvaluation);
+			int resultat = pEnregistreMoyenne.executeUpdate();
+			if(resultat == 1) {
+				etat = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return etat;
+	}
+	
+	private static java.sql.PreparedStatement pFindAllEvaluationFormateur = null;
+	/**
+	 * Requete pour récupérer le nombre maximum d'évaluations
+	 */
+	static {
+		try {
+			pFindAllEvaluationFormateur = DataBase.getConnection().prepareStatement(
+					"SELECT * FROM lagarenne2015.evaluation "
+					+ "WHERE id_formateur=? "
+					+ "AND id_session=?;");
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println("Requete findAllEvaluationFormateur échouée.");
+		}
+	}
+
+	/**
+	 * Méthode qui récupère la liste des notes pour chaque évaluation
+	 * 
+	 * @return une liste, la liste des notes pour cette évaluation
+	 */
+	public ArrayList<Double> recupereToutesMoyenne(int idFormateur, int idSession) {
+		ArrayList<Double> listeMoyenne = new ArrayList<Double>();
+		try {
+			pFindAllEvaluationFormateur.setInt(1, idFormateur);
+			pFindAllEvaluationFormateur.setInt(2, idSession);
+			ResultSet resultat = pFindAllEvaluationFormateur.executeQuery();
+			while(resultat.next()) {
+				Double moyenne = resultat.getDouble("evaluation_moyenne");
+				listeMoyenne.add(moyenne);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listeMoyenne;
+	}
 }

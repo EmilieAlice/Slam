@@ -43,7 +43,22 @@ public class StatistiquesEvaluation extends HttpServlet {
 		evaluation.setNoteLaPlusHaute(evaluation.calculNoteLaPlusHaute());
 		evaluation.setNoteLaPlusBasse(evaluation.calculNoteLaPlusBasse());
 		
+		ArrayList<Double> toutesMoyenne = new ArrayList<Double>();
+		toutesMoyenne = evaluationDao.recupereToutesMoyenne(5, 1);
+		
+		int nbreEvaluations = toutesMoyenne.size();
+		
+		int rang = 1;
+		
+		for (Double moyenne : toutesMoyenne) {
+			if(moyenne > evaluation.getMoyenne()){
+				rang++;
+			}
+		}
+		
 		request.setAttribute("evaluation", evaluation);
+		request.setAttribute("nbreEvaluations", nbreEvaluations);
+		request.setAttribute("rang", rang);
 		
 		request.getRequestDispatcher("/WEB-INF/statistiques.jsp").forward(
 				request, response);
