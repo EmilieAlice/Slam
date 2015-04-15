@@ -1,10 +1,7 @@
 package modele;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.sun.org.apache.bcel.internal.generic.DDIV;
 
 public class Main {
 

@@ -28,9 +28,6 @@ import modele.Stagiaire;
  */
 public class EnregistrerNotes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private boolean formOk;
-	private Personne personne;
-
 	public EnregistrerNotes() {
 		super();
 	}
@@ -101,12 +98,8 @@ public class EnregistrerNotes extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// Recupere la session dans la variable session
-		SessionAgriotes maSession = SessionAgriotes.get(request);
-		// Simuler que le candidat 2 est connecte
-		PersonneDao userDao = new PersonneDao();
-		Personne user;
-
+		SessionAgriotes.get(request);
+		new PersonneDao();
 		String renvoiFormulaire = null;
 
 		String session = request.getParameter("idSession");
