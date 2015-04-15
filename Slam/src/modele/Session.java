@@ -20,6 +20,13 @@ public class Session {
 	public Session() {
 
 	}
+	
+	public Session(int idSession, String nomSession, String description) {
+		super();
+		this.idSession = idSession;
+		this.nomSession = nomSession;
+		this.descriptionSession = description;
+	}
 
 	public Session(int idSession, String nomSession, GregorianCalendar dateDebut, GregorianCalendar dateFin,
 			String descriptionSession, int idFormation, GregorianCalendar dateDebutInscription,

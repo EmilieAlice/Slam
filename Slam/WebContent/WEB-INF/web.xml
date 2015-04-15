@@ -91,13 +91,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>Modification des infos utilisateur</display-name>
-    <servlet-name>ModificationUtilisateur</servlet-name>
-    <servlet-class>servlet.ModificationUtilisateur</servlet-class>
+    <servlet-name>actionController</servlet-name>
+    <servlet-class>servlet.ActionController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ModificationUtilisateur</servlet-name>
-    <url-pattern>/ModificationUtilisateur</url-pattern>
+    <servlet-name>actionController</servlet-name>
+    <url-pattern>/actionController</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

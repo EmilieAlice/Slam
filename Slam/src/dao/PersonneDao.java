@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import modele.Personne;
 
@@ -54,14 +56,7 @@ public class PersonneDao implements Dao<Personne> {
 		pFindById.setInt(1, id);
 		ResultSet res = pFindById.executeQuery();
 		if (res.next()) {
-			result = new Personne(res.getInt("id_personne"),
-					res.getString("civilite"), res.getString("prenom"),
-					res.getString("nom"), res.getString("adresse"),
-					res.getString("code_postal"), res.getString("ville"),
-					res.getString("telephone"), res.getString("telephone2"),
-					res.getString("email"), res.getString("mot_passe"),
-					res.getTimestamp("date_inscription"),
-					res.getBoolean("est_inscrite"));
+			result = buildPersonne(res);
 		}
 		res.close();
 		pFindById.close();
@@ -293,7 +288,6 @@ public class PersonneDao implements Dao<Personne> {
 	  * @return la personne correspondante
 	  * @throws SQLException
 	  */
-	@Override
 	public Personne findByLoginPassword(String login, String pwd)
 			throws SQLException {
 		Connection connection = DataBase.getConnection();
@@ -303,19 +297,56 @@ public class PersonneDao implements Dao<Personne> {
 	    pFindByLoginPwd.setString(2, pwd);
 	    ResultSet res = pFindByLoginPwd.executeQuery();
 	    if (res.next()) {
-	      result = new Personne(res.getInt("id_personne"),
-	          res.getString("civilite"), res.getString("prenom"),
-	          res.getString("nom"), res.getString("adresse"),
-	          res.getString("code_postal"), res.getString("ville"),
-	          res.getString("telephone"), res.getString("telephone2"),
-	          res.getString("email"), res.getString("mot_passe"),
-	          res.getTimestamp("date_inscription"),
-	          res.getBoolean("est_inscrite")
-	      );
+	      result = buildPersonne(res);
 	    }
 	    res.close();
 	    pFindByLoginPwd.close();
 	    return result;
 	}
+	
+	private static String sqlFindByEmail = "select * from personne where email = ? ";
+	
+	public boolean mailDejaUtiliser(String login) throws SQLException {
+		Connection connection = DataBase.getConnection();
+	    PreparedStatement pFindByLogin = connection.prepareStatement(sqlFindByEmail);
+	    pFindByLogin.setString(1, login);
+	    ResultSet res = pFindByLogin.executeQuery();
+	    if (res.next()) {
+	    	return true;
+	    }
+	    return false;
+	}
+	
+	private static String sqlFindFormateurs = "select * from personne where id_personne in (select id_personne from formateur)";
+	
+	public List<Personne> retrieveAllFormateurs() throws SQLException {
+		Connection connection = DataBase.getConnection();
+		PreparedStatement prepareStatement = connection.prepareStatement(sqlFindFormateurs);
+		ResultSet res = prepareStatement.executeQuery();
+		
+		List<Personne> results = new ArrayList<>();
+		
+		while(res.next()) {
+			Personne personne = buildPersonne(res);
+			results.add(personne);
+		}
+		
+		return results;
+	}
+
+	private Personne buildPersonne(ResultSet res) throws SQLException {
+		Personne personne = new Personne(res.getInt("id_personne"),
+		          res.getString("civilite"), res.getString("prenom"),
+		          res.getString("nom"), res.getString("adresse"),
+		          res.getString("code_postal"), res.getString("ville"),
+		          res.getString("telephone"), res.getString("telephone2"),
+		          res.getString("email"), res.getString("mot_passe"),
+		          res.getTimestamp("date_inscription"),
+		          res.getBoolean("est_inscrite")
+		      );
+		return personne;
+	}
+	
+	
 
 }

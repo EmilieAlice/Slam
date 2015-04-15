@@ -1,6 +1,13 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import modele.Session;
 
 public class SessionDao {
 
@@ -37,5 +44,20 @@ public class SessionDao {
 			e.printStackTrace();
 		}
 		return nomSession;
+	}
+	
+	private static String sqlFindAllSessions = "select * from session";
+	
+	public List<Session> retrieveAll() throws SQLException {
+		PreparedStatement prepareStatement = DataBase.getConnection().prepareStatement(sqlFindAllSessions);
+		ResultSet rs = prepareStatement.executeQuery();
+		
+		List<Session> results = new ArrayList<>();
+		while(rs.next()) {
+			Session session = new Session(rs.getInt("id_session"), rs.getString("nom"), rs.getString("description"));
+			results.add(session);
+		}
+		
+		return results;
 	}
 }

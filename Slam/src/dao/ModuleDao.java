@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import modele.Module;
 
@@ -33,10 +34,10 @@ public class ModuleDao {
 			while (resultat.next()) {
 				Module unModule = new Module();
 				unModule.setIdModule(resultat.getInt("id_module"));
-				unModule.setNomModule(resultat.getString("nom_module"));
+				unModule.setNomModule(resultat.getString("nom"));
 				unModule.setObjectif(resultat.getString("objectif"));
 				unModule.setContenu(resultat.getString("contenu"));
-				unModule.setNbHeuresAnnuelles(resultat.getInt("nb_heures_annuel"));
+				unModule.setNbHeuresAnnuelles(resultat.getInt("nb_heures"));
 				unModule.setPrerequis(resultat.getString("prerequis"));
 				listeDesModules.add(unModule);
 			}
